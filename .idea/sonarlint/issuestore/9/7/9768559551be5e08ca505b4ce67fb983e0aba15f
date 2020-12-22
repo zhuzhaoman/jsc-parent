@@ -1,0 +1,7 @@
+
+y	java:S116"XRename this field "m_u32RelateId" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ΪΒαχόÿÿÿÿ8ΔΎί.
+t	java:S116"XRename this field "m_u32RuleType" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ΟιΤ8¨ΓΎί.
+v
+java:S1104"YMake m_u32RuleType a static final constant or non-public and provide accessors if needed.(ΟιΤ8¨ΓΎί.
+{
+java:S1104"YMake m_u32RelateId a static final constant or non-public and provide accessors if needed.(ΪΒαχόÿÿÿÿ8ΔΎί.

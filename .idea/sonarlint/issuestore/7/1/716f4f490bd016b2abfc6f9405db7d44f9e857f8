@@ -1,0 +1,18 @@
+
+b
+java:S3252‡"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ
+‰
+java:S4165\"mRemove this useless assignment; "protocolRuleDTO" already holds the assigned value along all execution paths.(¨´÷+8Ï×˜æâ.
+N
+java:S3011H",This accessibility bypass should be removed.(¼æ÷Îÿÿÿÿÿ8â‰ììá.
+V
+java:S1128"9Remove this unused import 'com.zzm.pojo.dto.IPV6RuleDTO'.(µ¼ü¿8Æß™ðß.
+I
+java:S30111",This accessibility update should be removed.(˜ÂÓ˜8†¯®ïá.
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ßú±Èûÿÿÿÿ
+o
+java:S3776*"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(ùŠñò8•‘öïá.
+I
+java:S3011F",This accessibility bypass should be removed.(„¨˜Ã8¡ë‡ïá.
+a
+java:S3252l"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ

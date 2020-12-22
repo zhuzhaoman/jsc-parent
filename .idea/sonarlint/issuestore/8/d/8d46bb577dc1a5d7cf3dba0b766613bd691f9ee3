@@ -1,0 +1,11 @@
+
+W
+java:S2209,"5Change this instance-reference to a static reference.(õÈà»ûÿÿÿÿ8ÂÅäÔä.
+X
+java:S2696,"6Make the enclosing method "static" or remove this set.(õÈà»ûÿÿÿÿ8÷¦ûåâ.
+X
+java:S2696i"6Make the enclosing method "static" or remove this set.( ¾ûüÿÿÿÿ8—ØóËæ.
+X
+java:S2696Y"6Make the enclosing method "static" or remove this set.(×şûÿÿÿÿ8÷¦ûåâ.
+c
+java:S2142b"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8÷¦ûåâ.

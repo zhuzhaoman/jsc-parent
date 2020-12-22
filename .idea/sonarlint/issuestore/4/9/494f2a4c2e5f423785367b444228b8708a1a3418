@@ -1,0 +1,11 @@
+
+t
+java:S2293_"YReplace the type specification in this constructor call with the diamond operator ("<>").(§Ì˜µþÿÿÿÿ
+a
+java:S32525"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ
+a
+java:S3252M"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ
+„
+java:S1488P"oImmediately return this expression instead of assigning it to the temporary variable "receiveSystemManagerDTO".(‰ÖÃs
+…
+java:S14886"oImmediately return this expression instead of assigning it to the temporary variable "receiveSystemManagerDTO".(Æ¶Ð³

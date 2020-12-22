@@ -1,0 +1,13 @@
+
+a
+java:S32527"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ
+a
+java:S3252R"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ßú±Èûÿÿÿÿ
+T
+java:S1128
+"7Remove this unused import 'com.zzm.pojo.bo.IPV4RuleBO'.(üÛÁ¡8–§­¹â.
+[
+java:S1128"9Remove this unused import 'com.zzm.pojo.dto.IPV4RuleDTO'.(à«Ì…ûÿÿÿÿ8¨«¬¹â.
+]
+java:S1128";Remove this unused import 'com.zzm.pojo.bo.PriorityRuleBO'.(€Ø—ãûÿÿÿÿ8æ²–æâ.

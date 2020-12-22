@@ -1,0 +1,7 @@
+
+m	java:S116"XRename this field "m_u32Priority" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßŞª
+s	java:S116"WRename this field "m_u32RuleTyp" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷ºŒš8ØÑ¨¹â.
+o
+java:S1104"YMake m_u32Priority a static final constant or non-public and provide accessors if needed.(ßŞª
+u
+java:S1104"XMake m_u32RuleTyp a static final constant or non-public and provide accessors if needed.(÷ºŒš8ØÑ¨¹â.

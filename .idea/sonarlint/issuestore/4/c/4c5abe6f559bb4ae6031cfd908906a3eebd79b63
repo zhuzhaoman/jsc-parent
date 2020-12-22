@@ -1,0 +1,15 @@
+
+Š
+java:S1845"tRename field "name" to prevent any misunderstanding/clash with method "name" defined in superclass "java.lang.Enum".( þÍ¾
+9
+java:S3066"#Lower the visibility of this field.( þÍ¾
+f
+java:S1104"PMake name a static final constant or non-public and provide accessors if needed.( þÍ¾
+f
+java:S1104"PMake code a static final constant or non-public and provide accessors if needed.(½±Ï©
+R
+java:S3066)"<Lower the visibility of this setter or remove it altogether.(Ò’Š¯
+W
+java:S3066!"<Lower the visibility of this setter or remove it altogether.(æ±±¬øÿÿÿÿ
+9
+java:S3066"#Lower the visibility of this field.(½±Ï©

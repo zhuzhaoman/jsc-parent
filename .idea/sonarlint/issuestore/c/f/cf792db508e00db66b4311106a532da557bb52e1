@@ -1,0 +1,12 @@
+
+I
+java:S3011/",This accessibility update should be removed.(˜ÂÓ˜8ÚìÎÌß.
+h
+java:S3252l"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ8õ¹Ì­Ý.
+†
+java:S4165A"iRemove this useless assignment; "ipv6RuleDTO" already holds the assigned value along all execution paths.(ß¼óî8ó·”æâ.
+a
+java:S3252Q"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ
+N
+java:S30110",This accessibility bypass should be removed.(¼æ÷Îÿÿÿÿÿ8ô™ŽÌß.
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ßú±Èûÿÿÿÿ

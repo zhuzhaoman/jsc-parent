@@ -1,0 +1,10 @@
+
+{	java:S116"ZRename this field "m_u32VlanIdMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«›üãûÿÿÿÿ8ÌÚ­¾ß.
+y
+java:S1104"WMake m_u32VlanId a static final constant or non-public and provide accessors if needed.(àÒ•Éùÿÿÿÿ8Á·¬¾ß.
+v
+java:S1104"YMake m_u32VlanType a static final constant or non-public and provide accessors if needed.(úº¬ô8ø¥«¾ß.
+t	java:S116"XRename this field "m_u32VlanType" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(úº¬ô8ø¥«¾ß.
+}
+java:S1104"[Make m_u32VlanIdMask a static final constant or non-public and provide accessors if needed.(«›üãûÿÿÿÿ8ÌÚ­¾ß.
+w	java:S116"VRename this field "m_u32VlanId" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(àÒ•Éùÿÿÿÿ8Á·¬¾ß.

@@ -1,0 +1,8 @@
+
+Y
+java:S1128"7Remove this unused import 'com.zzm.pojo.bo.VlanRuleBO'.(ï¥£„ûÿÿÿÿ8¬Ÿ«”â.
+a
+java:S3252`"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ßú±Èûÿÿÿÿ
+a
+java:S3252B"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ

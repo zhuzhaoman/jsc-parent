@@ -1,0 +1,16 @@
+
+v
+java:S1104"YMake m_u32RuleType a static final constant or non-public and provide accessors if needed.(ŠÏéÔ8Éæç¾ß.
+y	java:S116"XRename this field "m_strRuleMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ã§Ãıÿÿÿÿ8»Õë¾ß.
+{
+java:S1104"YMake m_strRuleMask a static final constant or non-public and provide accessors if needed.(Ã§Ãıÿÿÿÿ8»Õë¾ß.
+r
+java:S1104"UMake m_strRule a static final constant or non-public and provide accessors if needed.(õÉ­8ÑÅé¾ß.
+t	java:S116"XRename this field "m_u32RuleMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Åáñ¡8À€í¾ß.
+v
+java:S1104"YMake m_u32RuleMask a static final constant or non-public and provide accessors if needed.(Åáñ¡8À€í¾ß.
+t	java:S116"XRename this field "m_u32RuleType" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŠÏéÔ8Éæç¾ß.
+p	java:S116"TRename this field "m_strRule" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õÉ­8ÑÅé¾ß.
+r
+java:S1104"UMake m_u32Rule a static final constant or non-public and provide accessors if needed.(‰×Ä›8ğÿªÅá.
+p	java:S116"TRename this field "m_u32Rule" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰×Ä›8ğÿªÅá.

@@ -1,0 +1,7 @@
+
+y
+java:S1104"]Make m_u32TemplateType a static final constant or non-public and provide accessors if needed.(ßŞò08ËÚ¡¹â.
+t	java:S116"XRename this field "m_u32Priority" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßŞª8ËÚ¡¹â.
+v
+java:S1104"YMake m_u32Priority a static final constant or non-public and provide accessors if needed.(ßŞª8ËÚ¡¹â.
+w	java:S116"\Rename this field "m_u32TemplateType" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßŞò08ËÚ¡¹â.

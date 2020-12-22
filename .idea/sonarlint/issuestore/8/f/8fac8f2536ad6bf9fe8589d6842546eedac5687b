@@ -1,0 +1,20 @@
+
+X	java:S125I"<This block of commented-out lines of code should be removed.(Ôç…“8©ƒµÂá.
+^
+java:S1128"ARemove this unused import 'org.apache.tomcat.util.net.IPv6Utils'.(ŞñäÁ8¶à¾Ëß.
+X	java:S125E"<This block of commented-out lines of code should be removed.(šÊÍÕ8æß’Âá.
+]	java:S125-"<This block of commented-out lines of code should be removed.(ÛÙêîÿÿÿÿÿ8üÎÀß.
+]	java:S1253"<This block of commented-out lines of code should be removed.(ı‹”Íúÿÿÿÿ8‘Š‰Àß.
+X	java:S1255"<This block of commented-out lines of code should be removed.(Í¬ï‰8—ú†Ëß.
+]	java:S125("<This block of commented-out lines of code should be removed.(‚ë«òûÿÿÿÿ8í±ŠÀß.
+l
+java:S1128"JRemove this unused import 'com.alibaba.druid.support.http.util.IPAddress'.(Û¢áüÿÿÿÿ8¹®¾Ëß.
+X	java:S125="<This block of commented-out lines of code should be removed.(ûÔ¯8óÒ¬Ëß.
+H
+java:S1172!"+Remove this unused method parameter "mask".(±æ˜8©ÉËß.
+Y
+java:S1128"7Remove this unused import 'sun.net.util.IPAddressUtil'.(“Ç‡ÿÿÿÿÿ8¶à¾Ëß.
+[
+java:S1128	">Remove this unused import 'java.nio.charset.StandardCharsets'.(ï˜ŞÛ8ÉíÂá.
+W
+java:S1191"5Use classes from the Java API instead of Sun classes.(“Ç‡ÿÿÿÿÿ8èÂµËß.

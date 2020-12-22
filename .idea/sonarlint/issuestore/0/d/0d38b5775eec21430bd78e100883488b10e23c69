@@ -1,0 +1,21 @@
+
+„
+java:S14884"oImmediately return this expression instead of assigning it to the temporary variable "receiveSystemManagerDTO".(‰ÖÃs
+V
+java:S3252t"@Use static access with "com.alibaba.fastjson.JSON" for "toJSON".(„Å„â
+u
+java:S1488|"`Immediately return this expression instead of assigning it to the temporary variable "slotType".(˜§
+a
+java:S32522"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ğˆüÿÿÿÿ
+…
+java:S1488’"oImmediately return this expression instead of assigning it to the temporary variable "receiveSystemManagerDTO".(‰ÖÃs
+V
+java:S3252W"@Use static access with "com.alibaba.fastjson.JSON" for "toJSON".(„Å„â
+b
+java:S3252"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ğˆüÿÿÿÿ
+b
+java:S3252«"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ğˆüÿÿÿÿ
+…
+java:S1488­"oImmediately return this expression instead of assigning it to the temporary variable "receiveSystemManagerDTO".(‰ÖÃs
+V
+java:S3252E"@Use static access with "com.alibaba.fastjson.JSON" for "toJSON".(„Å„â

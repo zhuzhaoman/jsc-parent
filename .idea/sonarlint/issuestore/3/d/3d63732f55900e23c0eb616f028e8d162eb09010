@@ -1,0 +1,14 @@
+
+p	java:S116"VRename this field "m_u32PortId" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ó¾èæÿÿÿÿÿ
+q	java:S116"WRename this field "m_u64InBytes" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…£çüÿÿÿÿ
+l	java:S116"WRename this field "m_u64InPckts" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡›ÂÓ
+n	java:S116"YRename this field "m_u64InBitRate" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(â´
+s	java:S116"YRename this field "m_u64InPktRate" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( ›‘¨ùÿÿÿÿ
+t	java:S116 "ZRename this field "m_u64InDiscards" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„ÚÏ¤ùÿÿÿÿ
+l	java:S116#"XRename this field "m_u64InErrors" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·Ï¸[
+r	java:S116&"XRename this field "m_u64OutBytes" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŒÍ¹¯ıÿÿÿÿ
+m	java:S116)"XRename this field "m_u64OutPckts" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€ºš€
+o	java:S116,"ZRename this field "m_u64OutBitRate" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œÙ®å
+t	java:S116/"ZRename this field "m_u64OutPktRate" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æÇ²…ùÿÿÿÿ
+u	java:S1162"[Rename this field "m_u64OutDiscards" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡Õ…›ûÿÿÿÿ
+m	java:S1165"YRename this field "m_u64OutErrors" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™ƒÉj

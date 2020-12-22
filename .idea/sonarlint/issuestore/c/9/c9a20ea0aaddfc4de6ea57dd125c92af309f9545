@@ -1,0 +1,13 @@
+
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ßú±Èûÿÿÿÿ8ÕÓšæâ.
+]
+java:S1128";Remove this unused import 'com.zzm.pojo.bo.TemplateRuleBO'.(¶Î·ÿüÿÿÿÿ8ïÊ›æâ.
+h
+java:S32529"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ8ÕÓšæâ.
+h
+java:S3252T"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ8ÕÓšæâ.
+T
+java:S1128
+"7Remove this unused import 'com.zzm.pojo.bo.IPV4RuleBO'.(üÛÁ¡8ÕÓšæâ.
+[
+java:S1128"9Remove this unused import 'com.zzm.pojo.dto.IPV4RuleDTO'.(à«Ì…ûÿÿÿÿ8ÕÓšæâ.

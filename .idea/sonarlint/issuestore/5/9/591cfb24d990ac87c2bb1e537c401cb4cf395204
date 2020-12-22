@@ -1,0 +1,7 @@
+
+8
+java:S1118"Hide this public constructor.(Ø€ç¾ûÿÿÿÿ
+i
+java:S1444"SMake this "public static systemManagerSendingResourcesPolicyServiceMap" field final(³Õ™´
+
+java:S1104"yMake systemManagerSendingResourcesPolicyServiceMap a static final constant or non-public and provide accessors if needed.(³Õ™´

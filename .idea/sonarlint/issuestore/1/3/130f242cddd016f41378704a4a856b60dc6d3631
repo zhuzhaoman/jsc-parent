@@ -1,0 +1,20 @@
+
+Y
+java:S47194"<Replace charset name argument with StandardCharsets.US_ASCII(­žßÆ8Ž°†æâ.
+`
+java:S1128">Remove this unused import 'com.zzm.utils.BaseConversionUtils'.(Ðˆ§ôùÿÿÿÿ8À÷¤Ãá.
+q
+java:S1128"ORemove this unused import 'com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ'.(¬Ÿê³þÿÿÿÿ8Ðƒ Ãá.
+Y
+java:S4719<"<Replace charset name argument with StandardCharsets.US_ASCII(­žßÆ8Ž°†æâ.
+a
+java:S3252_"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ
+a
+java:S3252}"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ðˆüÿÿÿÿ
+Œ
+java:S4165O"jRemove this useless assignment; "ethMacRuleBO" already holds the assigned value along all execution paths.(ýÖêÕüÿÿÿÿ8›È‡æâ.
+[
+java:S1128"9Remove this unused import 'com.zzm.pojo.dto.VlanRuleDTO'.(œòØÝùÿÿÿÿ8ñÕþëß.
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ßú±Èûÿÿÿÿ
+W
+java:S1191"5Use classes from the Java API instead of Sun classes.(¬Ÿê³þÿÿÿÿ8Ðƒ Ãá.

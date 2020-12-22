@@ -1,0 +1,12 @@
+
+c
+java:S2259@"HA "NullPointerException" could be thrown; "attributes" is nullable here.(¨åÝÇúÿÿÿÿ
+d
+java:S2259g"IA "NullPointerException" could be thrown; "targetClass" is nullable here.(ˆ€ûÃùÿÿÿÿ
+—
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(çíÑª
+J
+java:S3740`"/Provide the parametrized type for this generic.(ñ„ÝÕüÿÿÿÿ
+V	java:S125P"<This block of commented-out lines of code should be removed.(œÞƒèûÿÿÿÿ
+­
+java:S1192/"–Define a constant instead of duplicating this literal "----------------------------->  end è€—æ—¶: {} æ¯«ç§’  <-----------------------------" 3 times.(®ì÷·

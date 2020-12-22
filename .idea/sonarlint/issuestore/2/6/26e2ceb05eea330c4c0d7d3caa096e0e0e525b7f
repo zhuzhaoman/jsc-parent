@@ -1,0 +1,69 @@
+
+E
+java:S3740:"/Provide the parametrized type for this generic.(Ñ´ì´
+r	java:S116"XRename this field "m_u32AclIndex" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(íØ¡òşÿÿÿÿ
+r	java:S116"XRename this field "m_u32RuleType" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜¥°¯úÿÿÿÿ
+z	java:S116"`Rename this field "m_u32ServiceProfileId" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰ËÁãıÿÿÿÿ
+o	java:S116"URename this field "m_strSrcIp" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•·Áâşÿÿÿÿ
+s	java:S116"YRename this field "m_strSrcIpMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶ÓÂ÷ùÿÿÿÿ
+q	java:S116"WRename this field "m_u32SrcPort" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€Œˆ¦øÿÿÿÿ
+o	java:S116"[Rename this field "m_u32SrcPortMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øë³w
+o	java:S116""URename this field "m_strDstIp" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–õÊÂÿÿÿÿÿ
+m	java:S116%"YRename this field "m_strDstIpMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óªË+
+l	java:S116("WRename this field "m_u32DstPort" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰«çÄ
+p	java:S116+"[Rename this field "m_u32DstPortMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ÆúÖ
+u	java:S116."`Rename this field "m_u32InputPortGroupId" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ëé£
+m	java:S1161"XRename this field "m_u32Protocol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òÊÊ­
+v	java:S1164"\Rename this field "m_u32ProtocolMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰ ©æøÿÿÿÿ
+m	java:S1167"XRename this field "m_u32Priority" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÒÓ„¸
+n	java:S116:"YRename this field "m_tCompoundMsg" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñ´ì´
+w	java:S116="]Rename this field "m_u32CompositeFlag" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ƒØÆüÿÿÿÿ
+t	java:S116@"ZRename this field "m_u32RstAclSave" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»º¥üÿÿÿÿ
+l	java:S116C"WRename this field "m_u32HitStat" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æüó¯
+r	java:S116F"XRename this field "m_u32MaskFlag" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïáãªúÿÿÿÿ
+n	java:S116I"ZRename this field "m_u32RuleSource" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä»Õ{
+n	java:S116L"YRename this field "m_u32MatchType" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÈìÌ“
+L
+java:S1068"1Remove this unused "m_u32AclIndex" private field.(íØ¡òşÿÿÿÿ
+L
+java:S1068"1Remove this unused "m_u32RuleType" private field.(˜¥°¯úÿÿÿÿ
+T
+java:S1068"9Remove this unused "m_u32ServiceProfileId" private field.(‰ËÁãıÿÿÿÿ
+I
+java:S1068".Remove this unused "m_strSrcIp" private field.(•·Áâşÿÿÿÿ
+M
+java:S1068"2Remove this unused "m_strSrcIpMask" private field.(¶ÓÂ÷ùÿÿÿÿ
+K
+java:S1068"0Remove this unused "m_u32SrcPort" private field.(€Œˆ¦øÿÿÿÿ
+I
+java:S1068"4Remove this unused "m_u32SrcPortMask" private field.(øë³w
+I
+java:S1068"".Remove this unused "m_strDstIp" private field.(–õÊÂÿÿÿÿÿ
+G
+java:S1068%"2Remove this unused "m_strDstIpMask" private field.(óªË+
+F
+java:S1068("0Remove this unused "m_u32DstPort" private field.(‰«çÄ
+J
+java:S1068+"4Remove this unused "m_u32DstPortMask" private field.(±ÆúÖ
+O
+java:S1068."9Remove this unused "m_u32InputPortGroupId" private field.(ëé£
+G
+java:S10681"1Remove this unused "m_u32Protocol" private field.(òÊÊ­
+P
+java:S10684"5Remove this unused "m_u32ProtocolMask" private field.(‰ ©æøÿÿÿÿ
+G
+java:S10687"1Remove this unused "m_u32Priority" private field.(ÒÓ„¸
+H
+java:S1068:"2Remove this unused "m_tCompoundMsg" private field.(Ñ´ì´
+Q
+java:S1068="6Remove this unused "m_u32CompositeFlag" private field.(ƒØÆüÿÿÿÿ
+N
+java:S1068@"3Remove this unused "m_u32RstAclSave" private field.(»º¥üÿÿÿÿ
+F
+java:S1068C"0Remove this unused "m_u32HitStat" private field.(æüó¯
+L
+java:S1068F"1Remove this unused "m_u32MaskFlag" private field.(ïáãªúÿÿÿÿ
+H
+java:S1068I"3Remove this unused "m_u32RuleSource" private field.(ä»Õ{
+H
+java:S1068L"2Remove this unused "m_u32MatchType" private field.(ÈìÌ“

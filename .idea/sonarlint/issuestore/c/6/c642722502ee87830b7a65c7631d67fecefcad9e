@@ -1,0 +1,72 @@
+
+{	java:S116="ZRename this field "m_u32RuleSource" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Íø¤Áûÿÿÿÿ8ËûŞÇß.
+z	java:S116"YRename this field "m_u32DstIpMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·Ğîşÿÿÿÿ8ËûŞÇß.
+t	java:S116@"XRename this field "m_u32Priority" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßŞª8ËûŞÇß.
+{
+java:S1104:"YMake m_u32AclIndex a static final constant or non-public and provide accessors if needed.(´‚Ôúÿÿÿÿ8ËûŞÇß.
+w	java:S116"[Rename this field "m_u32SrcPortMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ü¦®Â8ËûŞÇß.
+y
+java:S1104"\Make m_u32SrcPortMask a static final constant or non-public and provide accessors if needed.(Ü¦®Â8ËûŞÇß.
+y	java:S116:"XRename this field "m_u32AclIndex" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´‚Ôúÿÿÿÿ8ËûŞÇß.
+	java:S116["`Rename this field "m_u32InputPortGroupId" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—õ±Àùÿÿÿÿ8ËûŞÇß.
+z
+java:S1104"]Make m_u32ProtocolMask a static final constant or non-public and provide accessors if needed.(Ùêê8ËûŞÇß.
+z
+java:S1104%"XMake m_u32HitStat a static final constant or non-public and provide accessors if needed.(‘®Ÿºøÿÿÿÿ8ËûŞÇß.
+v
+java:S1104@"YMake m_u32Priority a static final constant or non-public and provide accessors if needed.(ßŞª8ËûŞÇß.
+v	java:S116""ZRename this field "m_u32RstAclSave" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í¤ÁÒ8ËûŞÇß.
+x	java:S1164"WRename this field "m_u32SrcPort" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½›•ñşÿÿÿÿ8ËûŞÇß.
+x	java:S1167"WRename this field "m_u32DstPort" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ë§¾¼ıÿÿÿÿ8ËûŞÇß.
+t	java:S116+"XRename this field "m_u32Protocol" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(öÚ‰Œ8ËûŞÇß.
+X	java:S125L"<This block of commented-out lines of code should be removed.(Ü á‹8ËûŞÇß.
+y	java:S116("XRename this field "m_u32MaskFlag" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿²©úøÿÿÿÿ8ËûŞÇß.
+~	java:S116C"]Rename this field "m_u32CompositeFlag" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ü€¥¥ùÿÿÿÿ8ËûŞÇß.
+v
+java:S1104+"YMake m_u32Protocol a static final constant or non-public and provide accessors if needed.(öÚ‰Œ8ËûŞÇß.
+~
+java:S1104"\Make m_u32DstPortMask a static final constant or non-public and provide accessors if needed.(—¸—Æÿÿÿÿÿ8ËûŞÇß.
+{
+java:S1104("YMake m_u32MaskFlag a static final constant or non-public and provide accessors if needed.(¿²©úøÿÿÿÿ8ËûŞÇß.
+]	java:S125O"<This block of commented-out lines of code should be removed.(ù­ö„şÿÿÿÿ8ËûŞÇß.
+u	java:S116^"YRename this field "m_tCompoundMsg" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ší»³8«¶¡Èß.
+z
+java:S11044"XMake m_u32SrcPort a static final constant or non-public and provide accessors if needed.(½›•ñşÿÿÿÿ8ËûŞÇß.
+|
+java:S1104"ZMake m_u32DstIpMask a static final constant or non-public and provide accessors if needed.(·Ğîşÿÿÿÿ8ËûŞÇß.
+]	java:S125R"<This block of commented-out lines of code should be removed.(¯ú•ıøÿÿÿÿ8ËûŞÇß.
+X	java:S125I"<This block of commented-out lines of code should be removed.(·Øä8ËûŞÇß.
+z	java:S116"YRename this field "m_u32SrcIpMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ù«úÿÿÿÿ8ËûŞÇß.
+|	java:S116"[Rename this field "m_u32DstPortMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—¸—Æÿÿÿÿÿ8ËûŞÇß.
+x
+java:S1104""[Make m_u32RstAclSave a static final constant or non-public and provide accessors if needed.(Í¤ÁÒ8ËûŞÇß.
+x	java:S116"\Rename this field "m_u32ProtocolMask" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ùêê8ËûŞÇß.
+~
+java:S1104"aMake m_u32ServiceProfileId a static final constant or non-public and provide accessors if needed.(şœ´«8ËûŞÇß.
+t	java:S116U"XRename this field "m_u32RuleType" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŠÏéÔ8ËûŞÇß.
+q	java:S1161"URename this field "m_u32DstIp" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òĞ À8ËûŞÇß.
+€
+java:S1104C"^Make m_u32CompositeFlag a static final constant or non-public and provide accessors if needed.(ü€¥¥ùÿÿÿÿ8ËûŞÇß.
+v	java:S116."URename this field "m_u32SrcIp" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ƒáĞ×ÿÿÿÿÿ8ËûŞÇß.
+u	java:S116X"YRename this field "m_u32MatchType" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(è£Ø8ËûŞÇß.
+x
+java:S1104."VMake m_u32SrcIp a static final constant or non-public and provide accessors if needed.(ƒáĞ×ÿÿÿÿÿ8ËûŞÇß.
+s
+java:S11041"VMake m_u32DstIp a static final constant or non-public and provide accessors if needed.(òĞ À8ËûŞÇß.
+w
+java:S1104^"ZMake m_tCompoundMsg a static final constant or non-public and provide accessors if needed.(Ší»³8«¶¡Èß.
+|
+java:S1104"ZMake m_u32SrcIpMask a static final constant or non-public and provide accessors if needed.(Ù«úÿÿÿÿ8ËûŞÇß.
+w
+java:S1104X"ZMake m_u32MatchType a static final constant or non-public and provide accessors if needed.(è£Ø8ËûŞÇß.
+ƒ
+java:S1104["aMake m_u32InputPortGroupId a static final constant or non-public and provide accessors if needed.(—õ±Àùÿÿÿÿ8ËûŞÇß.
+z
+java:S11047"XMake m_u32DstPort a static final constant or non-public and provide accessors if needed.(ë§¾¼ıÿÿÿÿ8ËûŞÇß.
+}
+java:S1104="[Make m_u32RuleSource a static final constant or non-public and provide accessors if needed.(Íø¤Áûÿÿÿÿ8ËûŞÇß.
+X	java:S125F"<This block of commented-out lines of code should be removed.(åÁÔ–8ËûŞÇß.
+x	java:S116%"WRename this field "m_u32HitStat" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‘®Ÿºøÿÿÿÿ8ËûŞÇß.
+|	java:S116"`Rename this field "m_u32ServiceProfileId" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şœ´«8ËûŞÇß.
+v
+java:S1104U"YMake m_u32RuleType a static final constant or non-public and provide accessors if needed.(ŠÏéÔ8ËûŞÇß.

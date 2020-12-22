@@ -1,0 +1,8 @@
+
+Y
+java:S47196"<Replace charset name argument with StandardCharsets.US_ASCII(¨±Ø‰8œÖúÃá.
+h
+java:S3252z"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ğˆüÿÿÿÿ8°«üïß.
+h
+java:S3252_"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ğˆüÿÿÿÿ8°«üïß.
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ßú±Èûÿÿÿÿ

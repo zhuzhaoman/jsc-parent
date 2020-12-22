@@ -1,0 +1,5 @@
+
+u	java:S116"[Rename this field "m_strDescription" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“§µıÿÿÿÿ
+m	java:S116"XRename this field "m_u32DomainId" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ò²ıœ
+r	java:S116"XRename this field "m_u32Property" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ø¡Øâûÿÿÿÿ
+j	java:S116"URename this field "m_tSlotMsg" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÂÛ

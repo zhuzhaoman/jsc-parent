@@ -1,0 +1,14 @@
+
+h
+java:S3252'"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ğˆüÿÿÿÿ8Óñ è.
+L
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ8ø½‡ è.
+R
+java:S1128"6Remove this unused import 'com.alibaba.fastjson.JSON'.(Ö¢å$8òµ è.
+P
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8ø½‡ è.
+h
+java:S3252="FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ğˆüÿÿÿÿ8³Æ è.
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ßú±Èûÿÿÿÿ
+S
+java:S1128"6Remove this unused import 'com.zzm.pojo.bo.RuleDelBO'.(¡¿ıõ8òµ è.

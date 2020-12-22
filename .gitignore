@@ -1,0 +1,11 @@
+# Project exclude paths
+/jsc-api/target/
+/jsc-common/target/
+/jsc-dao/target/
+/jsc-job/target/
+/jsc-netty/target/
+/jsc-pojo/target/
+/jsc-policy/target/
+/jsc-service/target/
+/jsc-snmp/target/
+/jsc-sqlite/target/

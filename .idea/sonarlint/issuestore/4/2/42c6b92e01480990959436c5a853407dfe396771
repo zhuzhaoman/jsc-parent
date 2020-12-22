@@ -1,0 +1,17 @@
+
+S
+java:S2696."6Make the enclosing method "static" or remove this set.(ֶר†ּ8חיצוג.
+Z
+java:S1905>"8Remove this unnecessary cast to "ChannelFutureListener".(ֱוו‏ÿÿÿÿ8חיצוג.
+L
+java:S1144W"*Remove this unused private "close" method.(׃׃ֶ¢רÿÿÿÿ8חיצוג.
+c
+java:S2142y"FEither re-interrupt this method or rethrow the "InterruptedException".(ה ¹€8שֹתוג.
+o
+java:S1871n"MThis branch's code block is the same as the block for the branch on line 108.(±µאםתÿÿÿÿ8חיצוג.
+K
+java:S1125n")Remove the literal "false" boolean value.(±µאםתÿÿÿÿ8חיצוג.
+c
+java:S2142N"FEither re-interrupt this method or rethrow the "InterruptedException".(ה ¹€8חיצוג.
+I
+java:S1602K",Remove useless curly braces around statement(„“וא8חיצוג.

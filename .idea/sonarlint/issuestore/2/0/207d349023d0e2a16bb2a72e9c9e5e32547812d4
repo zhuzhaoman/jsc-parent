@@ -1,0 +1,20 @@
+
+L
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ8–§ğ‘â.
+p
+java:S1128"NRemove this unused import 'com.alibaba.fastjson.serializer.SerializerFeature'.(òÛõûÿÿÿÿ8¸æĞÂß.
+Q
+java:S1128"4Remove this unused import 'java.lang.reflect.Field'.(„‡Áú8–§ğ‘â.
+h
+java:S3252G"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ğˆüÿÿÿÿ8Á¤òªİ.
+P
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ8–§ğ‘â.
+`
+java:S1128">Remove this unused import 'com.zzm.utils.BaseConversionUtils'.(Ğˆ§ôùÿÿÿÿ8¸æĞÂß.
+b
+java:S1128"@Remove this unused import 'org.apache.commons.lang.StringUtils'.(Ö¥¬øÿÿÿÿ8Ô÷Ä‘â.
+]
+java:S1128"@Remove this unused import 'org.springframework.beans.BeanUtils'.(ŠğÄÜ8¸æĞÂß.
+h
+java:S3252b"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ğˆüÿÿÿÿ8îÜÅ«İ.
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ßú±Èûÿÿÿÿ

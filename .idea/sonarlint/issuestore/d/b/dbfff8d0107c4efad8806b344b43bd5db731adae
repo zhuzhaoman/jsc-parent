@@ -1,0 +1,10 @@
+
+Y
+java:S47190"<Replace charset name argument with StandardCharsets.US_ASCII(ºŞ»É8½ôçá.
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ßú±Èûÿÿÿÿ8½ôçá.
+h
+java:S3252q"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ğˆüÿÿÿÿ8½ôçá.
+\
+java:S1128":Remove this unused import 'com.zzm.pojo.bo.FixCharRuleBO'.(ÚÊäÿÿÿÿÿ8Æ¶ë—â.
+h
+java:S3252V"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ğˆüÿÿÿÿ8½ôçá.

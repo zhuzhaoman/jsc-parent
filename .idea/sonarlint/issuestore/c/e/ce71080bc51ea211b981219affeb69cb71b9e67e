@@ -1,0 +1,6 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(‚ ÿš
+_
+java:S3252#"DUse static access with "com.alibaba.fastjson.JSON" for "parseArray".(É§ÄÉüÿÿÿÿ
+J
+java:S1481"4Remove this unused "messageCodeEnum" local variable.(º©Ÿ˜
