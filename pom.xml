@@ -17,7 +17,7 @@
         <module>jsc-snmp</module>
         <module>jsc-policy</module>
         <module>jsc-job</module>
-<!--        <module>jsc-sqlite</module>-->
+        <module>jsc-sqlite</module>
     </modules>
 
     <packaging>pom</packaging>

@@ -11,11 +11,12 @@ import java.util.Objects;
  * @description:
  **/
 public class ImsiRuleMsgPK implements Serializable {
+
     private long domainId;
     private long ruleId;
 
-    @Column(name = "DomainId")
     @Id
+    @Column(name = "DomainId")
     public long getDomainId() {
         return domainId;
     }
@@ -24,8 +25,8 @@ public class ImsiRuleMsgPK implements Serializable {
         this.domainId = domainId;
     }
 
-    @Column(name = "RuleId")
     @Id
+    @Column(name = "RuleId")
     public long getRuleId() {
         return ruleId;
     }

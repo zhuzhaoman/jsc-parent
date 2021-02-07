@@ -2,6 +2,8 @@ package com.zzm.utils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: zhuzhaoman
@@ -15,6 +17,20 @@ public class BaseConversionUtils {
 //        System.out.println(aLong);
         Long aLong = hex2Long("#ffffff");
         System.out.println(aLong);
+    }
+
+    public static String long2Ip(Long ipInt) {
+
+        if (ipInt == 0) {
+            return "any";
+        }
+
+        String[] ipString = new String[4];
+        for (int i = 0; i < 4; i++) {
+            ipString[3 - i] = String.valueOf(ipInt & 255);
+            ipInt >>>= 8;
+        }
+        return String.join(".", ipString);
     }
 
     public static Long ip2Long(String ipString) {
@@ -100,6 +116,22 @@ public class BaseConversionUtils {
         BigDecimal b = new BigDecimal(bit / (1000 * 1000 * 1000));
         float result = b.setScale(3, BigDecimal.ROUND_HALF_UP).floatValue();
         return result;
+    }
+
+
+    public static String ipv6Format(String ip) {
+
+        List<String> split = new ArrayList<>();
+
+        if (ip.equals("00000000000000000000000000000000")) {
+            return "any";
+        }
+
+        for (int i = 0; i < ip.length(); i+=4) {
+            split.add(ip.substring(i, i+4));
+        }
+
+        return String.join(":", split);
     }
 
 }

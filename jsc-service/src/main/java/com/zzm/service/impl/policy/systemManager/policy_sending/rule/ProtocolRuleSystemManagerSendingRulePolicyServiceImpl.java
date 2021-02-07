@@ -95,6 +95,8 @@ public class ProtocolRuleSystemManagerSendingRulePolicyServiceImpl extends BaseS
             GraceException.display(e.getMessage());
         }
 
+        JSONObject jsonObject = priorityHandle(protocolRuleDTO);
+
         SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
                 MessageBlockTypeEnum.RULE_ADD.getCode(),
                 MessageIdentifyEnum.Y1.getCode(),
@@ -103,7 +105,7 @@ public class ProtocolRuleSystemManagerSendingRulePolicyServiceImpl extends BaseS
                 ruleBO.getUsername(),
                 ruleBO.getDomainId(),
                 ruleBO.getDomainType(),
-                protocolRuleDTO);
+                jsonObject);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
         Object data = clientServerSync.sendMessage(content);
@@ -140,6 +142,19 @@ public class ProtocolRuleSystemManagerSendingRulePolicyServiceImpl extends BaseS
 
     @Override
     public Object findDataEncapsulation(RuleBO ruleBO) {
-        return null;
+        SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
+                MessageBlockTypeEnum.RULE_DEL.getCode(),
+                MessageIdentifyEnum.Y1.getCode(),
+                MessageTypeEnum.RULE_GET.getCode(),
+                MessageCodeEnum.PROTOCOL_GET_ONE.getReqCode(),
+                ruleBO.getUsername(),
+                ruleBO.getDomainId(),
+                ruleBO.getDomainType(),
+                ruleBO.getParam());
+
+        String content = JSONObject.toJSONString(sendSystemManagerDTO);
+        Object data = clientServerSync.sendMessage(content);
+
+        return data;
     }
 }

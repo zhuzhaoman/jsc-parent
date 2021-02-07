@@ -17,11 +17,13 @@ import java.util.Base64;
  **/
 public class IPUtils {
 
+
     public static String ipToBase64(String ip) {
 
         try {
             InetAddress a = InetAddress.getByName(ip);
             byte[] bytes = a.getAddress();
+            System.out.println(Arrays.toString(bytes));
             return Base64.getEncoder().encodeToString(bytes);
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -48,7 +50,7 @@ public class IPUtils {
 //        String ss = new String(decode);
 //        System.out.println(s);
 
-//        System.out.println(ipToBase64("DD:FF:AA::"));
+        System.out.println(ipToBase64("88:77:66:55:44:33::"));
 
 //        byte[] bytes = new byte[4];
 //        bytes[0] = 17;
@@ -67,8 +69,8 @@ public class IPUtils {
         // ff:ff:ff:ff:ff:ff
 
 //        String s = ipToBase64("90:00:A9:AF:D0:0B");
-//        String s = base64ToIp("/////////////////////w==");
-//        System.out.println(s);
+        String s = base64ToIp("ABEAAAAAAAAAAAAAAAAAAA==");
+        System.out.println(s);
 
 //        String str = "MDEwMjAzMDQwNTA2";
 //        byte[] decode = Base64.getDecoder().decode(str);

@@ -20,6 +20,7 @@ public enum MessageTypeEnum {
      * 规则下发、删除
      */
     RULE_ADD(2, "规则下发"),
+    RULE_GET(3, "规则查询"),
     RULE_DEL(5, "规则删除(单条、多条删除)"),
 
     /**
@@ -45,7 +46,25 @@ public enum MessageTypeEnum {
     PORT_GROUP_GET(133, "查询端口组"),
     PORT_GROUP_CONFIG(131, "配置端口组"),
 
-    SYSTEM_CONFIG(8, "系统配置");
+    /**
+     * 系统
+     */
+    SYSTEM_CONFIG(8, "系统配置"),
+
+    /**
+     * 端口
+     */
+    INTERFACE_CONFIG(134, "端口配置"),
+    INTERFACE_GET(135, "端口查询"),
+    INTERFACE_CLEAR_GROUP_SUB(131, "端口和子端口组流量清除"),
+    INTERFACE_CLEAR_SLOT(136, "槽位流量清除"),
+    INTERFACE_CLEAR_PORT(134, "槽位流量清除"),
+
+    /**
+     * 设备
+     */
+    DEVICE_GET(143, "设备查询"),
+    DEVICE_CONFIG(142, "设备配置");
 
 
     private Integer code;

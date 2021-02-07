@@ -9,15 +9,16 @@ import java.util.Objects;
  * @description:
  **/
 @Entity
-@Table(name = "URL_RULE_MSG", schema = "main", catalog = "")
+@Table(name = "URL_RULE_MSG")
 @IdClass(UrlRuleMsgPK.class)
 public class UrlRuleMsg {
+    
     private long domainId;
     private long userId;
     private long ruleId;
     private Long ruleType;
-    private Object keyCode;
-    private Object keyCodeMask;
+    private String keyCode;
+    private String keyCodeMask;
     private Long keyCodeLen;
     private Long profileId;
     private Long isHitStat;
@@ -46,7 +47,7 @@ public class UrlRuleMsg {
         this.domainId = domainId;
     }
 
-    @Basic
+    
     @Column(name = "UserId")
     public long getUserId() {
         return userId;
@@ -66,7 +67,7 @@ public class UrlRuleMsg {
         this.ruleId = ruleId;
     }
 
-    @Basic
+    
     @Column(name = "RuleType")
     public Long getRuleType() {
         return ruleType;
@@ -76,27 +77,27 @@ public class UrlRuleMsg {
         this.ruleType = ruleType;
     }
 
-    @Basic
+    
     @Column(name = "KeyCode")
-    public Object getKeyCode() {
+    public String getKeyCode() {
         return keyCode;
     }
 
-    public void setKeyCode(Object keyCode) {
+    public void setKeyCode(String keyCode) {
         this.keyCode = keyCode;
     }
 
-    @Basic
+    
     @Column(name = "KeyCodeMask")
-    public Object getKeyCodeMask() {
+    public String getKeyCodeMask() {
         return keyCodeMask;
     }
 
-    public void setKeyCodeMask(Object keyCodeMask) {
+    public void setKeyCodeMask(String keyCodeMask) {
         this.keyCodeMask = keyCodeMask;
     }
 
-    @Basic
+    
     @Column(name = "KeyCodeLen")
     public Long getKeyCodeLen() {
         return keyCodeLen;
@@ -106,7 +107,7 @@ public class UrlRuleMsg {
         this.keyCodeLen = keyCodeLen;
     }
 
-    @Basic
+    
     @Column(name = "ProfileID")
     public Long getProfileId() {
         return profileId;
@@ -116,7 +117,7 @@ public class UrlRuleMsg {
         this.profileId = profileId;
     }
 
-    @Basic
+    
     @Column(name = "IsHitStat")
     public Long getIsHitStat() {
         return isHitStat;
@@ -126,7 +127,7 @@ public class UrlRuleMsg {
         this.isHitStat = isHitStat;
     }
 
-    @Basic
+    
     @Column(name = "IsComPound")
     public Long getIsComPound() {
         return isComPound;
@@ -136,7 +137,7 @@ public class UrlRuleMsg {
         this.isComPound = isComPound;
     }
 
-    @Basic
+    
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;
@@ -146,7 +147,7 @@ public class UrlRuleMsg {
         this.ruleSource = ruleSource;
     }
 
-    @Basic
+    
     @Column(name = "Priority")
     public Long getPriority() {
         return priority;
@@ -156,7 +157,7 @@ public class UrlRuleMsg {
         this.priority = priority;
     }
 
-    @Basic
+    
     @Column(name = "InputPortGroup")
     public Long getInputPortGroup() {
         return inputPortGroup;
@@ -166,7 +167,7 @@ public class UrlRuleMsg {
         this.inputPortGroup = inputPortGroup;
     }
 
-    @Basic
+    
     @Column(name = "CombRuleType1")
     public Long getCombRuleType1() {
         return combRuleType1;
@@ -176,7 +177,7 @@ public class UrlRuleMsg {
         this.combRuleType1 = combRuleType1;
     }
 
-    @Basic
+    
     @Column(name = "CombRuleType2")
     public Long getCombRuleType2() {
         return combRuleType2;
@@ -186,7 +187,7 @@ public class UrlRuleMsg {
         this.combRuleType2 = combRuleType2;
     }
 
-    @Basic
+    
     @Column(name = "CombRuleType3")
     public Long getCombRuleType3() {
         return combRuleType3;
@@ -196,7 +197,7 @@ public class UrlRuleMsg {
         this.combRuleType3 = combRuleType3;
     }
 
-    @Basic
+    
     @Column(name = "CombRuleType4")
     public Long getCombRuleType4() {
         return combRuleType4;
@@ -206,7 +207,7 @@ public class UrlRuleMsg {
         this.combRuleType4 = combRuleType4;
     }
 
-    @Basic
+    
     @Column(name = "CombRuleType5")
     public Long getCombRuleType5() {
         return combRuleType5;
@@ -216,7 +217,7 @@ public class UrlRuleMsg {
         this.combRuleType5 = combRuleType5;
     }
 
-    @Basic
+    
     @Column(name = "CombRuleId1")
     public Long getCombRuleId1() {
         return combRuleId1;
@@ -226,7 +227,7 @@ public class UrlRuleMsg {
         this.combRuleId1 = combRuleId1;
     }
 
-    @Basic
+    
     @Column(name = "CombRuleId2")
     public Long getCombRuleId2() {
         return combRuleId2;
@@ -236,7 +237,7 @@ public class UrlRuleMsg {
         this.combRuleId2 = combRuleId2;
     }
 
-    @Basic
+    
     @Column(name = "CombRuleId3")
     public Long getCombRuleId3() {
         return combRuleId3;
@@ -246,7 +247,7 @@ public class UrlRuleMsg {
         this.combRuleId3 = combRuleId3;
     }
 
-    @Basic
+    
     @Column(name = "CombRuleId4")
     public Long getCombRuleId4() {
         return combRuleId4;
@@ -256,7 +257,7 @@ public class UrlRuleMsg {
         this.combRuleId4 = combRuleId4;
     }
 
-    @Basic
+    
     @Column(name = "CombRuleId5")
     public Long getCombRuleId5() {
         return combRuleId5;
@@ -266,38 +267,4 @@ public class UrlRuleMsg {
         this.combRuleId5 = combRuleId5;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UrlRuleMsg that = (UrlRuleMsg) o;
-        return domainId == that.domainId &&
-                userId == that.userId &&
-                ruleId == that.ruleId &&
-                Objects.equals(ruleType, that.ruleType) &&
-                Objects.equals(keyCode, that.keyCode) &&
-                Objects.equals(keyCodeMask, that.keyCodeMask) &&
-                Objects.equals(keyCodeLen, that.keyCodeLen) &&
-                Objects.equals(profileId, that.profileId) &&
-                Objects.equals(isHitStat, that.isHitStat) &&
-                Objects.equals(isComPound, that.isComPound) &&
-                Objects.equals(ruleSource, that.ruleSource) &&
-                Objects.equals(priority, that.priority) &&
-                Objects.equals(inputPortGroup, that.inputPortGroup) &&
-                Objects.equals(combRuleType1, that.combRuleType1) &&
-                Objects.equals(combRuleType2, that.combRuleType2) &&
-                Objects.equals(combRuleType3, that.combRuleType3) &&
-                Objects.equals(combRuleType4, that.combRuleType4) &&
-                Objects.equals(combRuleType5, that.combRuleType5) &&
-                Objects.equals(combRuleId1, that.combRuleId1) &&
-                Objects.equals(combRuleId2, that.combRuleId2) &&
-                Objects.equals(combRuleId3, that.combRuleId3) &&
-                Objects.equals(combRuleId4, that.combRuleId4) &&
-                Objects.equals(combRuleId5, that.combRuleId5);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(domainId, userId, ruleId, ruleType, keyCode, keyCodeMask, keyCodeLen, profileId, isHitStat, isComPound, ruleSource, priority, inputPortGroup, combRuleType1, combRuleType2, combRuleType3, combRuleType4, combRuleType5, combRuleId1, combRuleId2, combRuleId3, combRuleId4, combRuleId5);
-    }
 }

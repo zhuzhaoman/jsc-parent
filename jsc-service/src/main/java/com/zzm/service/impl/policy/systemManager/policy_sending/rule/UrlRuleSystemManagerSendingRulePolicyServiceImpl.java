@@ -73,6 +73,8 @@ public class UrlRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSystem
             GraceException.display(e.getMessage());
         }
 
+        JSONObject jsonObject = priorityHandle(urlRuleBO);
+
         SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
                 MessageBlockTypeEnum.RULE_ADD.getCode(),
                 MessageIdentifyEnum.Y1.getCode(),
@@ -81,7 +83,7 @@ public class UrlRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSystem
                 ruleBO.getUsername(),
                 ruleBO.getDomainId(),
                 ruleBO.getDomainType(),
-                urlRuleBO);
+                jsonObject);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
         Object data = clientServerSync.sendMessage(content);
@@ -118,6 +120,19 @@ public class UrlRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSystem
 
     @Override
     public Object findDataEncapsulation(RuleBO ruleBO) {
-        return null;
+        SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
+                MessageBlockTypeEnum.RULE_DEL.getCode(),
+                MessageIdentifyEnum.Y1.getCode(),
+                MessageTypeEnum.RULE_GET.getCode(),
+                MessageCodeEnum.URL_GET_ONE.getReqCode(),
+                ruleBO.getUsername(),
+                ruleBO.getDomainId(),
+                ruleBO.getDomainType(),
+                ruleBO.getParam());
+
+        String content = JSONObject.toJSONString(sendSystemManagerDTO);
+        Object data = clientServerSync.sendMessage(content);
+
+        return data;
     }
 }

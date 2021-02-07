@@ -23,7 +23,6 @@ public class LoginSystemManagerReceivedPolicyServiceImpl implements SystemManage
     public Object dataProcessing(ReceiveSystemManagerDTO receiveSystemManagerDTO) {
 
         if(receiveSystemManagerDTO.getCode() == 200) {
-            receiveSystemManagerDTO.setData(null);
             String username = receiveSystemManagerDTO.getUsername();
             receiveSystemManagerDTO.setMsg(username + " 登录成功！！！");
         }

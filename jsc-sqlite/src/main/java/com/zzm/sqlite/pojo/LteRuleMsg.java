@@ -9,51 +9,52 @@ import java.util.Objects;
  * @description:
  **/
 @Entity
-@Table(name = "LTE_RULE_MSG", schema = "main", catalog = "")
+@Table(name = "LTE_RULE_MSG")
 @IdClass(LteRuleMsgPK.class)
 public class LteRuleMsg {
+    
     private Long ruleSource;
     private long domainId;
     private long userId;
     private long ruleId;
     private Long profileId;
-    private Object imsi;
-    private Object imsiMask;
-    private Object msisdn;
-    private Object msisdnMask;
-    private Object imei;
-    private Object imeiMask;
-    private Object meid;
-    private Object meidMask;
-    private Object esn;
-    private Object esnMask;
-    private Object lac;
-    private Object lacMask;
-    private Object tac;
-    private Object tacMask;
-    private Object ci;
-    private Object ciMask;
-    private Object apn;
-    private Object apnMask;
-    private Object bsid;
-    private Object bsidMask;
-    private Object enodeB;
-    private Object enodeBMask;
-    private Object rnc;
-    private Object rncMask;
-    private Object cellid;
-    private Object cellidMask;
-    private Object rat;
-    private Object ratMask;
-    private Object qci;
-    private Object qciMask;
+    private String imsi;
+    private String imsiMask;
+    private String msisdn;
+    private String msisdnMask;
+    private String imei;
+    private String imeiMask;
+    private String meid;
+    private String meidMask;
+    private String esn;
+    private String esnMask;
+    private String lac;
+    private String lacMask;
+    private String tac;
+    private String tacMask;
+    private String ci;
+    private String ciMask;
+    private String apn;
+    private String apnMask;
+    private String bsid;
+    private String bsidMask;
+    private String enodeB;
+    private String enodeBMask;
+    private String rnc;
+    private String rncMask;
+    private String cellid;
+    private String cellidMask;
+    private String rat;
+    private String ratMask;
+    private String qci;
+    private String qciMask;
     private Long priority;
     private Long setTime;
     private Long setIp;
     private Long isStatic;
     private Long isHitStat;
 
-    @Basic
+    
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;
@@ -73,7 +74,7 @@ public class LteRuleMsg {
         this.domainId = domainId;
     }
 
-    @Basic
+    
     @Column(name = "UserId")
     public long getUserId() {
         return userId;
@@ -93,7 +94,7 @@ public class LteRuleMsg {
         this.ruleId = ruleId;
     }
 
-    @Basic
+    
     @Column(name = "ProfileID")
     public Long getProfileId() {
         return profileId;
@@ -103,307 +104,307 @@ public class LteRuleMsg {
         this.profileId = profileId;
     }
 
-    @Basic
+    
     @Column(name = "Imsi")
-    public Object getImsi() {
+    public String getImsi() {
         return imsi;
     }
 
-    public void setImsi(Object imsi) {
+    public void setImsi(String imsi) {
         this.imsi = imsi;
     }
 
-    @Basic
+    
     @Column(name = "ImsiMask")
-    public Object getImsiMask() {
+    public String getImsiMask() {
         return imsiMask;
     }
 
-    public void setImsiMask(Object imsiMask) {
+    public void setImsiMask(String imsiMask) {
         this.imsiMask = imsiMask;
     }
 
-    @Basic
+    
     @Column(name = "Msisdn")
-    public Object getMsisdn() {
+    public String getMsisdn() {
         return msisdn;
     }
 
-    public void setMsisdn(Object msisdn) {
+    public void setMsisdn(String msisdn) {
         this.msisdn = msisdn;
     }
 
-    @Basic
+    
     @Column(name = "MsisdnMask")
-    public Object getMsisdnMask() {
+    public String getMsisdnMask() {
         return msisdnMask;
     }
 
-    public void setMsisdnMask(Object msisdnMask) {
+    public void setMsisdnMask(String msisdnMask) {
         this.msisdnMask = msisdnMask;
     }
 
-    @Basic
+    
     @Column(name = "Imei")
-    public Object getImei() {
+    public String getImei() {
         return imei;
     }
 
-    public void setImei(Object imei) {
+    public void setImei(String imei) {
         this.imei = imei;
     }
 
-    @Basic
+    
     @Column(name = "ImeiMask")
-    public Object getImeiMask() {
+    public String getImeiMask() {
         return imeiMask;
     }
 
-    public void setImeiMask(Object imeiMask) {
+    public void setImeiMask(String imeiMask) {
         this.imeiMask = imeiMask;
     }
 
-    @Basic
+    
     @Column(name = "Meid")
-    public Object getMeid() {
+    public String getMeid() {
         return meid;
     }
 
-    public void setMeid(Object meid) {
+    public void setMeid(String meid) {
         this.meid = meid;
     }
 
-    @Basic
+    
     @Column(name = "MeidMask")
-    public Object getMeidMask() {
+    public String getMeidMask() {
         return meidMask;
     }
 
-    public void setMeidMask(Object meidMask) {
+    public void setMeidMask(String meidMask) {
         this.meidMask = meidMask;
     }
 
-    @Basic
+    
     @Column(name = "Esn")
-    public Object getEsn() {
+    public String getEsn() {
         return esn;
     }
 
-    public void setEsn(Object esn) {
+    public void setEsn(String esn) {
         this.esn = esn;
     }
 
-    @Basic
+    
     @Column(name = "EsnMask")
-    public Object getEsnMask() {
+    public String getEsnMask() {
         return esnMask;
     }
 
-    public void setEsnMask(Object esnMask) {
+    public void setEsnMask(String esnMask) {
         this.esnMask = esnMask;
     }
 
-    @Basic
+    
     @Column(name = "Lac")
-    public Object getLac() {
+    public String getLac() {
         return lac;
     }
 
-    public void setLac(Object lac) {
+    public void setLac(String lac) {
         this.lac = lac;
     }
 
-    @Basic
+    
     @Column(name = "LacMask")
-    public Object getLacMask() {
+    public String getLacMask() {
         return lacMask;
     }
 
-    public void setLacMask(Object lacMask) {
+    public void setLacMask(String lacMask) {
         this.lacMask = lacMask;
     }
 
-    @Basic
+    
     @Column(name = "Tac")
-    public Object getTac() {
+    public String getTac() {
         return tac;
     }
 
-    public void setTac(Object tac) {
+    public void setTac(String tac) {
         this.tac = tac;
     }
 
-    @Basic
+    
     @Column(name = "TacMask")
-    public Object getTacMask() {
+    public String getTacMask() {
         return tacMask;
     }
 
-    public void setTacMask(Object tacMask) {
+    public void setTacMask(String tacMask) {
         this.tacMask = tacMask;
     }
 
-    @Basic
+    
     @Column(name = "Ci")
-    public Object getCi() {
+    public String getCi() {
         return ci;
     }
 
-    public void setCi(Object ci) {
+    public void setCi(String ci) {
         this.ci = ci;
     }
 
-    @Basic
+    
     @Column(name = "CiMask")
-    public Object getCiMask() {
+    public String getCiMask() {
         return ciMask;
     }
 
-    public void setCiMask(Object ciMask) {
+    public void setCiMask(String ciMask) {
         this.ciMask = ciMask;
     }
 
-    @Basic
+    
     @Column(name = "Apn")
-    public Object getApn() {
+    public String getApn() {
         return apn;
     }
 
-    public void setApn(Object apn) {
+    public void setApn(String apn) {
         this.apn = apn;
     }
 
-    @Basic
+    
     @Column(name = "ApnMask")
-    public Object getApnMask() {
+    public String getApnMask() {
         return apnMask;
     }
 
-    public void setApnMask(Object apnMask) {
+    public void setApnMask(String apnMask) {
         this.apnMask = apnMask;
     }
 
-    @Basic
+    
     @Column(name = "Bsid")
-    public Object getBsid() {
+    public String getBsid() {
         return bsid;
     }
 
-    public void setBsid(Object bsid) {
+    public void setBsid(String bsid) {
         this.bsid = bsid;
     }
 
-    @Basic
+    
     @Column(name = "BsidMask")
-    public Object getBsidMask() {
+    public String getBsidMask() {
         return bsidMask;
     }
 
-    public void setBsidMask(Object bsidMask) {
+    public void setBsidMask(String bsidMask) {
         this.bsidMask = bsidMask;
     }
 
-    @Basic
+    
     @Column(name = "EnodeB")
-    public Object getEnodeB() {
+    public String getEnodeB() {
         return enodeB;
     }
 
-    public void setEnodeB(Object enodeB) {
+    public void setEnodeB(String enodeB) {
         this.enodeB = enodeB;
     }
 
-    @Basic
+    
     @Column(name = "EnodeBMask")
-    public Object getEnodeBMask() {
+    public String getEnodeBMask() {
         return enodeBMask;
     }
 
-    public void setEnodeBMask(Object enodeBMask) {
+    public void setEnodeBMask(String enodeBMask) {
         this.enodeBMask = enodeBMask;
     }
 
-    @Basic
+    
     @Column(name = "Rnc")
-    public Object getRnc() {
+    public String getRnc() {
         return rnc;
     }
 
-    public void setRnc(Object rnc) {
+    public void setRnc(String rnc) {
         this.rnc = rnc;
     }
 
-    @Basic
+    
     @Column(name = "RncMask")
-    public Object getRncMask() {
+    public String getRncMask() {
         return rncMask;
     }
 
-    public void setRncMask(Object rncMask) {
+    public void setRncMask(String rncMask) {
         this.rncMask = rncMask;
     }
 
-    @Basic
+    
     @Column(name = "Cellid")
-    public Object getCellid() {
+    public String getCellid() {
         return cellid;
     }
 
-    public void setCellid(Object cellid) {
+    public void setCellid(String cellid) {
         this.cellid = cellid;
     }
 
-    @Basic
+    
     @Column(name = "CellidMask")
-    public Object getCellidMask() {
+    public String getCellidMask() {
         return cellidMask;
     }
 
-    public void setCellidMask(Object cellidMask) {
+    public void setCellidMask(String cellidMask) {
         this.cellidMask = cellidMask;
     }
 
-    @Basic
+    
     @Column(name = "Rat")
-    public Object getRat() {
+    public String getRat() {
         return rat;
     }
 
-    public void setRat(Object rat) {
+    public void setRat(String rat) {
         this.rat = rat;
     }
 
-    @Basic
+    
     @Column(name = "RatMask")
-    public Object getRatMask() {
+    public String getRatMask() {
         return ratMask;
     }
 
-    public void setRatMask(Object ratMask) {
+    public void setRatMask(String ratMask) {
         this.ratMask = ratMask;
     }
 
-    @Basic
+    
     @Column(name = "Qci")
-    public Object getQci() {
+    public String getQci() {
         return qci;
     }
 
-    public void setQci(Object qci) {
+    public void setQci(String qci) {
         this.qci = qci;
     }
 
-    @Basic
+    
     @Column(name = "QciMask")
-    public Object getQciMask() {
+    public String getQciMask() {
         return qciMask;
     }
 
-    public void setQciMask(Object qciMask) {
+    public void setQciMask(String qciMask) {
         this.qciMask = qciMask;
     }
 
-    @Basic
+    
     @Column(name = "Priority")
     public Long getPriority() {
         return priority;
@@ -413,7 +414,7 @@ public class LteRuleMsg {
         this.priority = priority;
     }
 
-    @Basic
+    
     @Column(name = "SetTime")
     public Long getSetTime() {
         return setTime;
@@ -423,7 +424,7 @@ public class LteRuleMsg {
         this.setTime = setTime;
     }
 
-    @Basic
+    
     @Column(name = "SetIp")
     public Long getSetIp() {
         return setIp;
@@ -433,7 +434,7 @@ public class LteRuleMsg {
         this.setIp = setIp;
     }
 
-    @Basic
+    
     @Column(name = "IsStatic")
     public Long getIsStatic() {
         return isStatic;
@@ -443,7 +444,7 @@ public class LteRuleMsg {
         this.isStatic = isStatic;
     }
 
-    @Basic
+    
     @Column(name = "IsHitStat")
     public Long getIsHitStat() {
         return isHitStat;
@@ -453,55 +454,5 @@ public class LteRuleMsg {
         this.isHitStat = isHitStat;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LteRuleMsg that = (LteRuleMsg) o;
-        return domainId == that.domainId &&
-                userId == that.userId &&
-                ruleId == that.ruleId &&
-                Objects.equals(ruleSource, that.ruleSource) &&
-                Objects.equals(profileId, that.profileId) &&
-                Objects.equals(imsi, that.imsi) &&
-                Objects.equals(imsiMask, that.imsiMask) &&
-                Objects.equals(msisdn, that.msisdn) &&
-                Objects.equals(msisdnMask, that.msisdnMask) &&
-                Objects.equals(imei, that.imei) &&
-                Objects.equals(imeiMask, that.imeiMask) &&
-                Objects.equals(meid, that.meid) &&
-                Objects.equals(meidMask, that.meidMask) &&
-                Objects.equals(esn, that.esn) &&
-                Objects.equals(esnMask, that.esnMask) &&
-                Objects.equals(lac, that.lac) &&
-                Objects.equals(lacMask, that.lacMask) &&
-                Objects.equals(tac, that.tac) &&
-                Objects.equals(tacMask, that.tacMask) &&
-                Objects.equals(ci, that.ci) &&
-                Objects.equals(ciMask, that.ciMask) &&
-                Objects.equals(apn, that.apn) &&
-                Objects.equals(apnMask, that.apnMask) &&
-                Objects.equals(bsid, that.bsid) &&
-                Objects.equals(bsidMask, that.bsidMask) &&
-                Objects.equals(enodeB, that.enodeB) &&
-                Objects.equals(enodeBMask, that.enodeBMask) &&
-                Objects.equals(rnc, that.rnc) &&
-                Objects.equals(rncMask, that.rncMask) &&
-                Objects.equals(cellid, that.cellid) &&
-                Objects.equals(cellidMask, that.cellidMask) &&
-                Objects.equals(rat, that.rat) &&
-                Objects.equals(ratMask, that.ratMask) &&
-                Objects.equals(qci, that.qci) &&
-                Objects.equals(qciMask, that.qciMask) &&
-                Objects.equals(priority, that.priority) &&
-                Objects.equals(setTime, that.setTime) &&
-                Objects.equals(setIp, that.setIp) &&
-                Objects.equals(isStatic, that.isStatic) &&
-                Objects.equals(isHitStat, that.isHitStat);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(ruleSource, domainId, userId, ruleId, profileId, imsi, imsiMask, msisdn, msisdnMask, imei, imeiMask, meid, meidMask, esn, esnMask, lac, lacMask, tac, tacMask, ci, ciMask, apn, apnMask, bsid, bsidMask, enodeB, enodeBMask, rnc, rncMask, cellid, cellidMask, rat, ratMask, qci, qciMask, priority, setTime, setIp, isStatic, isHitStat);
-    }
 }

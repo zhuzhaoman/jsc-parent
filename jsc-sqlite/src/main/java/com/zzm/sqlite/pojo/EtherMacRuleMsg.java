@@ -1,24 +1,26 @@
 package com.zzm.sqlite.pojo;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 /**
  * @author: zhuzhaoman
- * @date: 2020-11-19
+ * @date: 2021-01-04
  * @description:
  **/
 @Entity
-@Table(name = "ETHER_MAC_RULE_MSG", schema = "main", catalog = "")
+@Table(name = "ETHER_MAC_RULE_MSG")
 @IdClass(EtherMacRuleMsgPK.class)
 public class EtherMacRuleMsg {
+    
     private Long ruleSource;
     private long domainId;
     private long userId;
     private long ruleId;
     private long profileId;
-    private Object srcMac;
-    private Object dstMac;
+    private String srcMac;
+    private String dstMac;
+    private String srcMacMask;
+    private String dstMacMask;
     private Long ruleType;
     private Long isStatic;
     private Long isHitStat;
@@ -28,7 +30,7 @@ public class EtherMacRuleMsg {
     private Long setTime;
     private Long setIp;
 
-    @Basic
+    
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;
@@ -48,7 +50,7 @@ public class EtherMacRuleMsg {
         this.domainId = domainId;
     }
 
-    @Basic
+    
     @Column(name = "UserId")
     public long getUserId() {
         return userId;
@@ -68,7 +70,7 @@ public class EtherMacRuleMsg {
         this.ruleId = ruleId;
     }
 
-    @Basic
+    
     @Column(name = "ProfileID")
     public long getProfileId() {
         return profileId;
@@ -78,27 +80,47 @@ public class EtherMacRuleMsg {
         this.profileId = profileId;
     }
 
-    @Basic
+    
     @Column(name = "SrcMac")
-    public Object getSrcMac() {
+    public String getSrcMac() {
         return srcMac;
     }
 
-    public void setSrcMac(Object srcMac) {
+    public void setSrcMac(String srcMac) {
         this.srcMac = srcMac;
     }
 
-    @Basic
+    
     @Column(name = "DstMac")
-    public Object getDstMac() {
+    public String getDstMac() {
         return dstMac;
     }
 
-    public void setDstMac(Object dstMac) {
+    public void setDstMac(String dstMac) {
         this.dstMac = dstMac;
     }
 
-    @Basic
+    
+    @Column(name = "SrcMacMask")
+    public String getSrcMacMask() {
+        return srcMacMask;
+    }
+
+    public void setSrcMacMask(String srcMacMask) {
+        this.srcMacMask = srcMacMask;
+    }
+
+    
+    @Column(name = "DstMacMask")
+    public String getDstMacMask() {
+        return dstMacMask;
+    }
+
+    public void setDstMacMask(String dstMacMask) {
+        this.dstMacMask = dstMacMask;
+    }
+
+    
     @Column(name = "RuleType")
     public Long getRuleType() {
         return ruleType;
@@ -108,7 +130,7 @@ public class EtherMacRuleMsg {
         this.ruleType = ruleType;
     }
 
-    @Basic
+    
     @Column(name = "IsStatic")
     public Long getIsStatic() {
         return isStatic;
@@ -118,7 +140,7 @@ public class EtherMacRuleMsg {
         this.isStatic = isStatic;
     }
 
-    @Basic
+    
     @Column(name = "IsHitStat")
     public Long getIsHitStat() {
         return isHitStat;
@@ -128,7 +150,7 @@ public class EtherMacRuleMsg {
         this.isHitStat = isHitStat;
     }
 
-    @Basic
+    
     @Column(name = "IsComPound")
     public Long getIsComPound() {
         return isComPound;
@@ -138,7 +160,7 @@ public class EtherMacRuleMsg {
         this.isComPound = isComPound;
     }
 
-    @Basic
+    
     @Column(name = "Priority")
     public Long getPriority() {
         return priority;
@@ -148,7 +170,7 @@ public class EtherMacRuleMsg {
         this.priority = priority;
     }
 
-    @Basic
+    
     @Column(name = "InputPortGroupId")
     public Long getInputPortGroupId() {
         return inputPortGroupId;
@@ -158,7 +180,7 @@ public class EtherMacRuleMsg {
         this.inputPortGroupId = inputPortGroupId;
     }
 
-    @Basic
+    
     @Column(name = "SetTime")
     public Long getSetTime() {
         return setTime;
@@ -168,7 +190,7 @@ public class EtherMacRuleMsg {
         this.setTime = setTime;
     }
 
-    @Basic
+    
     @Column(name = "SetIp")
     public Long getSetIp() {
         return setIp;
@@ -177,31 +199,5 @@ public class EtherMacRuleMsg {
     public void setSetIp(Long setIp) {
         this.setIp = setIp;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EtherMacRuleMsg that = (EtherMacRuleMsg) o;
-        return domainId == that.domainId &&
-                userId == that.userId &&
-                ruleId == that.ruleId &&
-                profileId == that.profileId &&
-                Objects.equals(ruleSource, that.ruleSource) &&
-                Objects.equals(srcMac, that.srcMac) &&
-                Objects.equals(dstMac, that.dstMac) &&
-                Objects.equals(ruleType, that.ruleType) &&
-                Objects.equals(isStatic, that.isStatic) &&
-                Objects.equals(isHitStat, that.isHitStat) &&
-                Objects.equals(isComPound, that.isComPound) &&
-                Objects.equals(priority, that.priority) &&
-                Objects.equals(inputPortGroupId, that.inputPortGroupId) &&
-                Objects.equals(setTime, that.setTime) &&
-                Objects.equals(setIp, that.setIp);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ruleSource, domainId, userId, ruleId, profileId, srcMac, dstMac, ruleType, isStatic, isHitStat, isComPound, priority, inputPortGroupId, setTime, setIp);
-    }
+    
 }

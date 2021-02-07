@@ -9,9 +9,10 @@ import java.util.Objects;
  * @description:
  **/
 @Entity
-@Table(name = "FIXEDLOCCHARCODE_RULE_MSG", schema = "main", catalog = "")
+@Table(name = "FIXEDLOCCHARCODE_RULE_MSG")
 @IdClass(FixedloccharcodeRuleMsgPK.class)
 public class FixedloccharcodeRuleMsg {
+    
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -19,8 +20,8 @@ public class FixedloccharcodeRuleMsg {
     private long profileId;
     private Long beginPos;
     private Long keyCodeLen;
-    private Object keyCode;
-    private Object keyCodeMask;
+    private String keyCode;
+    private String keyCodeMask;
     private Long isStatic;
     private Long isHitStat;
     private Long isComPound;
@@ -37,7 +38,7 @@ public class FixedloccharcodeRuleMsg {
     private Long outpuPktAction;
     private Long outpuPktNum;
 
-    @Basic
+    
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;
@@ -57,7 +58,7 @@ public class FixedloccharcodeRuleMsg {
         this.domainId = domainId;
     }
 
-    @Basic
+    
     @Column(name = "UserId")
     public long getUserId() {
         return userId;
@@ -77,7 +78,7 @@ public class FixedloccharcodeRuleMsg {
         this.ruleId = ruleId;
     }
 
-    @Basic
+    
     @Column(name = "ProfileID")
     public long getProfileId() {
         return profileId;
@@ -87,7 +88,7 @@ public class FixedloccharcodeRuleMsg {
         this.profileId = profileId;
     }
 
-    @Basic
+    
     @Column(name = "BeginPos")
     public Long getBeginPos() {
         return beginPos;
@@ -97,7 +98,7 @@ public class FixedloccharcodeRuleMsg {
         this.beginPos = beginPos;
     }
 
-    @Basic
+    
     @Column(name = "KeyCodeLen")
     public Long getKeyCodeLen() {
         return keyCodeLen;
@@ -107,27 +108,27 @@ public class FixedloccharcodeRuleMsg {
         this.keyCodeLen = keyCodeLen;
     }
 
-    @Basic
+    
     @Column(name = "KeyCode")
-    public Object getKeyCode() {
+    public String getKeyCode() {
         return keyCode;
     }
 
-    public void setKeyCode(Object keyCode) {
+    public void setKeyCode(String keyCode) {
         this.keyCode = keyCode;
     }
 
-    @Basic
+    
     @Column(name = "KeyCodeMask")
-    public Object getKeyCodeMask() {
+    public String getKeyCodeMask() {
         return keyCodeMask;
     }
 
-    public void setKeyCodeMask(Object keyCodeMask) {
+    public void setKeyCodeMask(String keyCodeMask) {
         this.keyCodeMask = keyCodeMask;
     }
 
-    @Basic
+    
     @Column(name = "IsStatic")
     public Long getIsStatic() {
         return isStatic;
@@ -137,7 +138,7 @@ public class FixedloccharcodeRuleMsg {
         this.isStatic = isStatic;
     }
 
-    @Basic
+    
     @Column(name = "IsHitStat")
     public Long getIsHitStat() {
         return isHitStat;
@@ -147,7 +148,7 @@ public class FixedloccharcodeRuleMsg {
         this.isHitStat = isHitStat;
     }
 
-    @Basic
+    
     @Column(name = "IsComPound")
     public Long getIsComPound() {
         return isComPound;
@@ -157,7 +158,7 @@ public class FixedloccharcodeRuleMsg {
         this.isComPound = isComPound;
     }
 
-    @Basic
+    
     @Column(name = "Priority")
     public Long getPriority() {
         return priority;
@@ -167,7 +168,7 @@ public class FixedloccharcodeRuleMsg {
         this.priority = priority;
     }
 
-    @Basic
+    
     @Column(name = "Protocol")
     public Long getProtocol() {
         return protocol;
@@ -177,7 +178,7 @@ public class FixedloccharcodeRuleMsg {
         this.protocol = protocol;
     }
 
-    @Basic
+    
     @Column(name = "ProtocolMask")
     public Long getProtocolMask() {
         return protocolMask;
@@ -187,7 +188,7 @@ public class FixedloccharcodeRuleMsg {
         this.protocolMask = protocolMask;
     }
 
-    @Basic
+    
     @Column(name = "SrcPort")
     public Long getSrcPort() {
         return srcPort;
@@ -197,7 +198,7 @@ public class FixedloccharcodeRuleMsg {
         this.srcPort = srcPort;
     }
 
-    @Basic
+    
     @Column(name = "SrcPortMask")
     public Long getSrcPortMask() {
         return srcPortMask;
@@ -207,7 +208,7 @@ public class FixedloccharcodeRuleMsg {
         this.srcPortMask = srcPortMask;
     }
 
-    @Basic
+    
     @Column(name = "DstPort")
     public Long getDstPort() {
         return dstPort;
@@ -217,7 +218,7 @@ public class FixedloccharcodeRuleMsg {
         this.dstPort = dstPort;
     }
 
-    @Basic
+    
     @Column(name = "DstPortMask")
     public Long getDstPortMask() {
         return dstPortMask;
@@ -227,7 +228,7 @@ public class FixedloccharcodeRuleMsg {
         this.dstPortMask = dstPortMask;
     }
 
-    @Basic
+    
     @Column(name = "SetTime")
     public Long getSetTime() {
         return setTime;
@@ -237,7 +238,7 @@ public class FixedloccharcodeRuleMsg {
         this.setTime = setTime;
     }
 
-    @Basic
+    
     @Column(name = "SetIp")
     public Long getSetIp() {
         return setIp;
@@ -247,7 +248,7 @@ public class FixedloccharcodeRuleMsg {
         this.setIp = setIp;
     }
 
-    @Basic
+    
     @Column(name = "InputPortGroupId")
     public Long getInputPortGroupId() {
         return inputPortGroupId;
@@ -257,7 +258,7 @@ public class FixedloccharcodeRuleMsg {
         this.inputPortGroupId = inputPortGroupId;
     }
 
-    @Basic
+    
     @Column(name = "OutpuPktAction")
     public Long getOutpuPktAction() {
         return outpuPktAction;
@@ -267,7 +268,7 @@ public class FixedloccharcodeRuleMsg {
         this.outpuPktAction = outpuPktAction;
     }
 
-    @Basic
+    
     @Column(name = "OutpuPktNum")
     public Long getOutpuPktNum() {
         return outpuPktNum;
@@ -277,39 +278,4 @@ public class FixedloccharcodeRuleMsg {
         this.outpuPktNum = outpuPktNum;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FixedloccharcodeRuleMsg that = (FixedloccharcodeRuleMsg) o;
-        return domainId == that.domainId &&
-                userId == that.userId &&
-                ruleId == that.ruleId &&
-                profileId == that.profileId &&
-                Objects.equals(ruleSource, that.ruleSource) &&
-                Objects.equals(beginPos, that.beginPos) &&
-                Objects.equals(keyCodeLen, that.keyCodeLen) &&
-                Objects.equals(keyCode, that.keyCode) &&
-                Objects.equals(keyCodeMask, that.keyCodeMask) &&
-                Objects.equals(isStatic, that.isStatic) &&
-                Objects.equals(isHitStat, that.isHitStat) &&
-                Objects.equals(isComPound, that.isComPound) &&
-                Objects.equals(priority, that.priority) &&
-                Objects.equals(protocol, that.protocol) &&
-                Objects.equals(protocolMask, that.protocolMask) &&
-                Objects.equals(srcPort, that.srcPort) &&
-                Objects.equals(srcPortMask, that.srcPortMask) &&
-                Objects.equals(dstPort, that.dstPort) &&
-                Objects.equals(dstPortMask, that.dstPortMask) &&
-                Objects.equals(setTime, that.setTime) &&
-                Objects.equals(setIp, that.setIp) &&
-                Objects.equals(inputPortGroupId, that.inputPortGroupId) &&
-                Objects.equals(outpuPktAction, that.outpuPktAction) &&
-                Objects.equals(outpuPktNum, that.outpuPktNum);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ruleSource, domainId, userId, ruleId, profileId, beginPos, keyCodeLen, keyCode, keyCodeMask, isStatic, isHitStat, isComPound, priority, protocol, protocolMask, srcPort, srcPortMask, dstPort, dstPortMask, setTime, setIp, inputPortGroupId, outpuPktAction, outpuPktNum);
-    }
 }

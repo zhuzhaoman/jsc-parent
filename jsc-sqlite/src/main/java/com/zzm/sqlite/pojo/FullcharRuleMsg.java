@@ -9,17 +9,18 @@ import java.util.Objects;
  * @description:
  **/
 @Entity
-@Table(name = "FULLCHAR_RULE_MSG", schema = "main", catalog = "")
+@Table(name = "FULLCHAR_RULE_MSG")
 @IdClass(FullcharRuleMsgPK.class)
 public class FullcharRuleMsg {
+    
     private Long ruleSource;
     private long domainId;
     private long userId;
     private long ruleId;
     private long profileId;
     private long keyCodeLen;
-    private Object keyCode;
-    private Object keyCodeMask;
+    private String keyCode;
+    private String keyCodeMask;
     private Long ruleType;
     private Long relatedType1;
     private Long relatedType2;
@@ -39,7 +40,7 @@ public class FullcharRuleMsg {
     private Long setTime;
     private Long setIp;
 
-    @Basic
+    
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;
@@ -59,7 +60,7 @@ public class FullcharRuleMsg {
         this.domainId = domainId;
     }
 
-    @Basic
+    
     @Column(name = "UserId")
     public long getUserId() {
         return userId;
@@ -79,7 +80,7 @@ public class FullcharRuleMsg {
         this.ruleId = ruleId;
     }
 
-    @Basic
+    
     @Column(name = "ProfileID")
     public long getProfileId() {
         return profileId;
@@ -89,7 +90,7 @@ public class FullcharRuleMsg {
         this.profileId = profileId;
     }
 
-    @Basic
+    
     @Column(name = "KeyCodeLen")
     public long getKeyCodeLen() {
         return keyCodeLen;
@@ -99,27 +100,27 @@ public class FullcharRuleMsg {
         this.keyCodeLen = keyCodeLen;
     }
 
-    @Basic
+    
     @Column(name = "KeyCode")
-    public Object getKeyCode() {
+    public String getKeyCode() {
         return keyCode;
     }
 
-    public void setKeyCode(Object keyCode) {
+    public void setKeyCode(String keyCode) {
         this.keyCode = keyCode;
     }
 
-    @Basic
+    
     @Column(name = "KeyCodeMask")
-    public Object getKeyCodeMask() {
+    public String getKeyCodeMask() {
         return keyCodeMask;
     }
 
-    public void setKeyCodeMask(Object keyCodeMask) {
+    public void setKeyCodeMask(String keyCodeMask) {
         this.keyCodeMask = keyCodeMask;
     }
 
-    @Basic
+    
     @Column(name = "RuleType")
     public Long getRuleType() {
         return ruleType;
@@ -129,7 +130,7 @@ public class FullcharRuleMsg {
         this.ruleType = ruleType;
     }
 
-    @Basic
+    
     @Column(name = "RelatedType1")
     public Long getRelatedType1() {
         return relatedType1;
@@ -139,7 +140,7 @@ public class FullcharRuleMsg {
         this.relatedType1 = relatedType1;
     }
 
-    @Basic
+    
     @Column(name = "RelatedType2")
     public Long getRelatedType2() {
         return relatedType2;
@@ -149,7 +150,7 @@ public class FullcharRuleMsg {
         this.relatedType2 = relatedType2;
     }
 
-    @Basic
+    
     @Column(name = "RelatedType3")
     public Long getRelatedType3() {
         return relatedType3;
@@ -159,7 +160,7 @@ public class FullcharRuleMsg {
         this.relatedType3 = relatedType3;
     }
 
-    @Basic
+    
     @Column(name = "RelatedType4")
     public Long getRelatedType4() {
         return relatedType4;
@@ -169,7 +170,7 @@ public class FullcharRuleMsg {
         this.relatedType4 = relatedType4;
     }
 
-    @Basic
+    
     @Column(name = "RelatedType5")
     public Long getRelatedType5() {
         return relatedType5;
@@ -179,7 +180,7 @@ public class FullcharRuleMsg {
         this.relatedType5 = relatedType5;
     }
 
-    @Basic
+    
     @Column(name = "RelatedId1")
     public Long getRelatedId1() {
         return relatedId1;
@@ -189,7 +190,7 @@ public class FullcharRuleMsg {
         this.relatedId1 = relatedId1;
     }
 
-    @Basic
+    
     @Column(name = "RelatedId2")
     public Long getRelatedId2() {
         return relatedId2;
@@ -199,7 +200,7 @@ public class FullcharRuleMsg {
         this.relatedId2 = relatedId2;
     }
 
-    @Basic
+    
     @Column(name = "RelatedId3")
     public Long getRelatedId3() {
         return relatedId3;
@@ -209,7 +210,7 @@ public class FullcharRuleMsg {
         this.relatedId3 = relatedId3;
     }
 
-    @Basic
+    
     @Column(name = "RelatedId4")
     public Long getRelatedId4() {
         return relatedId4;
@@ -219,7 +220,7 @@ public class FullcharRuleMsg {
         this.relatedId4 = relatedId4;
     }
 
-    @Basic
+    
     @Column(name = "RelatedId5")
     public Long getRelatedId5() {
         return relatedId5;
@@ -229,7 +230,7 @@ public class FullcharRuleMsg {
         this.relatedId5 = relatedId5;
     }
 
-    @Basic
+    
     @Column(name = "IsStatic")
     public Long getIsStatic() {
         return isStatic;
@@ -239,7 +240,7 @@ public class FullcharRuleMsg {
         this.isStatic = isStatic;
     }
 
-    @Basic
+    
     @Column(name = "IsHitStat")
     public Long getIsHitStat() {
         return isHitStat;
@@ -249,7 +250,7 @@ public class FullcharRuleMsg {
         this.isHitStat = isHitStat;
     }
 
-    @Basic
+    
     @Column(name = "IsComPound")
     public Long getIsComPound() {
         return isComPound;
@@ -259,7 +260,7 @@ public class FullcharRuleMsg {
         this.isComPound = isComPound;
     }
 
-    @Basic
+    
     @Column(name = "Priority")
     public Long getPriority() {
         return priority;
@@ -269,7 +270,7 @@ public class FullcharRuleMsg {
         this.priority = priority;
     }
 
-    @Basic
+    
     @Column(name = "InputPortGroupId")
     public Long getInputPortGroupId() {
         return inputPortGroupId;
@@ -279,7 +280,7 @@ public class FullcharRuleMsg {
         this.inputPortGroupId = inputPortGroupId;
     }
 
-    @Basic
+    
     @Column(name = "SetTime")
     public Long getSetTime() {
         return setTime;
@@ -289,7 +290,7 @@ public class FullcharRuleMsg {
         this.setTime = setTime;
     }
 
-    @Basic
+    
     @Column(name = "SetIp")
     public Long getSetIp() {
         return setIp;
@@ -299,41 +300,4 @@ public class FullcharRuleMsg {
         this.setIp = setIp;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FullcharRuleMsg that = (FullcharRuleMsg) o;
-        return domainId == that.domainId &&
-                userId == that.userId &&
-                ruleId == that.ruleId &&
-                profileId == that.profileId &&
-                keyCodeLen == that.keyCodeLen &&
-                Objects.equals(ruleSource, that.ruleSource) &&
-                Objects.equals(keyCode, that.keyCode) &&
-                Objects.equals(keyCodeMask, that.keyCodeMask) &&
-                Objects.equals(ruleType, that.ruleType) &&
-                Objects.equals(relatedType1, that.relatedType1) &&
-                Objects.equals(relatedType2, that.relatedType2) &&
-                Objects.equals(relatedType3, that.relatedType3) &&
-                Objects.equals(relatedType4, that.relatedType4) &&
-                Objects.equals(relatedType5, that.relatedType5) &&
-                Objects.equals(relatedId1, that.relatedId1) &&
-                Objects.equals(relatedId2, that.relatedId2) &&
-                Objects.equals(relatedId3, that.relatedId3) &&
-                Objects.equals(relatedId4, that.relatedId4) &&
-                Objects.equals(relatedId5, that.relatedId5) &&
-                Objects.equals(isStatic, that.isStatic) &&
-                Objects.equals(isHitStat, that.isHitStat) &&
-                Objects.equals(isComPound, that.isComPound) &&
-                Objects.equals(priority, that.priority) &&
-                Objects.equals(inputPortGroupId, that.inputPortGroupId) &&
-                Objects.equals(setTime, that.setTime) &&
-                Objects.equals(setIp, that.setIp);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ruleSource, domainId, userId, ruleId, profileId, keyCodeLen, keyCode, keyCodeMask, ruleType, relatedType1, relatedType2, relatedType3, relatedType4, relatedType5, relatedId1, relatedId2, relatedId3, relatedId4, relatedId5, isStatic, isHitStat, isComPound, priority, inputPortGroupId, setTime, setIp);
-    }
 }

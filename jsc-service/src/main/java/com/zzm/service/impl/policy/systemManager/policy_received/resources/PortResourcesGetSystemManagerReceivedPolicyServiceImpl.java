@@ -36,7 +36,7 @@ public class PortResourcesGetSystemManagerReceivedPolicyServiceImpl implements S
         MessageCodeEnum messageCodeEnum = MessageCodeEnum.fromValue(messageCode);
 
         if(receiveSystemManagerDTO.getCode() == 200) {
-            receiveSystemManagerDTO.setMsg("获取成功！");
+            receiveSystemManagerDTO.setMsg("端口获取成功！");
 
             JSONArray objects = JSONObject.parseArray(receiveSystemManagerDTO.getData().toString());
 

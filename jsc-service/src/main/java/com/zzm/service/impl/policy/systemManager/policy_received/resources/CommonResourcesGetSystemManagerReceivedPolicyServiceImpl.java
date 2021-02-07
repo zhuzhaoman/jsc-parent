@@ -28,7 +28,7 @@ public class CommonResourcesGetSystemManagerReceivedPolicyServiceImpl implements
     public Object dataProcessing(ReceiveSystemManagerDTO receiveSystemManagerDTO) {
 
         if(receiveSystemManagerDTO.getCode() == 200) {
-            receiveSystemManagerDTO.setMsg("获取成功！");
+            receiveSystemManagerDTO.setMsg("资源获取成功！");
             JSONArray objects = JSONObject.parseArray(receiveSystemManagerDTO.getData().toString());
             receiveSystemManagerDTO.setData(objects);
         }

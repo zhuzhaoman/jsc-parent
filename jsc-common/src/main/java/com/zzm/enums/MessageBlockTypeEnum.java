@@ -14,7 +14,9 @@ public enum MessageBlockTypeEnum {
     RESOURCES_CONFIG(0, "资源配置"),
     SERVICE_PROFILE(0, "业务策略"),
     PORT_GROUP(0, "端口组"),
-    SYSTEM_CONFIG(0, "系统配置");
+    SYSTEM_CONFIG(0, "系统配置"),
+    INTERFACE(0, "端口管理"),
+    DEVICE(0, "设备管理");
 
 
     private int code;

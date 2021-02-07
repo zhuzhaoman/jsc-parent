@@ -39,6 +39,17 @@ public class BaseSystemManagerSendingPolicyServiceImpl {
         System.out.println(jsonObject.toString());
     }
 
+    public static  JSONObject priorityHandle(Object o) {
+        JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(o));
+        Integer priority = (Integer) jsonObject.get("m_u32Priority");
+
+        if (priority == 0) {
+            jsonObject.remove("m_u32Priority");
+        }
+
+        return jsonObject;
+    }
+
     /**
      * 将传入BO转换为对应的BO
      * @param ruleBO

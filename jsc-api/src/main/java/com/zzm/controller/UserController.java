@@ -49,6 +49,14 @@ public class UserController {
     @SystemLog(description = "用户登录")
     public ReceiveSystemManagerDTO login(@RequestBody UserBO userBO) throws InterruptedException {
         try {
+//            ReceiveSystemManagerDTO receiveSystemManagerDTO = new ReceiveSystemManagerDTO();
+//            receiveSystemManagerDTO.setCode(200);
+//            receiveSystemManagerDTO.setDomainType(8);
+//            receiveSystemManagerDTO.setUsername("admin");
+//            receiveSystemManagerDTO.setDomainId(1);
+//            receiveSystemManagerDTO.setMessageCode(0);
+//            receiveSystemManagerDTO.setMsg("登录成功");
+//            return receiveSystemManagerDTO;
             return userService.login(userBO);
         } catch (Exception e) {
             e.printStackTrace();

@@ -11,11 +11,12 @@ import java.util.Objects;
  * @description:
  **/
 public class ProtocolRuleMsgPK implements Serializable {
+
     private long domainId;
     private long ruleId;
 
-    @Column(name = "DomainId")
     @Id
+    @Column(name = "DomainId")
     public long getDomainId() {
         return domainId;
     }
@@ -24,8 +25,8 @@ public class ProtocolRuleMsgPK implements Serializable {
         this.domainId = domainId;
     }
 
-    @Column(name = "RuleId")
     @Id
+    @Column(name = "RuleId")
     public long getRuleId() {
         return ruleId;
     }
@@ -34,17 +35,4 @@ public class ProtocolRuleMsgPK implements Serializable {
         this.ruleId = ruleId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProtocolRuleMsgPK that = (ProtocolRuleMsgPK) o;
-        return domainId == that.domainId &&
-                ruleId == that.ruleId;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(domainId, ruleId);
-    }
 }

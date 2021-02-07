@@ -93,6 +93,8 @@ public class VlanRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
 
         System.out.println("vlanDTO:" + vlanRuleDTO.toString());
 
+        JSONObject jsonObject = priorityHandle(vlanRuleDTO);
+
         SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
                 MessageBlockTypeEnum.RULE_ADD.getCode(),
                 MessageIdentifyEnum.Y1.getCode(),
@@ -101,7 +103,7 @@ public class VlanRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
                 ruleBO.getUsername(),
                 ruleBO.getDomainId(),
                 ruleBO.getDomainType(),
-                vlanRuleDTO);
+                jsonObject);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
         Object data = clientServerSync.sendMessage(content);
@@ -141,6 +143,19 @@ public class VlanRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
 
     @Override
     public Object findDataEncapsulation(RuleBO ruleBO) {
-        return null;
+        SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
+                MessageBlockTypeEnum.RULE_DEL.getCode(),
+                MessageIdentifyEnum.Y1.getCode(),
+                MessageTypeEnum.RULE_GET.getCode(),
+                MessageCodeEnum.VLAN_GET_ONE.getReqCode(),
+                ruleBO.getUsername(),
+                ruleBO.getDomainId(),
+                ruleBO.getDomainType(),
+                ruleBO.getParam());
+
+        String content = JSONObject.toJSONString(sendSystemManagerDTO);
+        Object data = clientServerSync.sendMessage(content);
+
+        return data;
     }
 }

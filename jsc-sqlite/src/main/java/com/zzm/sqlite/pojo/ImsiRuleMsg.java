@@ -9,15 +9,16 @@ import java.util.Objects;
  * @description:
  **/
 @Entity
-@Table(name = "IMSI_RULE_MSG", schema = "main", catalog = "")
+@Table(name = "IMSI_RULE_MSG")
 @IdClass(ImsiRuleMsgPK.class)
 public class ImsiRuleMsg {
+    
     private Long ruleSource;
     private long domainId;
     private long userId;
     private long ruleId;
     private Long profileId;
-    private Object imsi;
+    private String imsi;
     private Long priority;
     private Long setTime;
     private Long setIp;
@@ -26,7 +27,7 @@ public class ImsiRuleMsg {
     private Long inputPortGroupId;
     private Long isCompound;
 
-    @Basic
+    
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;
@@ -46,7 +47,7 @@ public class ImsiRuleMsg {
         this.domainId = domainId;
     }
 
-    @Basic
+    
     @Column(name = "UserId")
     public long getUserId() {
         return userId;
@@ -66,7 +67,7 @@ public class ImsiRuleMsg {
         this.ruleId = ruleId;
     }
 
-    @Basic
+    
     @Column(name = "ProfileID")
     public Long getProfileId() {
         return profileId;
@@ -76,17 +77,17 @@ public class ImsiRuleMsg {
         this.profileId = profileId;
     }
 
-    @Basic
+    
     @Column(name = "Imsi")
-    public Object getImsi() {
+    public String getImsi() {
         return imsi;
     }
 
-    public void setImsi(Object imsi) {
+    public void setImsi(String imsi) {
         this.imsi = imsi;
     }
 
-    @Basic
+    
     @Column(name = "Priority")
     public Long getPriority() {
         return priority;
@@ -96,7 +97,7 @@ public class ImsiRuleMsg {
         this.priority = priority;
     }
 
-    @Basic
+    
     @Column(name = "SetTime")
     public Long getSetTime() {
         return setTime;
@@ -106,7 +107,7 @@ public class ImsiRuleMsg {
         this.setTime = setTime;
     }
 
-    @Basic
+    
     @Column(name = "SetIp")
     public Long getSetIp() {
         return setIp;
@@ -116,7 +117,7 @@ public class ImsiRuleMsg {
         this.setIp = setIp;
     }
 
-    @Basic
+    
     @Column(name = "IsStatic")
     public Long getIsStatic() {
         return isStatic;
@@ -126,7 +127,7 @@ public class ImsiRuleMsg {
         this.isStatic = isStatic;
     }
 
-    @Basic
+    
     @Column(name = "IsHitStat")
     public Long getIsHitStat() {
         return isHitStat;
@@ -136,7 +137,7 @@ public class ImsiRuleMsg {
         this.isHitStat = isHitStat;
     }
 
-    @Basic
+    
     @Column(name = "InputPortGroupId")
     public Long getInputPortGroupId() {
         return inputPortGroupId;
@@ -146,7 +147,7 @@ public class ImsiRuleMsg {
         this.inputPortGroupId = inputPortGroupId;
     }
 
-    @Basic
+    
     @Column(name = "IsCompound")
     public Long getIsCompound() {
         return isCompound;
@@ -156,28 +157,4 @@ public class ImsiRuleMsg {
         this.isCompound = isCompound;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ImsiRuleMsg that = (ImsiRuleMsg) o;
-        return domainId == that.domainId &&
-                userId == that.userId &&
-                ruleId == that.ruleId &&
-                Objects.equals(ruleSource, that.ruleSource) &&
-                Objects.equals(profileId, that.profileId) &&
-                Objects.equals(imsi, that.imsi) &&
-                Objects.equals(priority, that.priority) &&
-                Objects.equals(setTime, that.setTime) &&
-                Objects.equals(setIp, that.setIp) &&
-                Objects.equals(isStatic, that.isStatic) &&
-                Objects.equals(isHitStat, that.isHitStat) &&
-                Objects.equals(inputPortGroupId, that.inputPortGroupId) &&
-                Objects.equals(isCompound, that.isCompound);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(ruleSource, domainId, userId, ruleId, profileId, imsi, priority, setTime, setIp, isStatic, isHitStat, inputPortGroupId, isCompound);
-    }
 }

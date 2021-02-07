@@ -9,9 +9,10 @@ import java.util.Objects;
  * @description:
  **/
 @Entity
-@Table(name = "MAC_RULE_MSG", schema = "main", catalog = "")
+@Table(name = "MAC_RULE_MSG")
 @IdClass(MacRuleMsgPK.class)
 public class MacRuleMsg {
+    
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -37,7 +38,7 @@ public class MacRuleMsg {
     private Long setTime;
     private Long setIp;
 
-    @Basic
+    
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;
@@ -57,7 +58,7 @@ public class MacRuleMsg {
         this.domainId = domainId;
     }
 
-    @Basic
+    
     @Column(name = "UserId")
     public long getUserId() {
         return userId;
@@ -77,7 +78,7 @@ public class MacRuleMsg {
         this.ruleId = ruleId;
     }
 
-    @Basic
+    
     @Column(name = "ProfileID")
     public Long getProfileId() {
         return profileId;
@@ -87,7 +88,7 @@ public class MacRuleMsg {
         this.profileId = profileId;
     }
 
-    @Basic
+    
     @Column(name = "PortGroupId")
     public Long getPortGroupId() {
         return portGroupId;
@@ -97,7 +98,7 @@ public class MacRuleMsg {
         this.portGroupId = portGroupId;
     }
 
-    @Basic
+    
     @Column(name = "PortGroupMask")
     public Long getPortGroupMask() {
         return portGroupMask;
@@ -107,7 +108,7 @@ public class MacRuleMsg {
         this.portGroupMask = portGroupMask;
     }
 
-    @Basic
+    
     @Column(name = "DirType")
     public Long getDirType() {
         return dirType;
@@ -117,7 +118,7 @@ public class MacRuleMsg {
         this.dirType = dirType;
     }
 
-    @Basic
+    
     @Column(name = "DirMask")
     public Long getDirMask() {
         return dirMask;
@@ -127,7 +128,7 @@ public class MacRuleMsg {
         this.dirMask = dirMask;
     }
 
-    @Basic
+    
     @Column(name = "HashValue")
     public Long getHashValue() {
         return hashValue;
@@ -137,7 +138,7 @@ public class MacRuleMsg {
         this.hashValue = hashValue;
     }
 
-    @Basic
+    
     @Column(name = "HashMask")
     public Long getHashMask() {
         return hashMask;
@@ -147,7 +148,7 @@ public class MacRuleMsg {
         this.hashMask = hashMask;
     }
 
-    @Basic
+    
     @Column(name = "MacRule")
     public Long getMacRule() {
         return macRule;
@@ -157,7 +158,7 @@ public class MacRuleMsg {
         this.macRule = macRule;
     }
 
-    @Basic
+    
     @Column(name = "MacRuleMask")
     public Long getMacRuleMask() {
         return macRuleMask;
@@ -167,7 +168,7 @@ public class MacRuleMsg {
         this.macRuleMask = macRuleMask;
     }
 
-    @Basic
+    
     @Column(name = "SlotId")
     public Long getSlotId() {
         return slotId;
@@ -177,7 +178,7 @@ public class MacRuleMsg {
         this.slotId = slotId;
     }
 
-    @Basic
+    
     @Column(name = "SlotMask")
     public Long getSlotMask() {
         return slotMask;
@@ -187,7 +188,7 @@ public class MacRuleMsg {
         this.slotMask = slotMask;
     }
 
-    @Basic
+    
     @Column(name = "PortId")
     public Long getPortId() {
         return portId;
@@ -197,7 +198,7 @@ public class MacRuleMsg {
         this.portId = portId;
     }
 
-    @Basic
+    
     @Column(name = "PortMask")
     public Long getPortMask() {
         return portMask;
@@ -207,7 +208,7 @@ public class MacRuleMsg {
         this.portMask = portMask;
     }
 
-    @Basic
+    
     @Column(name = "DeviceId")
     public Long getDeviceId() {
         return deviceId;
@@ -217,7 +218,7 @@ public class MacRuleMsg {
         this.deviceId = deviceId;
     }
 
-    @Basic
+    
     @Column(name = "DeviceMask")
     public Long getDeviceMask() {
         return deviceMask;
@@ -227,7 +228,7 @@ public class MacRuleMsg {
         this.deviceMask = deviceMask;
     }
 
-    @Basic
+    
     @Column(name = "Priority")
     public Long getPriority() {
         return priority;
@@ -237,7 +238,7 @@ public class MacRuleMsg {
         this.priority = priority;
     }
 
-    @Basic
+    
     @Column(name = "IsStatic")
     public Long getIsStatic() {
         return isStatic;
@@ -247,7 +248,7 @@ public class MacRuleMsg {
         this.isStatic = isStatic;
     }
 
-    @Basic
+    
     @Column(name = "IsHitStat")
     public Long getIsHitStat() {
         return isHitStat;
@@ -257,7 +258,7 @@ public class MacRuleMsg {
         this.isHitStat = isHitStat;
     }
 
-    @Basic
+    
     @Column(name = "SetTime")
     public Long getSetTime() {
         return setTime;
@@ -267,7 +268,7 @@ public class MacRuleMsg {
         this.setTime = setTime;
     }
 
-    @Basic
+    
     @Column(name = "SetIp")
     public Long getSetIp() {
         return setIp;
@@ -277,39 +278,5 @@ public class MacRuleMsg {
         this.setIp = setIp;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MacRuleMsg that = (MacRuleMsg) o;
-        return domainId == that.domainId &&
-                userId == that.userId &&
-                ruleId == that.ruleId &&
-                Objects.equals(ruleSource, that.ruleSource) &&
-                Objects.equals(profileId, that.profileId) &&
-                Objects.equals(portGroupId, that.portGroupId) &&
-                Objects.equals(portGroupMask, that.portGroupMask) &&
-                Objects.equals(dirType, that.dirType) &&
-                Objects.equals(dirMask, that.dirMask) &&
-                Objects.equals(hashValue, that.hashValue) &&
-                Objects.equals(hashMask, that.hashMask) &&
-                Objects.equals(macRule, that.macRule) &&
-                Objects.equals(macRuleMask, that.macRuleMask) &&
-                Objects.equals(slotId, that.slotId) &&
-                Objects.equals(slotMask, that.slotMask) &&
-                Objects.equals(portId, that.portId) &&
-                Objects.equals(portMask, that.portMask) &&
-                Objects.equals(deviceId, that.deviceId) &&
-                Objects.equals(deviceMask, that.deviceMask) &&
-                Objects.equals(priority, that.priority) &&
-                Objects.equals(isStatic, that.isStatic) &&
-                Objects.equals(isHitStat, that.isHitStat) &&
-                Objects.equals(setTime, that.setTime) &&
-                Objects.equals(setIp, that.setIp);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(ruleSource, domainId, userId, ruleId, profileId, portGroupId, portGroupMask, dirType, dirMask, hashValue, hashMask, macRule, macRuleMask, slotId, slotMask, portId, portMask, deviceId, deviceMask, priority, isStatic, isHitStat, setTime, setIp);
-    }
 }

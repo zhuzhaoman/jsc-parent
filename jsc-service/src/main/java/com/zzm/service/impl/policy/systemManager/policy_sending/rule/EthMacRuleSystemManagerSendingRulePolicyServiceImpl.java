@@ -2,20 +2,21 @@ package com.zzm.service.impl.policy.systemManager.policy_sending.rule;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
 import com.zzm.exception.GraceException;
 import com.zzm.netty.ClientServerSync;
-import com.zzm.pojo.bo.*;
+import com.zzm.pojo.bo.EthMacRuleBO;
+import com.zzm.pojo.bo.RuleBO;
+import com.zzm.pojo.bo.RuleDelBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
-import com.zzm.pojo.dto.VlanRuleDTO;
 import com.zzm.policy.system_manager.sending.rule.SystemManagerSendingRulePolicyService;
 import com.zzm.service.impl.policy.systemManager.policy_sending.BaseSystemManagerSendingPolicyServiceImpl;
 import com.zzm.utils.BaseConversionUtils;
 import com.zzm.utils.IPUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,11 +42,22 @@ public class EthMacRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSys
         return "eth-mac";
     }
 
+    private static String maskHandle(String mask) throws UnsupportedEncodingException {
+        if (StringUtils.isBlank(mask)) {
+            return "";
+        }
+        String body = mask.substring(2);
+        byte[] bytes = body.getBytes("US-ASCII");
+        return Base64.getEncoder().encodeToString(bytes);
+    }
+
     private static EthMacRuleBO ruleHandle(EthMacRuleBO ethMacRuleBO) throws UnsupportedEncodingException {
         String m_strSourceMac = ethMacRuleBO.getM_strSourceMac();
+        String m_strSourceMask = ethMacRuleBO.getM_strSourceMacMask();
         String m_strDestinationMac = ethMacRuleBO.getM_strDestinationMac();
+        String m_strDestinationMacMask = ethMacRuleBO.getM_strDestinationMacMask();
 
-        if (m_strSourceMac.indexOf("ffff") != -1) {
+        if (m_strSourceMac.contains("ffff")) {
             m_strSourceMac = IPUtils.strToBase64(m_strSourceMac);
         } else {
             String replace = m_strSourceMac.replace(":", "");
@@ -53,7 +65,8 @@ public class EthMacRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSys
             m_strSourceMac = Base64.getEncoder().encodeToString(bytes);
         }
 
-        if (m_strDestinationMac.indexOf("ffff") != -1) {
+
+        if (m_strDestinationMac.contains("ffff")) {
             m_strDestinationMac = IPUtils.strToBase64(m_strDestinationMac);
         } else {
             String replace = m_strDestinationMac.replace(":", "");
@@ -61,8 +74,14 @@ public class EthMacRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSys
             m_strDestinationMac = Base64.getEncoder().encodeToString(bytes);
         }
 
+
+        m_strSourceMask = maskHandle(m_strSourceMask);
+        m_strDestinationMacMask = maskHandle(m_strDestinationMacMask);
+
         ethMacRuleBO.setM_strSourceMac(m_strSourceMac);
+        ethMacRuleBO.setM_strSourceMacMask(m_strSourceMask);
         ethMacRuleBO.setM_strDestinationMac(m_strDestinationMac);
+        ethMacRuleBO.setM_strDestinationMacMask(m_strDestinationMacMask);
 
         return ethMacRuleBO;
     }
@@ -82,6 +101,8 @@ public class EthMacRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSys
             GraceException.display(e.getMessage());
         }
 
+        JSONObject jsonObject = priorityHandle(ethMacRuleBO);
+
         SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
                 MessageBlockTypeEnum.RULE_ADD.getCode(),
                 MessageIdentifyEnum.Y1.getCode(),
@@ -90,7 +111,7 @@ public class EthMacRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSys
                 ruleBO.getUsername(),
                 ruleBO.getDomainId(),
                 ruleBO.getDomainType(),
-                ethMacRuleBO);
+                jsonObject);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
         Object data = clientServerSync.sendMessage(content);
@@ -130,6 +151,19 @@ public class EthMacRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSys
 
     @Override
     public Object findDataEncapsulation(RuleBO ruleBO) {
-        return null;
+        SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
+                MessageBlockTypeEnum.RULE_DEL.getCode(),
+                MessageIdentifyEnum.Y1.getCode(),
+                MessageTypeEnum.RULE_GET.getCode(),
+                MessageCodeEnum.ETH_GET_ONE.getReqCode(),
+                ruleBO.getUsername(),
+                ruleBO.getDomainId(),
+                ruleBO.getDomainType(),
+                ruleBO.getParam());
+
+        String content = JSONObject.toJSONString(sendSystemManagerDTO);
+        Object data = clientServerSync.sendMessage(content);
+
+        return data;
     }
 }

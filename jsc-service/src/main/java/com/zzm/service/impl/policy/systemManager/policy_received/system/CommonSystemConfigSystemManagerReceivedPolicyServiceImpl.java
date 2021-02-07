@@ -24,7 +24,6 @@ public class CommonSystemConfigSystemManagerReceivedPolicyServiceImpl implements
 
         if(receiveSystemManagerDTO.getCode() == 200) {
             receiveSystemManagerDTO.setMsg("系统配置成功！");
-            receiveSystemManagerDTO.setData(null);
         }
 
         return receiveSystemManagerDTO;

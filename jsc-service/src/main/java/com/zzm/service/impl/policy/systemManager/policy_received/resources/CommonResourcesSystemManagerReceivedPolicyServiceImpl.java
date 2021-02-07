@@ -24,7 +24,6 @@ public class CommonResourcesSystemManagerReceivedPolicyServiceImpl implements Sy
 
         if(receiveSystemManagerDTO.getCode() == 200) {
             receiveSystemManagerDTO.setMsg("资源配置成功！");
-            receiveSystemManagerDTO.setData(null);
         }
 
         return receiveSystemManagerDTO;

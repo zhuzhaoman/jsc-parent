@@ -3,7 +3,6 @@ package com.zzm.sqlite.pojo;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * @author: zhuzhaoman
@@ -11,11 +10,12 @@ import java.util.Objects;
  * @description:
  **/
 public class Ipv4RuleMsgPK implements Serializable {
+
     private long domainId;
     private long ruleId;
 
-    @Column(name = "DomainId")
     @Id
+    @Column(name = "DomainId")
     public long getDomainId() {
         return domainId;
     }
@@ -24,8 +24,8 @@ public class Ipv4RuleMsgPK implements Serializable {
         this.domainId = domainId;
     }
 
-    @Column(name = "RuleId")
     @Id
+    @Column(name = "RuleId")
     public long getRuleId() {
         return ruleId;
     }
@@ -34,17 +34,4 @@ public class Ipv4RuleMsgPK implements Serializable {
         this.ruleId = ruleId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Ipv4RuleMsgPK that = (Ipv4RuleMsgPK) o;
-        return domainId == that.domainId &&
-                ruleId == that.ruleId;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(domainId, ruleId);
-    }
 }

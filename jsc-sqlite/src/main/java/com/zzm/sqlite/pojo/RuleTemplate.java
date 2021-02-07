@@ -15,6 +15,7 @@ import java.util.Objects;
  **/
 @Data
 public class RuleTemplate {
+
     private long domainId;
     private long templateType;
     private long priority;

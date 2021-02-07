@@ -9,9 +9,10 @@ import java.util.Objects;
  * @description:
  **/
 @Entity
-@Table(name = "TCPFLAG_RULE_MSG", schema = "main", catalog = "")
+@Table(name = "TCPFLAG_RULE_MSG")
 @IdClass(TcpflagRuleMsgPK.class)
 public class TcpflagRuleMsg {
+    
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -32,7 +33,7 @@ public class TcpflagRuleMsg {
     private Long setIp;
     private Long inputPortGroupId;
 
-    @Basic
+    
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;
@@ -52,7 +53,7 @@ public class TcpflagRuleMsg {
         this.domainId = domainId;
     }
 
-    @Basic
+    
     @Column(name = "UserId")
     public long getUserId() {
         return userId;
@@ -72,7 +73,7 @@ public class TcpflagRuleMsg {
         this.ruleId = ruleId;
     }
 
-    @Basic
+    
     @Column(name = "ProfileID")
     public long getProfileId() {
         return profileId;
@@ -82,7 +83,7 @@ public class TcpflagRuleMsg {
         this.profileId = profileId;
     }
 
-    @Basic
+    
     @Column(name = "URGFlag")
     public Long getUrgFlag() {
         return urgFlag;
@@ -92,7 +93,7 @@ public class TcpflagRuleMsg {
         this.urgFlag = urgFlag;
     }
 
-    @Basic
+    
     @Column(name = "ACKFlag")
     public Long getAckFlag() {
         return ackFlag;
@@ -102,7 +103,7 @@ public class TcpflagRuleMsg {
         this.ackFlag = ackFlag;
     }
 
-    @Basic
+    
     @Column(name = "PSHFlag")
     public Long getPshFlag() {
         return pshFlag;
@@ -112,7 +113,7 @@ public class TcpflagRuleMsg {
         this.pshFlag = pshFlag;
     }
 
-    @Basic
+    
     @Column(name = "RSTFlag")
     public Long getRstFlag() {
         return rstFlag;
@@ -122,7 +123,7 @@ public class TcpflagRuleMsg {
         this.rstFlag = rstFlag;
     }
 
-    @Basic
+    
     @Column(name = "SYNFlag")
     public Long getSynFlag() {
         return synFlag;
@@ -132,7 +133,7 @@ public class TcpflagRuleMsg {
         this.synFlag = synFlag;
     }
 
-    @Basic
+    
     @Column(name = "FINFlag")
     public Long getFinFlag() {
         return finFlag;
@@ -142,7 +143,7 @@ public class TcpflagRuleMsg {
         this.finFlag = finFlag;
     }
 
-    @Basic
+    
     @Column(name = "IsStatic")
     public Long getIsStatic() {
         return isStatic;
@@ -152,7 +153,7 @@ public class TcpflagRuleMsg {
         this.isStatic = isStatic;
     }
 
-    @Basic
+    
     @Column(name = "IsHitStat")
     public Long getIsHitStat() {
         return isHitStat;
@@ -162,7 +163,7 @@ public class TcpflagRuleMsg {
         this.isHitStat = isHitStat;
     }
 
-    @Basic
+    
     @Column(name = "LoadLen")
     public Long getLoadLen() {
         return loadLen;
@@ -172,7 +173,7 @@ public class TcpflagRuleMsg {
         this.loadLen = loadLen;
     }
 
-    @Basic
+    
     @Column(name = "IsAny")
     public Long getIsAny() {
         return isAny;
@@ -182,7 +183,7 @@ public class TcpflagRuleMsg {
         this.isAny = isAny;
     }
 
-    @Basic
+    
     @Column(name = "Priority")
     public Long getPriority() {
         return priority;
@@ -192,7 +193,7 @@ public class TcpflagRuleMsg {
         this.priority = priority;
     }
 
-    @Basic
+    
     @Column(name = "SetTime")
     public Long getSetTime() {
         return setTime;
@@ -202,7 +203,7 @@ public class TcpflagRuleMsg {
         this.setTime = setTime;
     }
 
-    @Basic
+    
     @Column(name = "SetIp")
     public Long getSetIp() {
         return setIp;
@@ -212,7 +213,7 @@ public class TcpflagRuleMsg {
         this.setIp = setIp;
     }
 
-    @Basic
+    
     @Column(name = "InputPortGroupId")
     public Long getInputPortGroupId() {
         return inputPortGroupId;
@@ -222,34 +223,5 @@ public class TcpflagRuleMsg {
         this.inputPortGroupId = inputPortGroupId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TcpflagRuleMsg that = (TcpflagRuleMsg) o;
-        return domainId == that.domainId &&
-                userId == that.userId &&
-                ruleId == that.ruleId &&
-                profileId == that.profileId &&
-                Objects.equals(ruleSource, that.ruleSource) &&
-                Objects.equals(urgFlag, that.urgFlag) &&
-                Objects.equals(ackFlag, that.ackFlag) &&
-                Objects.equals(pshFlag, that.pshFlag) &&
-                Objects.equals(rstFlag, that.rstFlag) &&
-                Objects.equals(synFlag, that.synFlag) &&
-                Objects.equals(finFlag, that.finFlag) &&
-                Objects.equals(isStatic, that.isStatic) &&
-                Objects.equals(isHitStat, that.isHitStat) &&
-                Objects.equals(loadLen, that.loadLen) &&
-                Objects.equals(isAny, that.isAny) &&
-                Objects.equals(priority, that.priority) &&
-                Objects.equals(setTime, that.setTime) &&
-                Objects.equals(setIp, that.setIp) &&
-                Objects.equals(inputPortGroupId, that.inputPortGroupId);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(ruleSource, domainId, userId, ruleId, profileId, urgFlag, ackFlag, pshFlag, rstFlag, synFlag, finFlag, isStatic, isHitStat, loadLen, isAny, priority, setTime, setIp, inputPortGroupId);
-    }
 }

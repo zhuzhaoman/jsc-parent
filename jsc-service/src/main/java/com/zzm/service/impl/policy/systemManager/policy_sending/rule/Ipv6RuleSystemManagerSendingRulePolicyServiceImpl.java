@@ -68,6 +68,8 @@ public class Ipv6RuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
             GraceException.display(e.getMessage());
         }
 
+        JSONObject jsonObject = priorityHandle(ipv6RuleDTO);
+
         SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
                 MessageBlockTypeEnum.RULE_ADD.getCode(),
                 MessageIdentifyEnum.Y1.getCode(),
@@ -76,7 +78,7 @@ public class Ipv6RuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
                 ruleBO.getUsername(),
                 ruleBO.getDomainId(),
                 ruleBO.getDomainType(),
-                ipv6RuleDTO);
+                jsonObject);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
         Object data = clientServerSync.sendMessage(content);
@@ -113,6 +115,19 @@ public class Ipv6RuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
 
     @Override
     public Object findDataEncapsulation(RuleBO ruleBO) {
-        return null;
+        SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
+                MessageBlockTypeEnum.RULE_DEL.getCode(),
+                MessageIdentifyEnum.Y1.getCode(),
+                MessageTypeEnum.RULE_GET.getCode(),
+                MessageCodeEnum.IPV6_GET_ONE.getReqCode(),
+                ruleBO.getUsername(),
+                ruleBO.getDomainId(),
+                ruleBO.getDomainType(),
+                ruleBO.getParam());
+
+        String content = JSONObject.toJSONString(sendSystemManagerDTO);
+        Object data = clientServerSync.sendMessage(content);
+
+        return data;
     }
 }

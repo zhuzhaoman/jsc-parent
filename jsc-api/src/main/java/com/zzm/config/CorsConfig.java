@@ -22,12 +22,11 @@ public class CorsConfig {
 
         // 1.添加cors配置信息
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("*");
-//        config.addAllowedOrigin("http://wwww.zhuzhaoman.site");
-//        config.addAllowedOrigin("http://localhost:8080");
-//        config.addAllowedOrigin("http://127.0.0.1:8080");
-//        config.addAllowedOrigin("https://localhost:9528");
-//        config.addAllowedOrigin("https://127.0.0.1:9528");
+        config.addAllowedOrigin("http://localhost:9528");
+        config.addAllowedOrigin("http://127.0.0.1:9528");
+        config.addAllowedOrigin("http://localhost:8080");
+        config.addAllowedOrigin("http://127.0.0.1:8080");
+        config.addAllowedOrigin("http://www.zhuzhaoman.site");
 
         // 设置是否发送cookie信息
         config.setAllowCredentials(true);

@@ -24,7 +24,6 @@ public class CommonDelRuleSystemManagerReceivedPolicyServiceImpl implements Syst
 
         if(receiveSystemManagerDTO.getCode() == 200) {
             receiveSystemManagerDTO.setMsg("规则删除成功！");
-            receiveSystemManagerDTO.setData(null);
         }
 
         return receiveSystemManagerDTO;

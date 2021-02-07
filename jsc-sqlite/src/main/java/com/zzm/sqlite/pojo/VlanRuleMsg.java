@@ -9,9 +9,10 @@ import java.util.Objects;
  * @description:
  **/
 @Entity
-@Table(name = "VLAN_RULE_MSG", schema = "main", catalog = "")
+@Table(name = "VLAN_RULE_MSG")
 @IdClass(VlanRuleMsgPK.class)
 public class VlanRuleMsg {
+    
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -36,7 +37,7 @@ public class VlanRuleMsg {
     private Long setIp;
     private Long inputPortGroupId;
 
-    @Basic
+    
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;
@@ -56,7 +57,7 @@ public class VlanRuleMsg {
         this.domainId = domainId;
     }
 
-    @Basic
+    
     @Column(name = "UserId")
     public long getUserId() {
         return userId;
@@ -76,7 +77,7 @@ public class VlanRuleMsg {
         this.ruleId = ruleId;
     }
 
-    @Basic
+    
     @Column(name = "ProfileID")
     public long getProfileId() {
         return profileId;
@@ -86,7 +87,7 @@ public class VlanRuleMsg {
         this.profileId = profileId;
     }
 
-    @Basic
+    
     @Column(name = "VlanType1")
     public Long getVlanType1() {
         return vlanType1;
@@ -96,7 +97,7 @@ public class VlanRuleMsg {
         this.vlanType1 = vlanType1;
     }
 
-    @Basic
+    
     @Column(name = "VlanType2")
     public Long getVlanType2() {
         return vlanType2;
@@ -106,7 +107,7 @@ public class VlanRuleMsg {
         this.vlanType2 = vlanType2;
     }
 
-    @Basic
+    
     @Column(name = "VlanType3")
     public Long getVlanType3() {
         return vlanType3;
@@ -116,7 +117,7 @@ public class VlanRuleMsg {
         this.vlanType3 = vlanType3;
     }
 
-    @Basic
+    
     @Column(name = "VlanType4")
     public Long getVlanType4() {
         return vlanType4;
@@ -126,7 +127,7 @@ public class VlanRuleMsg {
         this.vlanType4 = vlanType4;
     }
 
-    @Basic
+    
     @Column(name = "VlanId1")
     public Long getVlanId1() {
         return vlanId1;
@@ -136,7 +137,7 @@ public class VlanRuleMsg {
         this.vlanId1 = vlanId1;
     }
 
-    @Basic
+    
     @Column(name = "VlanId2")
     public Long getVlanId2() {
         return vlanId2;
@@ -146,7 +147,7 @@ public class VlanRuleMsg {
         this.vlanId2 = vlanId2;
     }
 
-    @Basic
+    
     @Column(name = "VlanId3")
     public Long getVlanId3() {
         return vlanId3;
@@ -156,7 +157,7 @@ public class VlanRuleMsg {
         this.vlanId3 = vlanId3;
     }
 
-    @Basic
+    
     @Column(name = "VlanId4")
     public Long getVlanId4() {
         return vlanId4;
@@ -166,7 +167,7 @@ public class VlanRuleMsg {
         this.vlanId4 = vlanId4;
     }
 
-    @Basic
+    
     @Column(name = "VlanIdMask1")
     public Long getVlanIdMask1() {
         return vlanIdMask1;
@@ -176,7 +177,7 @@ public class VlanRuleMsg {
         this.vlanIdMask1 = vlanIdMask1;
     }
 
-    @Basic
+    
     @Column(name = "VlanIdMask2")
     public Long getVlanIdMask2() {
         return vlanIdMask2;
@@ -186,7 +187,7 @@ public class VlanRuleMsg {
         this.vlanIdMask2 = vlanIdMask2;
     }
 
-    @Basic
+    
     @Column(name = "VlanIdMask3")
     public Long getVlanIdMask3() {
         return vlanIdMask3;
@@ -196,7 +197,7 @@ public class VlanRuleMsg {
         this.vlanIdMask3 = vlanIdMask3;
     }
 
-    @Basic
+    
     @Column(name = "VlanIdMask4")
     public Long getVlanIdMask4() {
         return vlanIdMask4;
@@ -206,7 +207,7 @@ public class VlanRuleMsg {
         this.vlanIdMask4 = vlanIdMask4;
     }
 
-    @Basic
+    
     @Column(name = "IsStatic")
     public Long getIsStatic() {
         return isStatic;
@@ -216,7 +217,7 @@ public class VlanRuleMsg {
         this.isStatic = isStatic;
     }
 
-    @Basic
+    
     @Column(name = "IsHitStat")
     public Long getIsHitStat() {
         return isHitStat;
@@ -226,7 +227,7 @@ public class VlanRuleMsg {
         this.isHitStat = isHitStat;
     }
 
-    @Basic
+    
     @Column(name = "Priority")
     public Long getPriority() {
         return priority;
@@ -236,7 +237,7 @@ public class VlanRuleMsg {
         this.priority = priority;
     }
 
-    @Basic
+    
     @Column(name = "SetTime")
     public Long getSetTime() {
         return setTime;
@@ -246,7 +247,7 @@ public class VlanRuleMsg {
         this.setTime = setTime;
     }
 
-    @Basic
+    
     @Column(name = "SetIp")
     public Long getSetIp() {
         return setIp;
@@ -256,7 +257,7 @@ public class VlanRuleMsg {
         this.setIp = setIp;
     }
 
-    @Basic
+    
     @Column(name = "InputPortGroupId")
     public Long getInputPortGroupId() {
         return inputPortGroupId;
@@ -266,38 +267,5 @@ public class VlanRuleMsg {
         this.inputPortGroupId = inputPortGroupId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        VlanRuleMsg that = (VlanRuleMsg) o;
-        return domainId == that.domainId &&
-                userId == that.userId &&
-                ruleId == that.ruleId &&
-                profileId == that.profileId &&
-                Objects.equals(ruleSource, that.ruleSource) &&
-                Objects.equals(vlanType1, that.vlanType1) &&
-                Objects.equals(vlanType2, that.vlanType2) &&
-                Objects.equals(vlanType3, that.vlanType3) &&
-                Objects.equals(vlanType4, that.vlanType4) &&
-                Objects.equals(vlanId1, that.vlanId1) &&
-                Objects.equals(vlanId2, that.vlanId2) &&
-                Objects.equals(vlanId3, that.vlanId3) &&
-                Objects.equals(vlanId4, that.vlanId4) &&
-                Objects.equals(vlanIdMask1, that.vlanIdMask1) &&
-                Objects.equals(vlanIdMask2, that.vlanIdMask2) &&
-                Objects.equals(vlanIdMask3, that.vlanIdMask3) &&
-                Objects.equals(vlanIdMask4, that.vlanIdMask4) &&
-                Objects.equals(isStatic, that.isStatic) &&
-                Objects.equals(isHitStat, that.isHitStat) &&
-                Objects.equals(priority, that.priority) &&
-                Objects.equals(setTime, that.setTime) &&
-                Objects.equals(setIp, that.setIp) &&
-                Objects.equals(inputPortGroupId, that.inputPortGroupId);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(ruleSource, domainId, userId, ruleId, profileId, vlanType1, vlanType2, vlanType3, vlanType4, vlanId1, vlanId2, vlanId3, vlanId4, vlanIdMask1, vlanIdMask2, vlanIdMask3, vlanIdMask4, isStatic, isHitStat, priority, setTime, setIp, inputPortGroupId);
-    }
 }

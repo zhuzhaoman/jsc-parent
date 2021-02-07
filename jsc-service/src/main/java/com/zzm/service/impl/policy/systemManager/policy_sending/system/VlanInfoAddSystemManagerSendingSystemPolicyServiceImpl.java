@@ -55,6 +55,7 @@ public class VlanInfoAddSystemManagerSendingSystemPolicyServiceImpl implements S
         SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
                 MessageBlockTypeEnum.SYSTEM_CONFIG.getCode(),
                 MessageIdentifyEnum.Y1.getCode(),
+                MessageTypeEnum.SYSTEM_CONFIG.getCode(),
                 systemBO.getUsername(),
                 systemBO.getDomainId(),
                 systemBO.getDomainType());

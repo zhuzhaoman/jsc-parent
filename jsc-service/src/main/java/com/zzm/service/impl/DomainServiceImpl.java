@@ -43,6 +43,7 @@ public class DomainServiceImpl implements DomainService {
      */
     @Override
     public ReceiveSystemManagerDTO getDomainAll(String username) {
+        System.out.println("当前用户：" + username);
         SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
                 MessageBlockTypeEnum.DOMAIN_ALL.getCode(),
                 MessageIdentifyEnum.Z.getCode(),

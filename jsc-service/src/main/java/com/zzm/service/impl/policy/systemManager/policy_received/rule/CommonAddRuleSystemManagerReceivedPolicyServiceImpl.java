@@ -24,7 +24,6 @@ public class CommonAddRuleSystemManagerReceivedPolicyServiceImpl implements Syst
 
         if(receiveSystemManagerDTO.getCode() == 200) {
             receiveSystemManagerDTO.setMsg("规则下发成功！");
-            receiveSystemManagerDTO.setData(null);
         }
 
         return receiveSystemManagerDTO;

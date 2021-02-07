@@ -26,8 +26,6 @@ public class DeviceThresholdConfigSystemManagerReceivedPolicyServiceImpl impleme
             receiveSystemManagerDTO.setMsg("配置设备阈值成功！！！");
         }
 
-        receiveSystemManagerDTO.setData(null);
-
 
         return receiveSystemManagerDTO;
     }

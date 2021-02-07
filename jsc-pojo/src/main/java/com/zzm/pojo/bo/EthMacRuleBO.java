@@ -16,8 +16,12 @@ public class EthMacRuleBO {
     /* 源Mac地址 */
     public String m_strSourceMac;
 
+    private String m_strSourceMacMask;
+
     /* 目的Mac地址 */
     public String m_strDestinationMac;
+
+    public String m_strDestinationMacMask;
 
     /* EtherMac规则类型:0-src,1-dst,2-src+dst */
     public int m_u32RuleType;
