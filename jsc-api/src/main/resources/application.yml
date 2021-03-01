@@ -20,9 +20,9 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://127.0.0.1:3306/jsc_web?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-#    url: jdbc:mysql://192.168.17.54:3306/jsc_web?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    #    url: jdbc:mysql://192.168.17.54:3306/jsc_web?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
-#    password: root
+    #    password: root
     password: 1999114zzm
 
   jpa:
@@ -31,3 +31,10 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+jsc:
+  config:
+    save-path: D:/
+    linux-ip: 127.0.0.1
+    linux-username: root
+    linux-password: JSC@3pass0k

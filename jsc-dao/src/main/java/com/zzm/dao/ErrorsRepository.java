@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("all")
@@ -46,6 +48,19 @@ public interface ErrorsRepository extends JpaRepository<Errors, String>, JpaSpec
     @Query("update Errors c set c.flag = 1 where c.category = ?1 and c.flag = 0")
     @Transactional
     public void updateErrorsFlag(Integer category);
+
+    /**
+     * 删除比传入的时间小的数据
+     */
+    @Modifying
+    @Query("delete from Errors e where e.createTime < ?1")
+    public void deleteErrorsByDate(Date deleteTime);
+//
+//    @Query("select sum(DATA_LENGTH/1024/1024) as size " +
+//            "from information_schema.tables " +
+//            "where table_schema='jsc_web' " +
+//            "AND table_name='errors'")
+//    public void selectTableSize();
 
     /**
      * 根据分类删除异常信息

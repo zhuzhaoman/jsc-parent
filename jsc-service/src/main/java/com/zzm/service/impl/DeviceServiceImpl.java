@@ -4,17 +4,33 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zzm.enums.*;
+import com.zzm.exception.GraceException;
 import com.zzm.netty.ClientServerSync;
+import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.bo.DeviceThresholdConfigBO;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
+import com.zzm.policy.system_manager.sending.device.SystemManagerSendingDeviceComponent;
+import com.zzm.policy.system_manager.sending.device.SystemManagerSendingDevicePolicyService;
 import com.zzm.service.DeviceService;
+import com.zzm.utils.JSONResult;
+import com.zzm.utils.LinuxUtil;
+import lombok.SneakyThrows;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -30,6 +46,123 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Value("${jsc.config.save-path}")
+    private String savePath;
+    @Value("${jsc.config.linux-ip}")
+    private String linuxIp;
+    @Value("${jsc.config.linux-username}")
+    private String linuxUsername;
+    @Value("${jsc.config.linux-password}")
+    private String linuxPassword;
+
+    @Override
+    public boolean importConfigFile(MultipartFile[] files, String user) {
+
+        if (files == null || files.length <= 0) {
+            GraceException.display("上传的配置文件不能为空");
+        }
+
+        boolean checkFlag = checkImportFileName(files, user);
+        if (!checkFlag) {
+            GraceException.display("文件名称校验不通过");
+        }
+
+        try {
+            for (MultipartFile file : files) {
+                // 获得文件上传的文件名称
+                String fileName = file.getOriginalFilename();
+                if (StringUtils.isNotBlank(fileName)) {
+
+                    String[] fileNameArr = fileName.split("\\.");
+                    String suffix = fileNameArr[fileNameArr.length - 1];
+
+                    if (!"txt".equalsIgnoreCase(suffix)) {
+                        GraceException.display("配置文件格式有误");
+                    }
+
+                    try {
+                        String filePath = savePath + fileName;
+                        File newFile = new File(filePath);
+                        if (!newFile.exists()) {
+                            newFile.mkdirs();
+                        }
+                        File savedFile = new File(filePath);
+                        file.transferTo(savedFile);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            GraceException.display("配置文件导入失败");
+        }
+
+        return LinuxUtil.loadFileAdmin(linuxIp, linuxUsername, linuxPassword);
+    }
+
+
+    private boolean checkImportFileName(MultipartFile[] files, String user) {
+        List<String> fileNames = new ArrayList<>();
+        for (MultipartFile file : files) {
+            fileNames.add(file.getOriginalFilename());
+        }
+
+        return LinuxUtil.checkUserFileName(fileNames, user);
+    }
+
+    @Override
+    public void exportConfigFile(String user) {
+        LinuxUtil.exportFileAdmin(linuxIp, linuxUsername, linuxPassword);
+    }
+
+    @Override
+    @SneakyThrows
+    public void downloadConfigFile(String fileName, HttpServletResponse response) {
+
+        File scFile = new File("D:/" + fileName);
+        String srcFileName = scFile.getName();
+
+        if (scFile.exists()) {
+
+            response.setHeader("content-type", "application/octet-stream");
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition",
+                    "attachment;filename=" + URLEncoder.encode(srcFileName, "UTF-8"));
+
+            byte[] buffer = new byte[1024];
+            FileInputStream fis = null;
+            BufferedInputStream bis = null;
+            try {
+                fis = new FileInputStream(scFile);
+                bis = new BufferedInputStream(fis);
+                OutputStream os = response.getOutputStream();
+                int i = bis.read(buffer);
+                while (i != -1) {
+                    os.write(buffer, 0, i);
+                    i = bis.read(buffer);
+                }
+                response.setStatus(HttpStatus.OK.value());
+                os.flush();
+            } catch (Exception e) {
+                response.setStatus(HttpStatus.NOT_FOUND.value());
+            } finally {
+                if (bis != null) {
+                    try {
+                        bis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (fis != null) {
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * 查询设备信息
@@ -81,6 +214,7 @@ public class DeviceServiceImpl implements DeviceService {
      * @param slotNumber
      * @return
      */
+    @Override
     public int getSlotPortTotal(String username, int slotNumber) throws Exception {
 
         ReceiveSystemManagerDTO info = info(username);
@@ -110,6 +244,7 @@ public class DeviceServiceImpl implements DeviceService {
      * @throws ExecutionException
      * @throws InterruptedException
      */
+    @Override
     public int getSlotType(String username, int slotNumber) throws Exception {
 
         ReceiveSystemManagerDTO info = info(username);
@@ -173,4 +308,17 @@ public class DeviceServiceImpl implements DeviceService {
                 (ReceiveSystemManagerDTO) clientServerSync.sendMessage(content);
         return receiveSystemManagerDTO;
     }
+
+    @SneakyThrows
+    @Override
+    public ReceiveSystemManagerDTO operation(DeviceBO deviceBO) {
+        SystemManagerSendingDevicePolicyService systemManagerSendingDevicePolicyService
+                = SystemManagerSendingDeviceComponent.systemManagerSendingPolicyServiceMap.get(deviceBO.getDeviceType());
+
+        ReceiveSystemManagerDTO receiveSystemManagerDTO =
+                (ReceiveSystemManagerDTO) systemManagerSendingDevicePolicyService.dataEncapsulation(deviceBO);
+
+        return receiveSystemManagerDTO;
+    }
+
 }

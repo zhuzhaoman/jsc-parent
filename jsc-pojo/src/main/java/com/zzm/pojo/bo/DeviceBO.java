@@ -2,13 +2,15 @@ package com.zzm.pojo.bo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author: zhuzhaoman
  * @date: 2021-01-20
  * @description:
  **/
 @Data
-public class DeviceBO {
+public class DeviceBO implements Serializable {
 
     /**
      * 域id

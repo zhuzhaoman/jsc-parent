@@ -84,7 +84,7 @@ public class RuleServiceImpl implements RuleService {
     @Override
     public ReceiveSystemManagerDTO getRuleList(RuleQueryBO ruleQueryBO) {
 
-        String url = "http://192.8.141.199:9000/" + ruleQueryBO.getRuleType();
+        String url = "http://127.0.0.1:9000/" + ruleQueryBO.getRuleType();
 
         if (StringUtils.isBlank(ruleQueryBO.getCriteria())) {
             url = url + "/getRuleList?page=" + ruleQueryBO.getPage()

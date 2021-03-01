@@ -1,8 +1,12 @@
 package com.zzm.service;
 
 
+import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.bo.DeviceThresholdConfigBO;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -11,6 +15,8 @@ import java.util.concurrent.ExecutionException;
  * @description 设备信息接口
  */
 public interface DeviceService {
+
+    boolean importConfigFile(MultipartFile[] files, String user);
 
     /**
      * 查询设备信息
@@ -62,4 +68,10 @@ public interface DeviceService {
      * @param deviceThresholdConfigBO
      */
     ReceiveSystemManagerDTO configThreshold(DeviceThresholdConfigBO deviceThresholdConfigBO) throws Exception;
+
+    ReceiveSystemManagerDTO operation(DeviceBO deviceBO);
+
+    void exportConfigFile(String user);
+
+    void downloadConfigFile(String fileName, HttpServletResponse response);
 }

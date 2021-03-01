@@ -1,5 +1,8 @@
 package com.zzm.service.impl.policy.systemManager.policy_received.device;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
 import com.zzm.policy.system_manager.received.SystemManagerReceivedPolicyService;
@@ -23,10 +26,32 @@ public class DeviceCommonGetSystemManagerReceivedPolicyServiceImpl implements Sy
     public Object dataProcessing(ReceiveSystemManagerDTO receiveSystemManagerDTO) {
 
         if (receiveSystemManagerDTO.getCode() == 200) {
-            receiveSystemManagerDTO.setMsg("设备信息获取成功！！！");
+
+            System.out.println(receiveSystemManagerDTO.getData().toString());
+
+            if (receiveSystemManagerDTO.getMessageCode() == 36610) {
+                JSONObject result = JSONObject.parseObject(JSONObject.parse((receiveSystemManagerDTO.getData()).toString()).toString());
+                result = textHandle(result);
+                receiveSystemManagerDTO.setData(result);
+            }
+
+            receiveSystemManagerDTO.setMsg("设备信息获取成功！");
         }
 
 
         return receiveSystemManagerDTO;
+    }
+
+    private JSONObject textHandle(JSONObject jsonObject) {
+        String msg = jsonObject.getString("m_strNetConfigMsg");
+
+
+
+//        String msgReplace = (msg.replace("\n", "<br>")).replace(" ", "&ensp;");
+//        String msgReplace = msg.replace("\n", "<br>");
+
+//        jsonObject.put("m_strNetConfigMsg", msgReplace);
+
+        return jsonObject;
     }
 }
