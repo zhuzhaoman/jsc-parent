@@ -182,6 +182,10 @@ public enum MessageCodeEnum {
     SYSTEM_CONFIG_DPI_SWITCH(2158, 2159, "", "配置性能测试开关"),
     SYSTEM_CONFIG_RESUME_DEFAULT(2290, 2291, "", "数据处理配置恢复出厂默认设置"),
     SYSTEM_GET_DATA_PROCESSING_INFO_QUERY(2288, 2289, "", "数据处理配置信息查询"),
+    SYSTEM_CONFIG_DATA_ORIGIN(2142, 2143, "", "添加数据来源"),
+    SYSTEM_DEL_DATA_ORIGIN(2146, 2147, "", "删除数据来源"),
+    SYSTEM_CLEAN_DATA_ORIGIN(2148, 2149, "", "清除数据来源"),
+    SYSTEM_GET_DATA_ORIGIN(2144, 2145, "", "获取数据来源"),
     COMMON_SYSTEM_CONFIG(0,7770, "", "通用系统配置枚举"),
     COMMON_SYSTEM_CONFIG_GET(0,7771, "", "通用系统配置获取枚举"),
 

@@ -47,7 +47,7 @@ public enum MessageTypeEnum {
     PORT_GROUP_CONFIG(131, "配置端口组"),
 
     /**
-     * 系统
+     * 系统配置
      */
     SYSTEM_CONFIG(8, "系统配置"),
 
