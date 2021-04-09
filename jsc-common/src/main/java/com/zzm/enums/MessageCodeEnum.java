@@ -189,6 +189,8 @@ public enum MessageCodeEnum {
     /**
      * 端口
      */
+    INTERFACE_DEFAULT_ACTION_ID(34357, 34358, "", "端口默认动作id"),
+    INTERFACE_TUNNEL_MATCH_TYPE(34359, 34360, "", "内外层匹配"),
     INTERFACE_UP_AND_DOWN(34319, 34320, "", "端口上下行配置"),
     INTERFACE_EXTEND(34328, 34329, "", "端口甩纤配置"),
     INTERFACE_FIBER(34315, 34316, "", "端口单双纤配置"),
@@ -209,6 +211,10 @@ public enum MessageCodeEnum {
     COMMON_INTERFACE_CONFIG(0, 8880, "","通用端口配置枚举"),
     COMMON_INTERFACE_GET(0, 8881, "", "通用端口展示枚举"),
 
+    /**
+     * 设备
+     */
+    DEVICE_MANAGE(36631, 36632, "", "查看设备参数信息"),
     DEVICE_SHOW_NET_CONFIG(36609, 36610, "", "show net-config"),
     DEVICE_SHOW_SNMP_CONFIG(36613, 36614, "", "show snmp server config"),
     DEVICE_ADD_SNMP_COMMUNITY(36384, 36385, "", "添加团体名"),

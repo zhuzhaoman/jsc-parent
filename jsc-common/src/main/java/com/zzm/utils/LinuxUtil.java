@@ -1,12 +1,18 @@
 package com.zzm.utils;
 
-import com.alibaba.pelican.chaos.client.RemoteCmd;
-import com.alibaba.pelican.chaos.client.RemoteCmdClientConfig;
-import com.alibaba.pelican.chaos.client.impl.RemoteCmdClient;
 import com.zzm.enums.UserEnum;
+import com.zzm.enums.UserFileConfig;
+import com.zzm.enums.UserPasswordEnum;
+import org.springframework.stereotype.Component;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author: zhuzhaoman
@@ -15,63 +21,138 @@ import java.util.List;
  **/
 public class LinuxUtil {
 
-    public static List<String> adminFileName = Arrays.asList("admin_device_platform.txt", "admin_device_resource.txt", "admin_device_cfg.txt");
-    private static List<String> importCmd = Arrays.asList("su admin", "JSC@3pass0k", "configure terminal" ,"config");
-    private static List<String> exportCmd = Arrays.asList("su admin", "JSC@3pass0k", "configure terminal" ,"device");
+    public static List<String> exportParamsTemplate = Arrays.asList("127.0.0.1",
+            "admin", "JSC@3pass0k", "enable", "JSC@3pass0k",
+            "configure terminal", "device", "export running-config");
+    public static List<String> importParamsTemplate = Arrays.asList("127.0.0.1",
+            "admin", "JSC@3pass0k", "enable", "JSC@3pass0k",
+            "configure terminal");
 
-    public static String commandExecution(String ip, String username, String password, String[] instruct) {
-        RemoteCmdClientConfig remoteCmdClientConfig = new RemoteCmdClientConfig();
-        remoteCmdClientConfig.setIp(ip);
-        remoteCmdClientConfig.setUserName(username);
-        remoteCmdClientConfig.setPassword(password);
-
-        RemoteCmdClient remoteCmdClient = new RemoteCmdClient(remoteCmdClientConfig);
-
-        return remoteCmdClient.execCmdGetString(new RemoteCmd(instruct));
-    }
-
-    public static boolean loadFileAdmin(String ip, String username, String password) {
-        try {
-            adminFileName.forEach(name -> {
-                List<String> tempList = importCmd;
-                tempList.add("load file " + name);
-
-                String[] tempCmd = tempList.toArray(new String[0]);
-                String result = commandExecution(ip, username, password, tempCmd);
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
-    }
 
     public static boolean checkUserFileName(List<String> fileNames, String user) {
-        switch (UserEnum.toType(user)) {
-            case ADMIN:
-                if (!adminFileName.containsAll(fileNames)) {
-                    return false;
-                }
-                break;
-            case USER1:
-                break;
-            case USER2:
-                break;
-            case USER3:
-                break;
-            case USER4:
-                break;
+        List<String> mainFileNames = UserFileConfig.getFileList(user);
+
+        for (String file : fileNames) {
+            if (!mainFileNames.contains(file)) {
+                return false;
+            }
         }
 
         return true;
     }
 
-    public static void exportFileAdmin(String ip, String username, String password) {
-        List<String> tempList = exportCmd;
-        tempList.add("export running-config");
 
-        String[] tempCmd = tempList.toArray(new String[0]);
-        String result = commandExecution(ip, username, password, tempCmd);
+    /**
+     * admin用户配置文件导出
+     *
+     * @param pythonUrl
+     * @param exportProcedure
+     * @return
+     */
+    public static String exportFile(String user, String ip, String pythonUrl, String exportProcedure) {
+        List<String> tempList = exportParamsTemplate;
+
+        String password = UserPasswordEnum.getUserPassword(user);
+
+        tempList.set(0, ip);
+        tempList.set(1, user);
+        tempList.set(2, password);
+        tempList.set(4, password);
+        return executeCommandSimple(pythonUrl, exportProcedure, tempList);
+    }
+
+    public static String executeCommandExplicit(String pythonUrl, String exportProcedure, List<String> paramList) {
+        String params = String.join(",", paramList);
+
+        BufferedReader in = null;
+        Process process;
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            String[] python = new String[]{pythonUrl, exportProcedure, params};
+            process = Runtime.getRuntime().exec(python);
+
+            String line = "";
+            in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            while ((line = in.readLine()) != null) {
+                if (!"".equals(line)) {
+                    sb.append(line);
+                    sb.append("<br>");
+                }
+            }
+
+            long startTime = System.currentTimeMillis();
+            boolean processFinished = false;
+            while(System.currentTimeMillis() - startTime < 10*1000
+                    && !processFinished){
+                try {
+                    process.exitValue();
+                } catch (IllegalThreadStateException e) {
+                    continue;
+                }
+                processFinished = true;
+            }
+
+            process.waitFor();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+
+    public static String executeCommandSimple(String pythonUrl, String exportProcedure, List<String> paramList) {
+        String params = String.join(",", paramList);
+
+        BufferedReader in = null;
+        Process process;
+        String result = "error";
+
+        try {
+            String[] python = new String[]{pythonUrl, exportProcedure, params};
+            process = Runtime.getRuntime().exec(python);
+
+            String line = "";
+            in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            while ((line = in.readLine()) != null) {
+                result = line;
+                break;
+            }
+
+            long startTime = System.currentTimeMillis();
+            boolean processFinished = false;
+            int i = 1;
+            while(System.currentTimeMillis() - startTime < 10*1000
+                    && !processFinished){
+                try {
+                    process.exitValue();
+                } catch (IllegalThreadStateException e) {
+                    continue;
+                }
+                processFinished = true;
+            }
+
+            process.waitFor();
+            processFinished = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return result;
     }
 }

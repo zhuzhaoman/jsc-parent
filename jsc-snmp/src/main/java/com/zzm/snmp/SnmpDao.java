@@ -65,7 +65,9 @@ public class SnmpDao {
 
             for (TableEvent e : list) {
                 VariableBinding[] vb = e.getColumns();
-                if (null == vb) continue;
+                if (null == vb) {
+                    continue;
+                }
                 result.add(vb[0].getVariable().toString());
             }
 

@@ -13,8 +13,8 @@ import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.device.SystemManagerSendingDeviceComponent;
 import com.zzm.policy.system_manager.sending.device.SystemManagerSendingDevicePolicyService;
 import com.zzm.service.DeviceService;
-import com.zzm.utils.JSONResult;
 import com.zzm.utils.LinuxUtil;
+import com.zzm.utils.WebSocketSendMessage;
 import lombok.SneakyThrows;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -28,11 +28,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author zhuzhaoman
@@ -44,16 +43,31 @@ public class DeviceServiceImpl implements DeviceService {
 
     public static final Logger log = LoggerFactory.getLogger(DeviceServiceImpl.class);
 
+    public static List<String> importParamsTemplate = Arrays.asList("127.0.0.1",
+            "admin", "JSC@3pass0k", "enable", "JSC@3pass0k",
+            "configure terminal");
+
+    public static List<String> configDefaultTemplate = Arrays.asList("127.0.0.1",
+            "admin", "JSC@3pass0k", "enable", "JSC@3pass0k",
+            "configure terminal", "device", "config resume-default", "y");
+
     @Resource
     private ClientServerSync clientServerSync;
+    @Value("${jsc.config.python-url}")
+    private String pythonUrl;
+    @Value("${jsc.config.config-default}")
+    private String configDefault;
+    @Value("${jsc.config.export-procedure}")
+    private String exportProcedure;
+    @Value("${jsc.config.import-procedure}")
+    private String importProcedure;
     @Value("${jsc.config.save-path}")
     private String savePath;
     @Value("${jsc.config.linux-ip}")
     private String linuxIp;
-    @Value("${jsc.config.linux-username}")
-    private String linuxUsername;
-    @Value("${jsc.config.linux-password}")
-    private String linuxPassword;
+    private int tryCount = 14;
+    private int fileIndex = 0;
+    private StringBuilder cardStatusError = new StringBuilder();
 
     @Override
     public boolean importConfigFile(MultipartFile[] files, String user) {
@@ -97,7 +111,176 @@ public class DeviceServiceImpl implements DeviceService {
             GraceException.display("配置文件导入失败");
         }
 
-        return LinuxUtil.loadFileAdmin(linuxIp, linuxUsername, linuxPassword);
+        loadConfigFile(user, files);
+
+        return true;
+    }
+
+    private void loadConfigFile(String user, MultipartFile[] files) {
+        List<String> fileName = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            fileName.add(file.getOriginalFilename());
+        }
+
+        List<String> fileList = UserFileConfig.getFileList(user);
+
+        if (user.equals("admin")) {
+            if (fileName.size() == 2) {
+                importConfigWaitHandle(user);
+            } else {
+                executeImportConfig(user, fileList.get(2));
+            }
+        } else {
+            executeImportConfig(user, fileList.get(0));
+        }
+    }
+
+    private void importConfigWaitHandle(String user) {
+
+        if (!"admin".equals(user)) {
+            GraceException.display("当前用户不是admin用户");
+        }
+
+        boolean isDefault = restoreDefaultConfig();
+
+        if (!isDefault) {
+            GraceException.display("恢复默认出厂失败");
+        }
+
+        fileIndex = 0;
+        tryCount = 14;
+        List<String> fileList = new ArrayList<>();
+        fileList.addAll(UserFileConfig.getFileList(user));
+        fileList.remove(2);
+
+        executeImportConfig(user, fileList.get(fileIndex));
+        fileIndex++;
+
+        Timer timer = new Timer();
+        try {
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+
+                    if (tryCount <= 0) {
+                        tryCount = 14;
+                        checkCardStatus(user, true);
+                        sendCardStatus();
+                        timer.cancel();
+                        return;
+                    }
+
+                    boolean cardStatus = checkCardStatus(user, false);
+                    if (!cardStatus) {
+                        tryCount--;
+                        System.out.println("尝试" + tryCount);
+                    } else {
+
+                        if (fileIndex >= fileList.size()) {
+                            fileIndex = 0;
+                            tryCount = 14;
+                            timer.cancel();
+                            System.out.println("结束");
+                        } else {
+                            executeImportConfig(user, fileList.get(fileIndex));
+                            fileIndex++;
+                            tryCount = 14;
+                            System.out.println("执行发送");
+                        }
+                    }
+                }
+            }, 1000L, 60000L);
+        } catch (Exception e) {
+            e.printStackTrace();
+            timer.cancel();
+            WebSocketSendMessage.sendTopicMessage("导入失败");
+        }
+    }
+
+    private boolean restoreDefaultConfig() {
+        configDefaultTemplate.set(0, linuxIp);
+        List<String> template = new ArrayList<>(configDefaultTemplate);
+        String result = LinuxUtil.executeCommandExplicit(pythonUrl, configDefault, template);
+
+        if (result != null) {
+            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+            Matcher m = p.matcher(result);
+            result = m.replaceAll("");
+        }
+
+        if (result.equals("success")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void executeImportConfig(String user, String fileName) {
+        List<String> template = new ArrayList<>(generationTemplate(user, fileName));
+        String result = LinuxUtil.executeCommandExplicit(pythonUrl, importProcedure, template);
+        System.out.println("推送执行反馈");
+        System.out.println(result);
+
+        WebSocketSendMessage.sendTopicImportMessage(result);
+    }
+
+    private void sendCardStatus() {
+        String error = cardStatusError.toString();
+        System.out.println("发送板卡异常状态");
+        System.out.println(error);
+        cardStatusError.delete(0, cardStatusError.length());
+        WebSocketSendMessage.sendTopicImportMessage(error);
+    }
+
+    private List<String> generationTemplate(String user, String fileName) {
+        List<String> template = new ArrayList<>(importParamsTemplate);
+        String password = UserPasswordEnum.getUserPassword(user);
+
+        template.set(0, linuxIp);
+        template.set(1, user);
+        template.set(2, password);
+        template.set(4, password);
+        template.add("load file " + fileName);
+
+        return template;
+    }
+
+    private boolean checkCardStatus(String user, boolean isRecord) {
+        ReceiveSystemManagerDTO info = null;
+
+        boolean status = true;
+        try {
+            info = this.info(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        if (info.getData() == null) {
+            return false;
+        }
+
+        JSONObject result = JSONObject.parseObject(JSONObject.toJSONString(info.getData()));
+
+        JSONArray cardList = JSONArray.parseArray(JSONObject.toJSONString(result.get("m_tCardStatusMsg")));
+        if (cardList.size() <= 0) {
+            return false;
+        }
+
+        for (Object card : cardList) {
+            JSONObject cardObj = JSONObject.parseObject(JSONObject.toJSONString(card));
+            if ((Integer) cardObj.get("m_u32RunStatus") != 4) {
+                status = false;
+            }
+
+            if (isRecord) {
+                cardStatusError.append("slot " + cardObj.get("m_u32SlotId") + " abnormal state!");
+                cardStatusError.append("\n");
+            }
+        }
+
+        return status;
     }
 
 
@@ -107,19 +290,28 @@ public class DeviceServiceImpl implements DeviceService {
             fileNames.add(file.getOriginalFilename());
         }
 
-        return LinuxUtil.checkUserFileName(fileNames, user);
+        boolean userFlag = LinuxUtil.checkUserFileName(fileNames, user);
+
+        return userFlag;
     }
 
     @Override
-    public void exportConfigFile(String user) {
-        LinuxUtil.exportFileAdmin(linuxIp, linuxUsername, linuxPassword);
+    public Map<String, Object> exportConfigFile(String user) {
+        Map<String, Object> result = new HashMap<>();
+        String flag = LinuxUtil.exportFile(user, linuxIp, pythonUrl, exportProcedure);
+        List<String> fileList = UserFileConfig.getFileList(user);
+
+        result.put("status", flag);
+        result.put("fileList", fileList);
+
+        return result;
     }
 
     @Override
     @SneakyThrows
     public void downloadConfigFile(String fileName, HttpServletResponse response) {
 
-        File scFile = new File("D:/" + fileName);
+        File scFile = new File(savePath + fileName);
         String srcFileName = scFile.getName();
 
         if (scFile.exists()) {
@@ -238,6 +430,7 @@ public class DeviceServiceImpl implements DeviceService {
 
     /**
      * 根据槽位获取当前板卡的类型
+     *
      * @param username
      * @param slotNumber
      * @return

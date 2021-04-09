@@ -61,7 +61,7 @@ public class HistoryFlowJob {
     ExecutorService executorService1 = Executors.newFixedThreadPool(3);
     ExecutorService executorService2 = Executors.newFixedThreadPool(3);
 
-//    @Scheduled(cron = "0 */1 * * * ?")
+    @Scheduled(cron = "0 */1 * * * ?")
     @Transactional
     public void producePortHistoryFlow() throws Exception {
         executorService1.execute(() -> {
@@ -218,7 +218,7 @@ public class HistoryFlowJob {
         });
     }
 
-//    @Scheduled(cron = "0 */1 * * * ?")
+    @Scheduled(cron = "0 */1 * * * ?")
     @Transactional
     public void produceHistoryFlow() throws Exception {
         executorService2.execute(() -> {
@@ -360,7 +360,7 @@ public class HistoryFlowJob {
     /**
      * 每隔5分钟清除数据库中过期的数据
      */
-//    @Scheduled(cron = "0 */30 * * * ?")
+    @Scheduled(cron = "0 */30 * * * ?")
     @Transactional
     public void deleteHistoryFlow() {
         List<FlowCycle> flowCycleList = flowCycleRepository.findAll();

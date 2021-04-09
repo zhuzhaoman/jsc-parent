@@ -1,17 +1,13 @@
 package com.zzm.job;
 
 import com.zzm.dao.ErrorsRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -32,7 +28,7 @@ public class HistoryDataJob {
     private final Integer TABLE_SIZE = 1000;
     private final Integer SAVE_DATA = 15552000;
 
-    @Scheduled(cron = "0 */1 * * * ?")
+    @Scheduled(cron = "0 */30 * * * ?")
     @Transactional
     public void produceHistoryFlow() throws Exception {
 //        List<String> tables = Arrays.asList("errors", "total_history_flow", "port_history_flow", "port_history_optical_power");
@@ -40,7 +36,7 @@ public class HistoryDataJob {
 
         tables.stream().forEach(table -> {
             BigDecimal tableSize = this.getTableSize(table);
-            if (tableSize.intValue() > 0.01) {
+            if (tableSize.intValue() >= TABLE_SIZE) {
                 Calendar now = Calendar.getInstance();
                 now.add(Calendar.SECOND, -SAVE_DATA);
                 System.out.println(now.getTime());

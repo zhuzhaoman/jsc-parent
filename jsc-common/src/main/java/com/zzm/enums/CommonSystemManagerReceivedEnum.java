@@ -145,6 +145,8 @@ public enum CommonSystemManagerReceivedEnum {
     SYSTEM_GET_DATA_PROCESSING_INFO_QUERY(2289, 7771, "数据处理配置信息查询"),
 
     /* 端口配置 */
+    INTERFACE_DEFAULT_ACTION_ID(34358, 8880, "端口默认动作id"),
+    INTERFACE_TUNNEL_MATCH_TYPE(34360, 8880, "内外层匹配"),
     INTERFACE_UP_AND_DOWN(34320, 8880, "端口上下行配置"),
     INTERFACE_EXTEND(34329, 8880, "端口甩纤配置"),
     INTERFACE_FIBER(34316, 8880, "端口单双纤配置"),
@@ -166,6 +168,7 @@ public enum CommonSystemManagerReceivedEnum {
     COMMON_INTERFACE_GET(0, 8881, "通用端口展示枚举"),
 
     /* 设备管理 */
+    DEVICE_MANAGE( 36632, 9991, "查看设备参数信息"),
     DEVICE_SHOW_NET_CONFIG( 36610, 9991, "show net-config"),
     DEVICE_SHOW_SNMP_CONFIG(36614, 9991, "show snmp server config"),
     DEVICE_ADD_SNMP_COMMUNITY( 36385, 9992, "添加团体名"),

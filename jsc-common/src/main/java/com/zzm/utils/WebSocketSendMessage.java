@@ -26,6 +26,10 @@ public class WebSocketSendMessage {
         simpMessagingTemplate.convertAndSend("/topic/all", message);
     }
 
+    public static void sendTopicImportMessage(Object message) {
+        simpMessagingTemplate.convertAndSend("/topic/import", message);
+    }
+
     /**
      * 发送信息给指定用户
      * @param user 接受信息的用户

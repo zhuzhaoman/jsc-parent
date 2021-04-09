@@ -7,6 +7,7 @@ import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -71,7 +72,7 @@ public interface DeviceService {
 
     ReceiveSystemManagerDTO operation(DeviceBO deviceBO);
 
-    void exportConfigFile(String user);
+    Map<String, Object> exportConfigFile(String user);
 
     void downloadConfigFile(String fileName, HttpServletResponse response);
 }

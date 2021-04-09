@@ -4,24 +4,19 @@ import com.zzm.annotation.SystemLog;
 import com.zzm.exception.GraceException;
 import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.bo.DeviceThresholdConfigBO;
-import com.zzm.pojo.bo.PortBO;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
 import com.zzm.service.DeviceService;
 import com.zzm.utils.JSONResult;
-import lombok.SneakyThrows;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.net.URLEncoder;
+import java.util.Enumeration;
+import java.util.Map;
 
 /**
  * @author zhuzhaoman
@@ -39,8 +34,11 @@ public class DeviceController {
     private DeviceService deviceService;
 
     @PostMapping("/importConfigFile")
-    public JSONResult importConfigFile(@RequestParam("files") MultipartFile[] files,
-                                       @RequestParam("user") String user) {
+    public JSONResult importConfigFile(MultipartFile[] files, HttpServletRequest request) {
+
+        String user = request.getHeader("x-token");
+
+        System.out.println("开始导入");
 
         boolean flag = deviceService.importConfigFile(files, user);
         if (!flag) {
@@ -52,17 +50,24 @@ public class DeviceController {
 
 
     @GetMapping("/exportConfigFile")
-    public void exportConfigFile(@RequestParam("user") String user,
-                                 HttpServletRequest request,
-                                 HttpServletResponse response) {
+    //@SystemLog(description = "导出配置")
+    public JSONResult exportConfigFile(@RequestParam("user") String user,
+                                       HttpServletRequest request,
+                                       HttpServletResponse response) {
 
-        deviceService.exportConfigFile(user);
+        Map<String, Object> result = deviceService.exportConfigFile(user);
+        if (result.get("status").equals("error") ||
+                result.get("status").equals("")) {
+            return JSONResult.error("导出失败");
+        }
+
+        return JSONResult.ok(result.get("fileList"));
     }
 
-    @PostMapping("/download")
+    @GetMapping("/download")
     public void download(@RequestParam("fileName") String fileName,
-                                 HttpServletRequest request,
-                                 HttpServletResponse response) {
+                         HttpServletRequest request,
+                         HttpServletResponse response) {
 
         deviceService.downloadConfigFile(fileName, response);
     }
@@ -88,6 +93,7 @@ public class DeviceController {
 
     /**
      * 获取设备阈值
+     *
      * @throws InterruptedException
      */
     @GetMapping("/threshold")
@@ -97,13 +103,14 @@ public class DeviceController {
             return deviceService.getThreshold(username);
         } catch (Exception e) {
             e.printStackTrace();
-           GraceException.display("获取阈值信息失败");
+            GraceException.display("获取阈值信息失败");
         }
         return null;
     }
 
     /**
      * 配置设备的阈值
+     *
      * @param deviceThresholdConfigBO 传递的参数
      */
     @PostMapping("/thresholdConfig")

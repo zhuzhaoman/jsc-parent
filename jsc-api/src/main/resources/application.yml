@@ -2,7 +2,7 @@ server:
   port: 8080
 #  address: 127.0.0.1
 
-# (/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)
+# (//*([^*]|[/r/n]|(/*+([^*/]|[/r/n])))*/*+/|[ /t]*//.*)
 #
 
 #  ssl:
@@ -22,8 +22,8 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/jsc_web?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     #    url: jdbc:mysql://192.168.17.54:3306/jsc_web?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
-    #    password: root
-    password: 1999114zzm
+    password: root
+  # password: 1999114zzm
 
   jpa:
     properties:
@@ -34,7 +34,15 @@ spring:
 
 jsc:
   config:
-    save-path: D:/
+    #    linux-ip: 192.8.141.199
     linux-ip: 127.0.0.1
-    linux-username: root
-    linux-password: JSC@3pass0k
+    #    python-url: D:/Anaconda/envs/python3.5/python
+    python-url: python
+    #    save-path: D:/
+    save-path: /u01/pos
+    #    config-default: D:/IDEA/jsc-parent/jsc-api/src/main/resources/config_default.py
+    config-default: /home/web/config_default.py
+    #    export-procedure: D:/IDEA/jsc-parent/jsc-api/src/main/resources/config_export.py
+    export-procedure: /home/web/config_export.py
+    #    import-procedure: D:/IDEA/jsc-parent/jsc-api/src/main/resources/config_import.py
+    import-procedure: /home/web/config_import.py

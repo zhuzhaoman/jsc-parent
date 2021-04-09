@@ -5,9 +5,9 @@ spring:
   datasource:
     driver-class-name: org.sqlite.JDBC
     type: com.alibaba.druid.pool.DruidDataSource
-      # 方式一：  引用外部文件
-    url: jdbc:sqlite:D:/IDEA/jsc-parent/jsc-sqlite/src/main/resources/RuleDBOfOperator.db
-#    url: jdbc:sqlite:/u01/SystemManager/etc/RuleDBOfOperator.db
+    # 方式一：  引用外部文件
+    #    url: jdbc:sqlite:D:/IDEA/jsc-parent/jsc-sqlite/src/main/resources/RuleDBOfOperator.db
+    url: jdbc:sqlite:/u01/SystemManager/etc/RuleDBOfOperator.db
     #方式二： 引用项目中的文件
     #url: jdbc:sqlite::resource:RuleDBOfOperator.db
   jpa:
