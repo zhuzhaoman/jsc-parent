@@ -12,7 +12,8 @@ import java.util.Objects;
 @Table(name = "VLAN_RULE_MSG")
 @IdClass(VlanRuleMsgPK.class)
 public class VlanRuleMsg {
-    
+
+    private Long sendSlotId;
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -37,6 +38,14 @@ public class VlanRuleMsg {
     private Long setIp;
     private Long inputPortGroupId;
 
+    @Column(name = "SendSlotId")
+    public Long getSendSlotId() {
+        return sendSlotId;
+    }
+
+    public void setSendSlotId(Long sendSlotId) {
+        this.sendSlotId = sendSlotId;
+    }
     
     @Column(name = "RuleSource")
     public Long getRuleSource() {

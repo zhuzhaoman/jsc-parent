@@ -62,4 +62,6 @@ public class WindowRuleBO {
 
     /* 规则类型 */
     public int m_u32RuleType;
+
+    public RuleSendMsgBO m_tRuleSendMsg;
 }

@@ -35,4 +35,6 @@ public class VlanRuleBO {
 
     /* vlan规则的标签类型和id */
     public List<CVlanTypeMsgBO> m_tVlanTypeMsg;
+
+    public RuleSendMsgBO m_tRuleSendMsg;
 }

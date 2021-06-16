@@ -2,6 +2,7 @@ package com.zzm.sqlite.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zzm.sqlite.pojo.FullcharRuleMsg;
+import com.zzm.sqlite.pojo.ProtocolRuleMsg;
 import com.zzm.sqlite.pojo.TcpflagRuleMsg;
 import com.zzm.sqlite.pojo.UrlRuleMsg;
 import com.zzm.sqlite.pojo.vo.FullCharVO;
@@ -44,10 +45,25 @@ public class TcpFlagServiceImpl extends BaseService implements TcpFlagService {
     private final ValueObjectTransfer valueObjectTransfer;
 
     @Override
-    public PagedGridResult getRuleList(Integer page, Integer pageSize) {
+    public PagedGridResult getRuleList(String username, Integer page, Integer pageSize) {
         Pageable pageable = PageRequest.of(page, pageSize);
 
-        Page<TcpflagRuleMsg> ruleMsgPage = tcpFlagRepository.findAll(pageable);
+        Long userId = getUserId(username);
+
+        Specification<TcpflagRuleMsg> specification = new Specification<TcpflagRuleMsg>() {
+            @Override
+            public Predicate toPredicate(Root<TcpflagRuleMsg> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<>();
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
+
+                Predicate[] arr = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(arr));
+            }
+        };
+
+        Page<TcpflagRuleMsg> ruleMsgPage = tcpFlagRepository.findAll(specification, pageable);
 
         List<TcpFlagVO> urlVOList = ruleMsgPage.getContent().stream().map(urlRuleMsg -> {
             return (TcpFlagVO) valueObjectTransfer.cast(urlRuleMsg, TcpFlagVO.class);
@@ -57,9 +73,11 @@ public class TcpFlagServiceImpl extends BaseService implements TcpFlagService {
     }
 
     @Override
-    public PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria) {
+    public PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria) {
         JSONObject jsonObject = TcpFlagUtils.queryFieldCast(criteria);
         Set<String> keys = jsonObject.keySet();
+
+        Long userId = getUserId(username);
 
         Specification<TcpflagRuleMsg> specification = new Specification<TcpflagRuleMsg>() {
             @Override
@@ -70,6 +88,9 @@ public class TcpFlagServiceImpl extends BaseService implements TcpFlagService {
                     Predicate predicate = criteriaBuilder.equal(root.get(s), jsonObject.get(s));
                     list.add(predicate);
                 });
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
 
                 Predicate[] arr = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(arr));

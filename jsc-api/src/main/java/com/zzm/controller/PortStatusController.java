@@ -39,11 +39,8 @@ public class PortStatusController {
             return JSONResult.ok(allSlotPortStatus);
         } catch (Exception e) {
             e.printStackTrace();
-            GraceException.display("");
+            return JSONResult.error("获取端口状态失败");
         }
-
-        return JSONResult.error("获取端口状态失败");
-
     }
 
     /**

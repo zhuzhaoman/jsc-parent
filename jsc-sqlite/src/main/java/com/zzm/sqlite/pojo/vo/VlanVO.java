@@ -16,6 +16,9 @@ import lombok.Data;
 @BindEntity(VlanRuleMsg.class)
 public class VlanVO {
 
+    @BindField(fieldName = "sendSlotId", methodName = "slotIdFormat", value = BaseConversionUtils.class)
+    private String sendSlotId;
+
     private Long ruleId;
     private Long profileId;
     private Long inputPortGroupId;

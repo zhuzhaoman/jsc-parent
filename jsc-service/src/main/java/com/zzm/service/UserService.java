@@ -11,4 +11,6 @@ public interface UserService {
      * @param userBO
      */
     ReceiveSystemManagerDTO login(UserBO userBO) throws Exception;
+
+    ReceiveSystemManagerDTO guestLogin(UserBO userBO);
 }

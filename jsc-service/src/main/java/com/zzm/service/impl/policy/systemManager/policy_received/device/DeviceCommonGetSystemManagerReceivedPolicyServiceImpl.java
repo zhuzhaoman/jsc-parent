@@ -27,11 +27,18 @@ public class DeviceCommonGetSystemManagerReceivedPolicyServiceImpl implements Sy
 
         if (receiveSystemManagerDTO.getCode() == 200) {
 
+            System.out.println("---------------");
             System.out.println(receiveSystemManagerDTO.getData().toString());
 
-            if (receiveSystemManagerDTO.getMessageCode() == 36610) {
-                JSONObject result = JSONObject.parseObject(JSONObject.parse((receiveSystemManagerDTO.getData()).toString()).toString());
+            if (receiveSystemManagerDTO.getMessageCode() == 36614) {
+                JSONArray result = JSONArray.parseArray(receiveSystemManagerDTO.getData().toString());
+                receiveSystemManagerDTO.setData(result);
+            } else if (receiveSystemManagerDTO.getMessageCode() == 36610) {
+                JSONObject result = JSONObject.parseObject(JSONObject.toJSONString(receiveSystemManagerDTO.getData()));
                 result = textHandle(result);
+                receiveSystemManagerDTO.setData(result);
+            } else {
+                JSONObject result = JSONObject.parseObject(receiveSystemManagerDTO.getData().toString());
                 receiveSystemManagerDTO.setData(result);
             }
 

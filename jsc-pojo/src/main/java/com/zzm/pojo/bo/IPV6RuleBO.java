@@ -93,5 +93,5 @@ public class IPV6RuleBO {
     /* 符合规则类型和ID */
     public List<CCompoundMsgBO> m_tCompoundMsg;
 
-
+    public RuleSendMsgBO m_tRuleSendMsg;
 }

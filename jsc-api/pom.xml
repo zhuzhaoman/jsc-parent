@@ -12,6 +12,7 @@
     <artifactId>jsc-api</artifactId>
 
     <dependencies>
+
         <dependency>
             <groupId>com.zzm</groupId>
             <artifactId>jsc-job</artifactId>

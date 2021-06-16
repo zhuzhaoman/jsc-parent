@@ -30,7 +30,6 @@ import java.util.Base64;
 @Service
 public class UrlRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSystemManagerSendingPolicyServiceImpl implements SystemManagerSendingRulePolicyService {
 
-
     @Resource
     private ClientServerSync clientServerSync;
 

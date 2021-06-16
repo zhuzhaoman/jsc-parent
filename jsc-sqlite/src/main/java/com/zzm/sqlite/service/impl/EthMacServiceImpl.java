@@ -42,12 +42,27 @@ public class EthMacServiceImpl extends BaseService implements EthMacService {
     private final ValueObjectTransfer valueObjectTransfer;
 
     @Override
-    public PagedGridResult getRuleList(Integer page, Integer pageSize) {
+    public PagedGridResult getRuleList(String username, Integer page, Integer pageSize) {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "setTime");
         Pageable pageable = PageRequest.of(page, pageSize, sort);
 
-        Page<EtherMacRuleMsg> ruleMsgPage = ethMacRepository.findAll(pageable);
+        Long userId = getUserId(username);
+
+        Specification<EtherMacRuleMsg> specification = new Specification<EtherMacRuleMsg>() {
+            @Override
+            public Predicate toPredicate(Root<EtherMacRuleMsg> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<>();
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
+
+                Predicate[] arr = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(arr));
+            }
+        };
+
+        Page<EtherMacRuleMsg> ruleMsgPage = ethMacRepository.findAll(specification, pageable);
 
         List<EthMacVO> ethMacVOList = ruleMsgPage.getContent().stream().map(ethMacVO -> {
             return (EthMacVO) valueObjectTransfer.cast(ethMacVO, EthMacVO.class);
@@ -59,10 +74,12 @@ public class EthMacServiceImpl extends BaseService implements EthMacService {
 
 
     @Override
-    public PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria) {
+    public PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria) {
 
         JSONObject jsonObject = EthMacUtils.queryFieldCast(criteria);
         Set<String> keys = jsonObject.keySet();
+
+        Long userId = getUserId(username);
 
         Specification<EtherMacRuleMsg> specification = new Specification<EtherMacRuleMsg>() {
             @Override
@@ -73,6 +90,9 @@ public class EthMacServiceImpl extends BaseService implements EthMacService {
                     Predicate predicate = criteriaBuilder.equal(root.get(s), jsonObject.get(s));
                     list.add(predicate);
                 });
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
 
                 Predicate[] arr = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(arr));

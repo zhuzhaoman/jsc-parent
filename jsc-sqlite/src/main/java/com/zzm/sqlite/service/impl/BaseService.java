@@ -1,5 +1,6 @@
 package com.zzm.sqlite.service.impl;
 
+import com.zzm.sqlite.enums.UserIdEnum;
 import com.zzm.sqlite.pojo.Ipv4RuleMsg;
 import com.zzm.sqlite.pojo.vo.Ipv4VO;
 import com.zzm.sqlite.utils.PagedGridResult;
@@ -26,5 +27,20 @@ public class BaseService {
         pagedGridResult.setList(list);
 
         return pagedGridResult;
+    }
+
+    public Long getUserId(String username) {
+
+        UserIdEnum userIdEnum = UserIdEnum.formValue(username);
+
+        switch (userIdEnum) {
+            case ADMIN: return UserIdEnum.ADMIN.getCode();
+            case USER1: return UserIdEnum.USER1.getCode();
+            case USER2: return UserIdEnum.USER2.getCode();
+            case USER3: return UserIdEnum.USER3.getCode();
+            case USER4: return UserIdEnum.USER4.getCode();
+        }
+
+        return 0L;
     }
 }

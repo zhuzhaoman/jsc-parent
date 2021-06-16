@@ -57,4 +57,6 @@ public class TcpFlagRuleBO {
 
     /* 输入端口组 */
     public int m_u32InputPortGroupId;
+
+    public RuleSendMsgBO m_tRuleSendMsg;
 }

@@ -1,6 +1,7 @@
 package com.zzm.sqlite.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zzm.sqlite.pojo.FullcharRuleMsg;
 import com.zzm.sqlite.pojo.ImsiRuleMsg;
 import com.zzm.sqlite.pojo.ImsiRuleMsg;
 import com.zzm.sqlite.pojo.VlanRuleMsg;
@@ -46,12 +47,27 @@ public class ImsiServiceImpl extends BaseService implements ImsiService {
     private final ValueObjectTransfer valueObjectTransfer;
 
     @Override
-    public PagedGridResult getRuleList(Integer page, Integer pageSize) {
+    public PagedGridResult getRuleList(String username, Integer page, Integer pageSize) {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "setTime");
         Pageable pageable = PageRequest.of(page, pageSize, sort);
 
-        Page<ImsiRuleMsg> ruleMsgPage = imsiRepository.findAll(pageable);
+        Long userId = getUserId(username);
+
+        Specification<ImsiRuleMsg> specification = new Specification<ImsiRuleMsg>() {
+            @Override
+            public Predicate toPredicate(Root<ImsiRuleMsg> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<>();
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
+
+                Predicate[] arr = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(arr));
+            }
+        };
+
+        Page<ImsiRuleMsg> ruleMsgPage = imsiRepository.findAll(specification, pageable);
 
         List<ImsiVO> imsiVOList = ruleMsgPage.getContent().stream().map(imsiRuleMsg -> {
             return (ImsiVO) valueObjectTransfer.cast(imsiRuleMsg, ImsiVO.class);
@@ -62,10 +78,12 @@ public class ImsiServiceImpl extends BaseService implements ImsiService {
 
 
     @Override
-    public PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria) {
+    public PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria) {
 
         JSONObject jsonObject = ImsiUtils.queryFieldCast(criteria);
         Set<String> keys = jsonObject.keySet();
+
+        Long userId = getUserId(username);
 
         Specification<ImsiRuleMsg> specification = new Specification<ImsiRuleMsg>() {
             @Override
@@ -76,6 +94,9 @@ public class ImsiServiceImpl extends BaseService implements ImsiService {
                     Predicate predicate = criteriaBuilder.equal(root.get(s), jsonObject.get(s));
                     list.add(predicate);
                 });
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
 
                 Predicate[] arr = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(arr));

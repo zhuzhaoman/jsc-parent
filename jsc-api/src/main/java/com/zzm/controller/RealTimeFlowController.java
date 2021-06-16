@@ -33,6 +33,12 @@ public class RealTimeFlowController {
     @PostMapping("/get")
     @SystemLog(description = "获取实时流量")
     public ReceiveSystemManagerDTO realTimeFlow(@RequestBody RealTimeFlowBO realTimeFlowBO) throws InterruptedException {
+
+        if ("".equals(realTimeFlowBO.getParam().trim())) {
+            GraceException.display("请输入查询的端口或端口组");
+            return null;
+        }
+
         try {
             return realTimeFlowService.realTimeFlow(realTimeFlowBO);
         } catch (Exception e) {

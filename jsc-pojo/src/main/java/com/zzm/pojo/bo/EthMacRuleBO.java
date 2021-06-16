@@ -23,6 +23,10 @@ public class EthMacRuleBO {
 
     public String m_strDestinationMacMask;
 
+    private String m_u32NextProtocol;
+
+    private String m_u32NextProtocolMask;
+
     /* EtherMac规则类型:0-src,1-dst,2-src+dst */
     public int m_u32RuleType;
 
@@ -46,4 +50,6 @@ public class EthMacRuleBO {
 
     /* 批量添加删除的规则数量 */
     public int m_u32RuleNum;
+
+    public RuleSendMsgBO m_tRuleSendMsg;
 }

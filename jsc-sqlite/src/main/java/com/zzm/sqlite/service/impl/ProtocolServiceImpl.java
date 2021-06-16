@@ -1,6 +1,7 @@
 package com.zzm.sqlite.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zzm.sqlite.pojo.Ipv6RuleMsg;
 import com.zzm.sqlite.pojo.ProtocolRuleMsg;
 import com.zzm.sqlite.pojo.ProtocolRuleMsg;
 import com.zzm.sqlite.pojo.vo.ProtocolVO;
@@ -42,11 +43,26 @@ public class ProtocolServiceImpl extends BaseService implements ProtocolService 
     private final ValueObjectTransfer valueObjectTransfer;
 
     @Override
-    public PagedGridResult getRuleList(Integer page, Integer pageSize) {
+    public PagedGridResult getRuleList(String username, Integer page, Integer pageSize) {
 
         Pageable pageable = PageRequest.of(page, pageSize);
 
-        Page<ProtocolRuleMsg> ruleMsgPage = protocolRepository.findAll(pageable);
+        Long userId = getUserId(username);
+
+        Specification<ProtocolRuleMsg> specification = new Specification<ProtocolRuleMsg>() {
+            @Override
+            public Predicate toPredicate(Root<ProtocolRuleMsg> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<>();
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
+
+                Predicate[] arr = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(arr));
+            }
+        };
+
+        Page<ProtocolRuleMsg> ruleMsgPage = protocolRepository.findAll(specification, pageable);
 
         List<ProtocolVO> protocolVOList = ruleMsgPage.getContent().stream().map(protocolRuleMsg -> {
             return (ProtocolVO) valueObjectTransfer.cast(protocolRuleMsg, ProtocolVO.class);
@@ -57,10 +73,12 @@ public class ProtocolServiceImpl extends BaseService implements ProtocolService 
 
 
     @Override
-    public PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria) {
+    public PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria) {
 
         JSONObject jsonObject = ProtocolUtils.queryFieldCast(criteria);
         Set<String> keys = jsonObject.keySet();
+
+        Long userId = getUserId(username);
 
         Specification<ProtocolRuleMsg> specification = new Specification<ProtocolRuleMsg>() {
             @Override
@@ -71,6 +89,9 @@ public class ProtocolServiceImpl extends BaseService implements ProtocolService 
                     Predicate predicate = criteriaBuilder.equal(root.get(s), jsonObject.get(s));
                     list.add(predicate);
                 });
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
 
                 Predicate[] arr = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(arr));

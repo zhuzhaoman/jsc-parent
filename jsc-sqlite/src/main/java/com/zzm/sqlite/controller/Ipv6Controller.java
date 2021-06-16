@@ -30,21 +30,19 @@ public class Ipv6Controller {
 
     @GetMapping("/getRuleList")
     public PagedGridResult getRuleList(@RequestParam Integer page,
-                                       @RequestParam Integer pageSize) {
+                                       @RequestParam Integer pageSize,
+                                       @RequestParam String username) {
 
-        PagedGridResult pagedGridResult = ipv6Service.getRuleList(page, pageSize);
-
-        return pagedGridResult;
+        return ipv6Service.getRuleList(username, page, pageSize);
     }
 
     @GetMapping("/getRuleListByCriteria")
     public PagedGridResult getRuleListByCriteria(@RequestParam Integer page,
                                                  @RequestParam Integer pageSize,
-                                                 @RequestParam String criteria) {
+                                                 @RequestParam String criteria,
+                                                 @RequestParam String username) {
 
-        PagedGridResult pagedGridResult = ipv6Service.getRuleListByCriteria(page, pageSize, criteria);
-
-        return pagedGridResult;
+        return ipv6Service.getRuleListByCriteria(username, page, pageSize, criteria);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.zzm.sqlite.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zzm.sqlite.pojo.UrlRuleMsg;
 import com.zzm.sqlite.pojo.VlanRuleMsg;
 import com.zzm.sqlite.pojo.VlanRuleMsg;
 import com.zzm.sqlite.pojo.vo.VlanVO;
@@ -44,12 +45,27 @@ public class VlanServiceImpl extends BaseService implements VlanService {
 
 
     @Override
-    public PagedGridResult getRuleList(Integer page, Integer pageSize) {
+    public PagedGridResult getRuleList(String username, Integer page, Integer pageSize) {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "setTime");
         Pageable pageable = PageRequest.of(page, pageSize, sort);
 
-        Page<VlanRuleMsg> ruleMsgPage = vlanRepository.findAll(pageable);
+        Long userId = getUserId(username);
+
+        Specification<VlanRuleMsg> specification = new Specification<VlanRuleMsg>() {
+            @Override
+            public Predicate toPredicate(Root<VlanRuleMsg> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<>();
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
+
+                Predicate[] arr = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(arr));
+            }
+        };
+
+        Page<VlanRuleMsg> ruleMsgPage = vlanRepository.findAll(specification, pageable);
 
         List<VlanVO> vlanVOList = ruleMsgPage.getContent().stream().map(vlanRuleMsg -> {
             return (VlanVO) valueObjectTransfer.cast(vlanRuleMsg, VlanVO.class);
@@ -60,10 +76,12 @@ public class VlanServiceImpl extends BaseService implements VlanService {
 
 
     @Override
-    public PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria) {
+    public PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria) {
 
         JSONObject jsonObject = VlanUtils.queryFieldCast(criteria);
         Set<String> keys = jsonObject.keySet();
+
+        Long userId = getUserId(username);
 
         Specification<VlanRuleMsg> specification = new Specification<VlanRuleMsg>() {
             @Override
@@ -74,6 +92,9 @@ public class VlanServiceImpl extends BaseService implements VlanService {
                     Predicate predicate = criteriaBuilder.equal(root.get(s), jsonObject.get(s));
                     list.add(predicate);
                 });
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
 
                 Predicate[] arr = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(arr));

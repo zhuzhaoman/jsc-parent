@@ -27,21 +27,19 @@ public class FullCharController {
 
     @GetMapping("/getRuleList")
     public PagedGridResult getRuleList(@RequestParam Integer page,
-                                       @RequestParam Integer pageSize) {
+                                       @RequestParam Integer pageSize,
+                                       @RequestParam String username) {
 
-        PagedGridResult pagedGridResult = fullCharService.getRuleList(page, pageSize);
-
-        return pagedGridResult;
+        return fullCharService.getRuleList(username, page, pageSize);
     }
 
     @GetMapping("/getRuleListByCriteria")
     public PagedGridResult getRuleListByCriteria(@RequestParam Integer page,
                                                  @RequestParam Integer pageSize,
-                                                 @RequestParam String criteria) {
+                                                 @RequestParam String criteria,
+                                                 @RequestParam String username) {
 
-        PagedGridResult pagedGridResult = fullCharService.getRuleListByCriteria(page, pageSize, criteria);
-
-        return pagedGridResult;
+        return fullCharService.getRuleListByCriteria(username, page, pageSize, criteria);
     }
 
 

@@ -33,12 +33,26 @@ public class DeviceController {
     @Resource
     private DeviceService deviceService;
 
+    @PostMapping("/upgrade")
+    public JSONResult SystemManagerUpgrade(MultipartFile[] files, String sort) {
+
+        if (files.length <= 0) {
+            GraceException.display("上传的文件不能为空");
+        }
+
+        if("".equals(sort)) {
+            GraceException.display("排序不能为空");
+        }
+
+        deviceService.SystemManagerUpgrade(files, sort);
+
+        return JSONResult.ok("升级成功");
+    }
+
     @PostMapping("/importConfigFile")
     public JSONResult importConfigFile(MultipartFile[] files, HttpServletRequest request) {
 
         String user = request.getHeader("x-token");
-
-        System.out.println("开始导入");
 
         boolean flag = deviceService.importConfigFile(files, user);
         if (!flag) {

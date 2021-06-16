@@ -1,6 +1,7 @@
 package com.zzm.pojo.dto;
 
 import com.zzm.pojo.bo.CVlanTypeMsgBO;
+import com.zzm.pojo.bo.RuleSendMsgBO;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -37,4 +38,6 @@ public class VlanRuleDTO {
 
     /* vlan规则的标签类型和id */
     public List<CVlanTypeMsgDTO> m_tVlanTypeMsg;
+
+    public RuleSendMsgBO m_tRuleSendMsg;
 }

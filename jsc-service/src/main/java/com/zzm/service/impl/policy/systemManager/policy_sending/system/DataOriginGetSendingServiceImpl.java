@@ -32,7 +32,6 @@ public class DataOriginGetSendingServiceImpl implements SystemManagerSendingSyst
     @Override
     public Object configDataEncapsulation(SystemBO systemBO){
 
-
         SendSystemManagerDTO sendSystemManagerDTO = getSendData(systemBO);
         sendSystemManagerDTO.setMessageCode(MessageCodeEnum.SYSTEM_GET_DATA_ORIGIN.getReqCode());
         sendSystemManagerDTO.setData(systemBO.getParam());

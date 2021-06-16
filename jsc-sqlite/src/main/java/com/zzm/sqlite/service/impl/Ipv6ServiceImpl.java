@@ -43,12 +43,27 @@ public class Ipv6ServiceImpl extends BaseService implements Ipv6Service {
 
 
     @Override
-    public PagedGridResult getRuleList(Integer page, Integer pageSize) {
+    public PagedGridResult getRuleList(String username, Integer page, Integer pageSize) {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "setTime");
         Pageable pageable = PageRequest.of(page, pageSize, sort);
 
-        Page<Ipv6RuleMsg> ruleMsgPage = ipv6Repository.findAll(pageable);
+        Long userId = getUserId(username);
+
+        Specification<Ipv6RuleMsg> specification = new Specification<Ipv6RuleMsg>() {
+            @Override
+            public Predicate toPredicate(Root<Ipv6RuleMsg> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<>();
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
+
+                Predicate[] arr = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(arr));
+            }
+        };
+
+        Page<Ipv6RuleMsg> ruleMsgPage = ipv6Repository.findAll(specification, pageable);
 
         List<Ipv6VO> ipv6VOList = ruleMsgPage.getContent().stream().map(ipv6RuleMsg -> {
             return (Ipv6VO) valueObjectTransfer.cast(ipv6RuleMsg, Ipv6VO.class);
@@ -59,10 +74,12 @@ public class Ipv6ServiceImpl extends BaseService implements Ipv6Service {
 
 
     @Override
-    public PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria) {
+    public PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria) {
 
         JSONObject jsonObject = Ipv6Utils.queryFieldCast(criteria);
         Set<String> keys = jsonObject.keySet();
+
+        Long userId = getUserId(username);
 
         Specification<Ipv6RuleMsg> specification = new Specification<Ipv6RuleMsg>() {
             @Override
@@ -73,6 +90,9 @@ public class Ipv6ServiceImpl extends BaseService implements Ipv6Service {
                     Predicate predicate = criteriaBuilder.equal(root.get(s), jsonObject.get(s));
                     list.add(predicate);
                 });
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
 
                 Predicate[] arr = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(arr));

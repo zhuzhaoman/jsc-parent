@@ -12,7 +12,7 @@ import java.util.Objects;
 @Table(name = "TCPFLAG_RULE_MSG")
 @IdClass(TcpflagRuleMsgPK.class)
 public class TcpflagRuleMsg {
-    
+
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -33,7 +33,7 @@ public class TcpflagRuleMsg {
     private Long setIp;
     private Long inputPortGroupId;
 
-    
+
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;

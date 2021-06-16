@@ -37,7 +37,6 @@ public class MacRuleMsg {
     private Long isHitStat;
     private Long setTime;
     private Long setIp;
-
     
     @Column(name = "RuleSource")
     public Long getRuleSource() {

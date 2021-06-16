@@ -57,7 +57,12 @@ public class UserController {
 //            receiveSystemManagerDTO.setMessageCode(0);
 //            receiveSystemManagerDTO.setMsg("登录成功");
 //            return receiveSystemManagerDTO;
-            return userService.login(userBO);
+
+            if (userBO.getUsername().equals("guest")) {
+                return userService.guestLogin(userBO);
+            } else {
+                return userService.login(userBO);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             GraceException.display("登录失败");

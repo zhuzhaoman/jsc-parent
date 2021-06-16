@@ -29,21 +29,19 @@ public class FixCharController {
 
     @GetMapping("/getRuleList")
     public PagedGridResult getRuleList(@RequestParam Integer page,
-                                       @RequestParam Integer pageSize) {
+                                       @RequestParam Integer pageSize,
+                                       @RequestParam String username) {
 
-        PagedGridResult pagedGridResult = fixCharService.getRuleList(page, pageSize);
-
-        return pagedGridResult;
+        return fixCharService.getRuleList(username, page, pageSize);
     }
 
     @GetMapping("/getRuleListByCriteria")
     public PagedGridResult getRuleListByCriteria(@RequestParam Integer page,
                                                  @RequestParam Integer pageSize,
-                                                 @RequestParam String criteria) {
+                                                 @RequestParam String criteria,
+                                                 @RequestParam String username) {
 
-        PagedGridResult pagedGridResult = fixCharService.getRuleListByCriteria(page, pageSize, criteria);
-
-        return pagedGridResult;
+        return fixCharService.getRuleListByCriteria(username, page, pageSize, criteria);
     }
 
 

@@ -27,17 +27,26 @@ public class CommonGetRuleSystemManagerReceivedPolicyServiceImpl implements Syst
         int messageCode = receiveSystemManagerDTO.getMessageCode();
         MessageCodeEnum messageCodeEnum = MessageCodeEnum.fromValue(messageCode);
 
-        if(receiveSystemManagerDTO.getCode() == 200) {
+        if (receiveSystemManagerDTO.getCode() == 200) {
+
+            if (MessageCodeEnum.SHOW_RULE_TEMPLATE.getResCode() == messageCode ||
+                    MessageCodeEnum.SHOW_RULE_PRIORITY.getResCode() == messageCode) {
+
+                JSONArray jsonArray = JSONArray.parseArray(receiveSystemManagerDTO.getData().toString());
+                receiveSystemManagerDTO.setData(jsonArray);
+
+            } else {
+                String[] params = messageCodeEnum.getParams().split(",");
+
+                JSONArray jsonArray = JSONArray.parseArray(receiveSystemManagerDTO.getData().toString());
+                JSONObject jsonObject1 = JSONObject.parseObject(jsonArray.get(0).toString());
+                JSONObject jsonObject2 = JSONObject.parseObject(jsonObject1.get(params[0]).toString());
+                Object parse = JSONObject.parse(jsonObject2.toString());
+
+                receiveSystemManagerDTO.setData(parse);
+            }
+
             receiveSystemManagerDTO.setMsg("规则查询成功！");
-
-            String[] params = messageCodeEnum.getParams().split(",");
-
-            JSONArray jsonArray = JSONArray.parseArray(receiveSystemManagerDTO.getData().toString());
-            JSONObject jsonObject1 = JSONObject.parseObject(jsonArray.get(0).toString());
-            JSONObject jsonObject2 = JSONObject.parseObject(jsonObject1.get(params[0]).toString());
-            Object parse = JSONObject.parse(jsonObject2.toString());
-
-            receiveSystemManagerDTO.setData(parse);
         }
 
         return receiveSystemManagerDTO;

@@ -19,13 +19,15 @@ import java.util.UUID;
 @Service
 public class VXP_PPB3320_PortFlowCardTypePolicyServiceImpl implements SnmpPortFlowCardTypePolicyService {
 
+    private int CARD_TYPE = 12;
+
     @Resource
     private PortHistoryFlowRepository portHistoryFlowRepository;
 
 
     @Override
     public int policyType() {
-        return 12;
+        return CARD_TYPE;
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.Objects;
 @Table(name = "FIXEDLOCCHARCODE_RULE_MSG")
 @IdClass(FixedloccharcodeRuleMsgPK.class)
 public class FixedloccharcodeRuleMsg {
-    
+
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -38,7 +38,7 @@ public class FixedloccharcodeRuleMsg {
     private Long outpuPktAction;
     private Long outpuPktNum;
 
-    
+
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;

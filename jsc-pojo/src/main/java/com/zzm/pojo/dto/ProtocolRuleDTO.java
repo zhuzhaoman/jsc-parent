@@ -82,6 +82,8 @@ public class ProtocolRuleDTO {
     /* 是否中标统计 */
     public int m_u32HitStat;
 
+    public int m_u32IsComPound;
+
     /* 规则数量 */
 //    public int m_u32RuleNum;
 

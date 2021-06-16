@@ -75,4 +75,6 @@ public interface DeviceService {
     Map<String, Object> exportConfigFile(String user);
 
     void downloadConfigFile(String fileName, HttpServletResponse response);
+
+    void SystemManagerUpgrade(MultipartFile[] files, String sort);
 }

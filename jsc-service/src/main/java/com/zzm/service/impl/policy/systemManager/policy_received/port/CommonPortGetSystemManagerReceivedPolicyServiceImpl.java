@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 
 /**
  * @author zhuzhaoman
@@ -29,7 +32,7 @@ public class CommonPortGetSystemManagerReceivedPolicyServiceImpl implements Syst
     }
 
     @Override
-    public Object dataProcessing(ReceiveSystemManagerDTO receiveSystemManagerDTO) {
+    public Object dataProcessing(ReceiveSystemManagerDTO receiveSystemManagerDTO) throws UnknownHostException {
 
         if (receiveSystemManagerDTO.getCode() == 200) {
 
@@ -50,13 +53,14 @@ public class CommonPortGetSystemManagerReceivedPolicyServiceImpl implements Syst
         return receiveSystemManagerDTO;
     }
 
+
     /**
      * 查询端口信息
      *
      * @param data
      * @return
      */
-    private JSONArray showPortInfo(JSONArray data) {
+    private JSONArray showPortInfo(JSONArray data) throws UnknownHostException {
         JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(data.get(0)));
 
         String ipv6Sip = IPUtils.base64ToIp(jsonObject.getString("m_strIpv6Sip"));
@@ -69,8 +73,29 @@ public class CommonPortGetSystemManagerReceivedPolicyServiceImpl implements Syst
         jsonObject.put("m_u32Ipv4Sip", ipv4Sip);
         jsonObject.put("m_u32Ipv4Dip", ipv4Dip);
 
+//        byte[] greSrcMac = Base64.getDecoder().decode(jsonObject.getString("m_strGreSrcMac"));
+//        byte[] greDstMac = Base64.getDecoder().decode(jsonObject.getString("m_strGreDstMac"));
+
+        jsonObject.put("m_strGreSrcMac", jsonObject.getString("m_strGreSrcMac"));
+        jsonObject.put("m_strGreDstMac", jsonObject.getString("m_strGreDstMac"));
+
+//        jsonObject.put("m_strGreSrcMac", new String(greSrcMac));
+//        jsonObject.put("m_strGreDstMac", new String(greDstMac));
+
         String port = portHandel(jsonObject.getInteger("m_u32PortId"));
         jsonObject.put("m_u32PortId", port);
+
+        if (jsonObject.getInteger("m_u32ForwardingPortId") != 0) {
+            String forwardPort = portHandel(jsonObject.getInteger("m_u32ForwardingPortId"));
+            jsonObject.put("m_u32ForwardingPortId", forwardPort);
+        }
+
+        try {
+            String mirrorPort = portHandel(jsonObject.getInteger("m_u32MirrorPortId"));
+            jsonObject.put("m_u32MirrorPortId", mirrorPort);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             JSONObject jsonObject1 = JSONObject.parseObject(JSONObject.toJSONString(jsonObject.get("m_tPortRoute")));
@@ -99,6 +124,23 @@ public class CommonPortGetSystemManagerReceivedPolicyServiceImpl implements Syst
         return data;
     }
 
+    private static List<String> getStrList(String inputString, int length) {
+        int size = inputString.length() / length;
+        if (inputString.length() % length != 0) {
+            size += 1;
+        }
+        return getStrList(inputString, length, size);
+    }
+
+    public static List<String> getStrList(String inputString, int length, int size) {
+        List<String> list = new ArrayList<String>();
+        for (int index = 0; index < size; index++) {
+            String childStr = inputString.substring(index * length, (index + 1) * length);
+            list.add(childStr);
+        }
+        return list;
+    }
+
     /**
      * 查询gre隧道信息
      *
@@ -106,50 +148,57 @@ public class CommonPortGetSystemManagerReceivedPolicyServiceImpl implements Syst
      * @return
      */
     private JSONArray showPortGre(JSONArray data) {
+        JSONArray result = new JSONArray();
 
         for (int i = 0; i < data.size(); i++) {
             JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(data.get(i)));
-
-            String port = portHandel((Integer) jsonObject.get("m_u32PortId"));
-            jsonObject.put("m_u32PortId", port);
-
             JSONArray jsonArray1 = JSONArray.parseArray(JSONObject.toJSONString(jsonObject.get("m_tIpInfo")));
-            JSONObject jsonObject1 = JSONObject.parseObject(JSONObject.toJSONString(jsonArray1.get(0)));
 
-            if (StringUtils.isNotBlank((String) jsonObject1.get("m_strIpv6"))) {
-                byte[] ipv6Byte = Base64.getDecoder().decode((String) jsonObject1.get("m_strIpv6"));
-                String ipv6 = null;
-                try {
-                    ipv6 = InetAddress.getByAddress(ipv6Byte).getHostAddress();
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                    ipv6 = "";
+            if (jsonArray1.size() > 0) {
+                System.out.println(jsonArray1.toJSONString());
+                String port = portHandel((Integer) jsonObject.get("m_u32PortId"));
+                jsonObject.put("m_u32PortId", port);
+
+                for (int i1 = 0; i1 < jsonArray1.size(); i1++) {
+                    JSONObject jsonObject1 = JSONObject.parseObject(JSONObject.toJSONString(jsonArray1.get(i1)));
+
+                    if (StringUtils.isNotBlank((String) jsonObject1.get("m_strIpv6"))) {
+                        byte[] ipv6Byte = Base64.getDecoder().decode((String) jsonObject1.get("m_strIpv6"));
+                        String ipv6 = null;
+                        try {
+                            ipv6 = InetAddress.getByAddress(ipv6Byte).getHostAddress();
+                        } catch (UnknownHostException e) {
+                            e.printStackTrace();
+                            ipv6 = "";
+                        }
+                        jsonObject1.put("m_strIpv6", ipv6);
+                    } else {
+                        String ipv4 = BaseConversionUtils.long2Ip(Long.parseLong(String.valueOf(jsonObject1.get("m_u32Ipv4"))));
+                        jsonObject1.put("m_u32Ipv4", ipv4);
+                    }
+
+                    byte[] macByte = Base64.getDecoder().decode((String) jsonObject1.get("m_strMac"));
+                    String[] macArr = new String[macByte.length];
+                    for (int j = 0; j < macByte.length; j++) {
+                        String s = Integer.toHexString(macByte[j]).replace("f", "");
+                        macArr[j] = s;
+                    }
+
+                    jsonObject1.put("m_strMac", String.join(":", macArr));
+                    jsonArray1.set(i1, jsonObject1);
                 }
-                jsonObject1.put("m_strIpv6", ipv6);
-            } else {
-                String ipv4 = BaseConversionUtils.long2Ip((Long) jsonObject1.get("m_u32Ipv4"));
-                jsonObject1.put("m_u32Ipv4", ipv4);
+
+                jsonObject.put("m_tIpInfo", jsonArray1);
+                result.add(jsonObject);
             }
-
-            byte[] macByte = Base64.getDecoder().decode((String) jsonObject1.get("m_strMac"));
-            String[] macArr = new String[macByte.length];
-            for (int j = 0; j < macByte.length; j++) {
-                String s = Integer.toHexString(macByte[j]).replace("f", "");
-                macArr[j] = s;
-            }
-
-            jsonObject1.put("m_strMac", String.join(":", macArr));
-            jsonArray1.set(0, jsonObject1);
-            jsonObject.put("m_tIpInfo", jsonArray1);
-            data.set(i, jsonObject);
-
         }
 
-        return data;
+        return result;
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws UnknownHostException {
+        System.out.println(String.join(":", new String("01020304").split(" ", 2)).substring(1));
+        System.out.println(getStrList("0102030405", 2));
         //"http://restapi.amap.com/v3/geocode/geo?address=上海市东方明珠&output=JSON&key=xxxxxxxxx";
 //        String geturl = "http://restapi.amap.com/v3/geocode/geo?key=b6235ca589ee3611762e4fdac357034e&address=江苏省宿迁市泗阳县";
 //        String location = "";

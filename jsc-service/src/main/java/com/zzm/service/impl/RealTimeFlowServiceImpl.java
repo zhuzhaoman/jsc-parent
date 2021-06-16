@@ -23,6 +23,7 @@ public class RealTimeFlowServiceImpl implements RealTimeFlowService {
      */
     @Override
     public ReceiveSystemManagerDTO realTimeFlow(RealTimeFlowBO realTimeFlowBO) throws Exception {
+
         SystemManagerSendingRealTimeFlowPolicyService systemManagerSendingRealTimeFlowPolicyService =
                 SystemManagerSendingRealTimeFlowComponent.systemManagerSendingPolicyServiceMap.get(realTimeFlowBO.getType());
         ReceiveSystemManagerDTO receiveSystemManagerDTO =

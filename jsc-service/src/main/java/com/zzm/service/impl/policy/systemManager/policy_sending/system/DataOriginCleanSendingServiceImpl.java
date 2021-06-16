@@ -32,7 +32,6 @@ public class DataOriginCleanSendingServiceImpl implements SystemManagerSendingSy
     @Override
     public Object configDataEncapsulation(SystemBO systemBO){
 
-
         SendSystemManagerDTO sendSystemManagerDTO = getSendData(systemBO);
         sendSystemManagerDTO.setMessageCode(MessageCodeEnum.SYSTEM_CLEAN_DATA_ORIGIN.getReqCode());
         sendSystemManagerDTO.setData(systemBO.getParam());

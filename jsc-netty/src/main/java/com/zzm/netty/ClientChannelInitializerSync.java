@@ -23,8 +23,8 @@ public class ClientChannelInitializerSync extends ChannelInitializer<SocketChann
         ByteBuf buf = Unpooled.copiedBuffer("\n".getBytes());
         pipeline.addLast(new DelimiterBasedFrameDecoder(65535, buf));
 
-        pipeline.addLast("decoder", new StringDecoder());
-        pipeline.addLast("encoder", new StringEncoder());
+        pipeline.addLast("decoder", new StringDecoder()); // 解码
+        pipeline.addLast("encoder", new StringEncoder()); // 编码
         pipeline.addLast(new ClientHandlerSync());
     }
 }

@@ -1,6 +1,7 @@
 package com.zzm.sqlite.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zzm.sqlite.pojo.ImsiRuleMsg;
 import com.zzm.sqlite.pojo.Ipv4RuleMsg;
 import com.zzm.sqlite.pojo.vo.Ipv4VO;
 import com.zzm.sqlite.repository.Ipv4Repository;
@@ -39,12 +40,27 @@ public class Ipv4ServiceImpl extends BaseService implements Ipv4Service {
     private final ValueObjectTransfer valueObjectTransfer;
 
     @Override
-    public PagedGridResult getRuleList(Integer page, Integer pageSize) {
+    public PagedGridResult getRuleList(String username, Integer page, Integer pageSize) {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "setTime");
         Pageable pageable = PageRequest.of(page, pageSize, sort);
 
-        Page<Ipv4RuleMsg> ruleMsgPage = ipv4Repository.findAll(pageable);
+        Long userId = getUserId(username);
+
+        Specification<Ipv4RuleMsg> specification = new Specification<Ipv4RuleMsg>() {
+            @Override
+            public Predicate toPredicate(Root<Ipv4RuleMsg> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<>();
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
+
+                Predicate[] arr = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(arr));
+            }
+        };
+
+        Page<Ipv4RuleMsg> ruleMsgPage = ipv4Repository.findAll(specification, pageable);
 
         List<Ipv4VO> ipv4VOList = ruleMsgPage.getContent().stream().map(ipv4RuleMsg -> {
             return (Ipv4VO) valueObjectTransfer.cast(ipv4RuleMsg, Ipv4VO.class);
@@ -55,10 +71,12 @@ public class Ipv4ServiceImpl extends BaseService implements Ipv4Service {
 
 
     @Override
-    public PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria) {
+    public PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria) {
 
         JSONObject jsonObject = Ipv4Utils.queryFieldCast(criteria);
         Set<String> keys = jsonObject.keySet();
+
+        Long userId = getUserId(username);
 
         Specification<Ipv4RuleMsg> specification = new Specification<Ipv4RuleMsg>() {
             @Override
@@ -69,6 +87,9 @@ public class Ipv4ServiceImpl extends BaseService implements Ipv4Service {
                     Predicate predicate = criteriaBuilder.equal(root.get(s), jsonObject.get(s));
                     list.add(predicate);
                 });
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
 
                 Predicate[] arr = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(arr));

@@ -1,5 +1,6 @@
 package com.zzm.sqlite.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public class PagedGridResult<T> {
     // 总页数
     protected int totalPage;
     // 数据
-    protected List<?> list;
+    protected List<?> list = new ArrayList<>();
 
     public int getPage() {
         return page;

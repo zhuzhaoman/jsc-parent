@@ -15,6 +15,9 @@ import lombok.Data;
 @BindEntity(Ipv6RuleMsg.class)
 public class Ipv6VO {
 
+    @BindField(fieldName = "sendSlotId", methodName = "slotIdFormat", value = BaseConversionUtils.class)
+    private String sendSlotId;
+
     private Long ruleId;
 
     @BindField(fieldName = "srcIp", methodName = "ipFormat", value = Ipv6Utils.class)

@@ -1,18 +1,13 @@
 package com.zzm.utils;
 
-import com.zzm.enums.UserEnum;
 import com.zzm.enums.UserFileConfig;
 import com.zzm.enums.UserPasswordEnum;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author: zhuzhaoman

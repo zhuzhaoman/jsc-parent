@@ -16,6 +16,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 
 /**
  * @author zhuzhaoman
@@ -33,10 +35,20 @@ public class PortGrePackageSystemManagerSendingPortPolicyServiceImpl implements 
         return "port-gre-package";
     }
 
-    private JSONArray handle(PortBO portBO) {
+    private JSONArray handle(PortBO portBO) throws UnsupportedEncodingException {
 
         JSONArray jsonArray = JSONArray.parseArray(JSONObject.toJSONString(portBO.getParam()));
         JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(jsonArray.get(0)));
+
+        String m_strGreSrcMac = jsonObject.get("m_strGreSrcMac").toString();
+        String m_strGreDstMac = jsonObject.get("m_strGreDstMac").toString();
+
+//        jsonObject.put("m_strGreSrcMac", Base64.getEncoder().encodeToString(m_strGreSrcMac.replace(":", "").getBytes("US-ASCII")));
+//        jsonObject.put("m_strGreDstMac", Base64.getEncoder().encodeToString(m_strGreDstMac.replace(":", "").getBytes("US-ASCII")));
+
+        jsonObject.put("m_strGreSrcMac", m_strGreSrcMac.replace(":", ""));
+        jsonObject.put("m_strGreDstMac", m_strGreDstMac.replace(":", ""));
+
 
         if (StringUtils.isNotBlank((String) jsonObject.get("m_u32Ipv4Sip"))) {
             String srcIp = (String) jsonObject.get("m_u32Ipv4Sip");

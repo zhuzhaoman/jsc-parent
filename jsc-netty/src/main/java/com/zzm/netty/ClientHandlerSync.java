@@ -100,7 +100,9 @@ public class ClientHandlerSync extends ChannelInboundHandlerAdapter {
             }
         }
 
+        message = this.messageHandler(message);
         System.out.println("发送数据：" + message);
+        System.out.println("发送数据长度：" + message.toString().length());
 
         promise = ctx.newPromise();
         ctx.writeAndFlush(message);
@@ -131,5 +133,14 @@ public class ClientHandlerSync extends ChannelInboundHandlerAdapter {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         ctx.close();
         log.error("掉线...");
+    }
+
+    public String messageHandler(Object message) {
+        String result = message.toString();
+        int size = 4096 - result.length();
+        for (int i = 0; i < size; i++) {
+            result += " ";
+        }
+        return result;
     }
 }

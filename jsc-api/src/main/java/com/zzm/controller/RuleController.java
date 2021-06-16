@@ -55,7 +55,6 @@ public class RuleController {
 
     @PostMapping("/getRuleList")
     public ReceiveSystemManagerDTO getRuleAll(@RequestBody RuleQueryBO ruleQueryBO) {
-        System.out.println("进入");
         return ruleService.getRuleList(ruleQueryBO);
     }
 

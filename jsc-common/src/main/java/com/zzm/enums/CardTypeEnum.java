@@ -2,7 +2,10 @@ package com.zzm.enums;
 
 public enum CardTypeEnum {
     NETVIS_PPB3320(12, 60, "NETVIS_PPB3320","正交2.0双路NPS卡"),
-    NETVIS_BB2032(14, 32,"NETVIS_BB2032", "32口盒式汇聚分流设备");
+    RTM(13, 90, "RTM","RTM"),
+    NETVIS_BB2032(14, 32,"NETVIS_BB2032", "32口盒式汇聚分流设备"),
+    NETVIS_PPB3321(18, 60, "NETVIS_PPB3321","正交2.0双路NPS卡+"),
+    NETVIS_AB1048S(21, 54, "NETVIS_AB1048S","48口盒式 单路NPS + barefoot");
 
     private int code;
     private int portNumber;

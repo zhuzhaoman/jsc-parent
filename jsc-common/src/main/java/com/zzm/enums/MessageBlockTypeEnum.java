@@ -11,6 +11,7 @@ public enum MessageBlockTypeEnum {
     IPV4_RULE_ADD(0, "IPV4规则下发"),
     RULE_ADD(0, "规则下发"),
     RULE_DEL(0, "规则删除"),
+    RULE_GET(0, "规则删除"),
     RESOURCES_CONFIG(0, "资源配置"),
     SERVICE_PROFILE(0, "业务策略"),
     PORT_GROUP(0, "端口组"),

@@ -86,6 +86,15 @@ public class EthMacRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSys
         return ethMacRuleBO;
     }
 
+    private JSONObject nextProtocolHandle(JSONObject data) {
+        String m_u32NextProtocol = data.get("m_u32NextProtocol").toString();
+        String m_u32NextProtocolMask = data.get("m_u32NextProtocolMask").toString();
+
+        data.put("m_u32NextProtocol", BaseConversionUtils.hex2int(m_u32NextProtocol));
+        data.put("m_u32NextProtocolMask", BaseConversionUtils.hex2int(m_u32NextProtocolMask));
+
+        return data;
+    }
 
     @Override
     public Object addDataEncapsulation(RuleBO ruleBO) {
@@ -102,6 +111,7 @@ public class EthMacRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSys
         }
 
         JSONObject jsonObject = priorityHandle(ethMacRuleBO);
+        JSONObject params = nextProtocolHandle(jsonObject);
 
         SendSystemManagerDTO sendSystemManagerDTO = new SendSystemManagerDTO(
                 MessageBlockTypeEnum.RULE_ADD.getCode(),
@@ -111,7 +121,7 @@ public class EthMacRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSys
                 ruleBO.getUsername(),
                 ruleBO.getDomainId(),
                 ruleBO.getDomainType(),
-                jsonObject);
+                params);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
         Object data = clientServerSync.sendMessage(content);

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface Ipv4Service {
 
-    PagedGridResult getRuleList(Integer page, Integer pageSize);
+    PagedGridResult getRuleList(String username, Integer page, Integer pageSize);
 
-    PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria);
+    PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria);
 }

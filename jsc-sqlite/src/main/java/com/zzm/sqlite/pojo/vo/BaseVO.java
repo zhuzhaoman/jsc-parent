@@ -16,6 +16,7 @@ import lombok.Data;
 @Data
 public class BaseVO {
 
+
     @BindField(fieldName = "isStatic", methodName = "getStatic", value = StatusUtils.class)
     public String isStatic;
 

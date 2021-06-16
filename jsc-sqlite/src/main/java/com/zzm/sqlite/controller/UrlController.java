@@ -26,21 +26,19 @@ public class UrlController {
 
     @GetMapping("/getRuleList")
     public PagedGridResult getRuleList(@RequestParam Integer page,
-                                       @RequestParam Integer pageSize) {
+                                       @RequestParam Integer pageSize,
+                                       @RequestParam String username) {
 
-        PagedGridResult pagedGridResult = urlService.getRuleList(page, pageSize);
-
-        return pagedGridResult;
+        return urlService.getRuleList(username, page, pageSize);
     }
 
     @GetMapping("/getRuleListByCriteria")
     public PagedGridResult getRuleListByCriteria(@RequestParam Integer page,
                                                  @RequestParam Integer pageSize,
-                                                 @RequestParam String criteria) {
+                                                 @RequestParam String criteria,
+                                                 @RequestParam String username) {
 
-        PagedGridResult pagedGridResult = urlService.getRuleListByCriteria(page, pageSize, criteria);
-
-        return pagedGridResult;
+        return urlService.getRuleListByCriteria(username, page, pageSize, criteria);
     }
 
 

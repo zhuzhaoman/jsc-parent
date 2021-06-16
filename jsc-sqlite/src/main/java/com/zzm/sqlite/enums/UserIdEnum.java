@@ -42,5 +42,14 @@ public enum UserIdEnum {
         }
         return String.valueOf(code);
     }
+
+    public static UserIdEnum formValue(String value) {
+        for (UserIdEnum p : UserIdEnum.values()) {
+            if (p.getValue().equals(value)) {
+                return p;
+            }
+        }
+        return UserIdEnum.ADMIN;
+    }
     
 }

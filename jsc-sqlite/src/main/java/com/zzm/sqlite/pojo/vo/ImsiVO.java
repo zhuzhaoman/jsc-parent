@@ -5,6 +5,7 @@ import com.zzm.sqlite.core.BindField;
 import com.zzm.sqlite.core.BindFieldIgnore;
 import com.zzm.sqlite.pojo.ImsiRuleMsg;
 import com.zzm.sqlite.pojo.WindowRuleMsg;
+import com.zzm.sqlite.utils.BaseConversionUtils;
 import com.zzm.sqlite.utils.Ipv4Utils;
 import com.zzm.sqlite.utils.StatusUtils;
 import com.zzm.sqlite.utils.TimeUtils;

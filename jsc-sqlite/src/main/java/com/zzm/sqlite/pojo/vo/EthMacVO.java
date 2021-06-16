@@ -3,10 +3,7 @@ package com.zzm.sqlite.pojo.vo;
 import com.zzm.sqlite.core.BindEntity;
 import com.zzm.sqlite.core.BindField;
 import com.zzm.sqlite.pojo.EtherMacRuleMsg;
-import com.zzm.sqlite.utils.EthMacUtils;
-import com.zzm.sqlite.utils.Ipv4Utils;
-import com.zzm.sqlite.utils.StatusUtils;
-import com.zzm.sqlite.utils.TimeUtils;
+import com.zzm.sqlite.utils.*;
 import lombok.Data;
 
 /**
@@ -17,6 +14,15 @@ import lombok.Data;
 @Data
 @BindEntity(EtherMacRuleMsg.class)
 public class EthMacVO {
+
+    @BindField(fieldName = "sendSlotId", methodName = "slotIdFormat", value = BaseConversionUtils.class)
+    private String sendSlotId;
+
+    @BindField(fieldName = "nextProtocol", methodName = "long2Hex", value = BaseConversionUtils.class)
+    private String nextProtocol;
+
+    @BindField(fieldName = "nextProtocolMask", methodName = "long2Hex", value = BaseConversionUtils.class)
+    private String nextProtocolMask;
 
     private Long ruleId;
 

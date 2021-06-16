@@ -25,21 +25,19 @@ public class VlanController {
 
     @GetMapping("/getRuleList")
     public PagedGridResult getRuleList(@RequestParam Integer page,
-                                       @RequestParam Integer pageSize) {
+                                       @RequestParam Integer pageSize,
+                                       @RequestParam String username) {
 
-        PagedGridResult pagedGridResult = vlanService.getRuleList(page, pageSize);
-
-        return pagedGridResult;
+        return vlanService.getRuleList(username, page, pageSize);
     }
 
     @GetMapping("/getRuleListByCriteria")
     public PagedGridResult getRuleListByCriteria(@RequestParam Integer page,
                                                  @RequestParam Integer pageSize,
-                                                 @RequestParam String criteria) {
+                                                 @RequestParam String criteria,
+                                                 @RequestParam String username) {
 
-        PagedGridResult pagedGridResult = vlanService.getRuleListByCriteria(page, pageSize, criteria);
-
-        return pagedGridResult;
+        return vlanService.getRuleListByCriteria(username, page, pageSize, criteria);
     }
 
 }

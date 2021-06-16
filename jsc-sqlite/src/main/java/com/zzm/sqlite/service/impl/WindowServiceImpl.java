@@ -1,6 +1,7 @@
 package com.zzm.sqlite.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zzm.sqlite.pojo.VlanRuleMsg;
 import com.zzm.sqlite.pojo.WindowRuleMsg;
 import com.zzm.sqlite.pojo.WindowRuleMsg;
 import com.zzm.sqlite.pojo.vo.WindowVO;
@@ -44,10 +45,25 @@ public class WindowServiceImpl extends BaseService implements WindowService {
     private final ValueObjectTransfer valueObjectTransfer;
 
     @Override
-    public PagedGridResult getRuleList(Integer page, Integer pageSize) {
+    public PagedGridResult getRuleList(String username, Integer page, Integer pageSize) {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "setTime");
         Pageable pageable = PageRequest.of(page, pageSize, sort);
+
+        Long userId = getUserId(username);
+
+        Specification<WindowRuleMsg> specification = new Specification<WindowRuleMsg>() {
+            @Override
+            public Predicate toPredicate(Root<WindowRuleMsg> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<>();
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
+
+                Predicate[] arr = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(arr));
+            }
+        };
 
         Page<WindowRuleMsg> ruleMsgPage = windowRepository.findAll(pageable);
 
@@ -60,10 +76,12 @@ public class WindowServiceImpl extends BaseService implements WindowService {
 
 
     @Override
-    public PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria) {
+    public PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria) {
 
         JSONObject jsonObject = WindowUtils.queryFieldCast(criteria);
         Set<String> keys = jsonObject.keySet();
+
+        Long userId = getUserId(username);
 
         Specification<WindowRuleMsg> specification = new Specification<WindowRuleMsg>() {
             @Override
@@ -74,6 +92,9 @@ public class WindowServiceImpl extends BaseService implements WindowService {
                     Predicate predicate = criteriaBuilder.equal(root.get(s), jsonObject.get(s));
                     list.add(predicate);
                 });
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
 
                 Predicate[] arr = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(arr));

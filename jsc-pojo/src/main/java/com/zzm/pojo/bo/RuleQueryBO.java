@@ -12,6 +12,7 @@ public class RuleQueryBO {
 
     private String ruleType;
     private String criteria;
+    private String username;
     private Integer page;
     private Integer pageSize;
 

@@ -6,6 +6,8 @@ import com.zzm.enums.MessageCodeEnum;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
 import com.zzm.policy.system_manager.received.SystemManagerReceivedPolicyService;
 import com.zzm.utils.BaseConversionUtils;
+import com.zzm.utils.IPUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,6 +37,24 @@ public class CommonPortGroupGetSystemManagerReceivedPolicyServiceImpl implements
 
             JSONArray jsonArray = JSONArray.parseArray(receiveSystemManagerDTO.getData().toString());
             JSONObject jsonObject = JSONObject.parseObject(jsonArray.get(0).toString());
+
+            // 查询子端口组
+            if (receiveSystemManagerDTO.getMessageCode() == 34056) {
+                if (StringUtils.isNotBlank((String) jsonObject.get("m_u32Ipv4Sip"))) {
+                    String srcIp = jsonObject.getString("m_u32Ipv4Sip");
+                    String dstIp = jsonObject.getString("m_u32Ipv4Dip");
+
+                    jsonObject.put("m_u32Ipv4Sip", IPUtils.base64ToIp(srcIp));
+                    jsonObject.put("m_u32Ipv4Dip", IPUtils.base64ToIp(dstIp));
+                } else if (StringUtils.isNotBlank((String) jsonObject.get("m_strIpv6Sip"))){
+                    String srcIp = jsonObject.getString("m_strIpv6Sip");
+                    String dstIp = jsonObject.getString("m_strIpv6Dip");
+
+                    jsonObject.put("m_strIpv6Sip", IPUtils.base64ToIp(srcIp));
+                    jsonObject.put("m_strIpv6Dip", IPUtils.base64ToIp(dstIp));
+                }
+            }
+
             JSONArray jsonArray1 = JSONArray.parseArray(jsonObject.get("m_tPortWeightMsg").toString());
 
             List<Map> result = new ArrayList<>();

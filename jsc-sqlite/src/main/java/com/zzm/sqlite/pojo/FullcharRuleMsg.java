@@ -12,7 +12,7 @@ import java.util.Objects;
 @Table(name = "FULLCHAR_RULE_MSG")
 @IdClass(FullcharRuleMsgPK.class)
 public class FullcharRuleMsg {
-    
+
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -40,7 +40,7 @@ public class FullcharRuleMsg {
     private Long setTime;
     private Long setIp;
 
-    
+
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;

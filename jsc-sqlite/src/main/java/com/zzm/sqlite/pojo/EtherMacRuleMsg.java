@@ -11,7 +11,8 @@ import javax.persistence.*;
 @Table(name = "ETHER_MAC_RULE_MSG")
 @IdClass(EtherMacRuleMsgPK.class)
 public class EtherMacRuleMsg {
-    
+
+    private Long sendSlotId;
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -21,6 +22,8 @@ public class EtherMacRuleMsg {
     private String dstMac;
     private String srcMacMask;
     private String dstMacMask;
+    private Long nextProtocol;
+    private Long nextProtocolMask;
     private Long ruleType;
     private Long isStatic;
     private Long isHitStat;
@@ -30,7 +33,34 @@ public class EtherMacRuleMsg {
     private Long setTime;
     private Long setIp;
 
-    
+
+    @Column(name = "NextProtocol")
+    public Long getNextProtocol() {
+        return nextProtocol;
+    }
+
+    public void setNextProtocol(Long nextProtocol) {
+        this.nextProtocol = nextProtocol;
+    }
+
+    @Column(name = "NextProtocolMask")
+    public Long getNextProtocolMask() {
+        return nextProtocolMask;
+    }
+
+    public void setNextProtocolMask(Long nextProtocolMask) {
+        this.nextProtocolMask = nextProtocolMask;
+    }
+
+    @Column(name = "SendSlotId")
+    public Long getSendSlotId() {
+        return sendSlotId;
+    }
+
+    public void setSendSlotId(Long sendSlotId) {
+        this.sendSlotId = sendSlotId;
+    }
+
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;

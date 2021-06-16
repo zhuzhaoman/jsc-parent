@@ -49,9 +49,9 @@ public class ProtocolRuleSystemManagerSendingRulePolicyServiceImpl extends BaseS
                 field.setAccessible(true);
 
                 String name = field.getName();
-                System.out.println(name);
+                System.out.println(name + ":" + field.get(rule));
 
-                if (name.equals("m_strImsi")) {
+                if ("m_strImsi".equals(name)) {
 
                     String content = (String) field.get(rule);
                     System.out.println(content);
@@ -88,7 +88,7 @@ public class ProtocolRuleSystemManagerSendingRulePolicyServiceImpl extends BaseS
         ProtocolRuleDTO protocolRuleDTO = null;
         try {
             protocolRuleDTO = (ProtocolRuleDTO) ruleBO2DTO(protocolRuleBO, ProtocolRuleDTO.class);
-
+            System.out.println("转换后的数据：" + protocolRuleDTO.toString());
             protocolRuleDTO = ruleHandle(protocolRuleDTO);
         } catch (Exception e) {
             e.printStackTrace();

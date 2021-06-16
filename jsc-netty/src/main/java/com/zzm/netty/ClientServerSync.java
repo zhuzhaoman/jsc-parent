@@ -52,7 +52,7 @@ public class ClientServerSync {
                     .option(ChannelOption.TCP_NODELAY, true)
                     // .option(ChannelOption.RCVBUF_ALLOCATOR, new FixedRecvByteBufAllocator(65536))
                     // 如果不设置超时，连接会一直占用本地线程，端口，连接客户端一多，会导致本地端口用尽及CPU压力
-                    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
+                    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 20000)
                     .handler(new ClientChannelInitializerSync());
 
             // 发起同步连接操作
@@ -107,7 +107,7 @@ public class ClientServerSync {
 
         if (clientChannel == null) {
             doConnect();
-        } else if (clientChannel.isActive() == false) {
+        } else if (!clientChannel.isActive()) {
             doConnect();
         }
 

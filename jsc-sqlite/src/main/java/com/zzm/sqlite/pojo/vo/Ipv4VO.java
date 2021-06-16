@@ -17,6 +17,9 @@ import java.io.Serializable;
 @BindEntity(Ipv4RuleMsg.class)
 public class Ipv4VO implements Serializable {
 
+    @BindField(fieldName = "sendSlotId", methodName = "slotIdFormat", value = BaseConversionUtils.class)
+    private String sendSlotId;
+
     private Long ruleId;
 
     @BindField(fieldName = "srcIp", methodName = "long2Ip", value = Ipv4Utils.class)

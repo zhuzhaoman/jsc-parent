@@ -1,6 +1,7 @@
 package com.zzm.sqlite.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zzm.sqlite.pojo.EtherMacRuleMsg;
 import com.zzm.sqlite.pojo.FixedloccharcodeRuleMsg;
 import com.zzm.sqlite.pojo.Ipv4RuleMsg;
 import com.zzm.sqlite.pojo.Ipv6RuleMsg;
@@ -47,12 +48,27 @@ public class FixCharServiceImpl extends BaseService implements FixCharService {
 
 
     @Override
-    public PagedGridResult getRuleList(Integer page, Integer pageSize) {
+    public PagedGridResult getRuleList(String username, Integer page, Integer pageSize) {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "setTime");
         Pageable pageable = PageRequest.of(page, pageSize, sort);
 
-        Page<FixedloccharcodeRuleMsg> ruleMsgPage = fixCharRepository.findAll(pageable);
+        Long userId = getUserId(username);
+
+        Specification<FixedloccharcodeRuleMsg> specification = new Specification<FixedloccharcodeRuleMsg>() {
+            @Override
+            public Predicate toPredicate(Root<FixedloccharcodeRuleMsg> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<>();
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
+
+                Predicate[] arr = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(arr));
+            }
+        };
+
+        Page<FixedloccharcodeRuleMsg> ruleMsgPage = fixCharRepository.findAll(specification, pageable);
 
         List<FixCharVO> fixCharVOList = ruleMsgPage.getContent().stream().map(fixChar -> {
             return (FixCharVO) valueObjectTransfer.cast(fixChar, FixCharVO.class);
@@ -63,10 +79,12 @@ public class FixCharServiceImpl extends BaseService implements FixCharService {
 
 
     @Override
-    public PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria) {
+    public PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria) {
 
         JSONObject jsonObject = FixCharUtils.queryFieldCast(criteria);
         Set<String> keys = jsonObject.keySet();
+
+        Long userId = getUserId(username);
 
         Specification<FixedloccharcodeRuleMsg> specification = new Specification<FixedloccharcodeRuleMsg>() {
             @Override
@@ -77,6 +95,9 @@ public class FixCharServiceImpl extends BaseService implements FixCharService {
                     Predicate predicate = criteriaBuilder.equal(root.get(s), jsonObject.get(s));
                     list.add(predicate);
                 });
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
 
                 Predicate[] arr = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(arr));

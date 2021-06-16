@@ -12,7 +12,7 @@ import java.util.Objects;
 @Table(name = "PROTOCOL_RULE_MSG")
 @IdClass(ProtocolRuleMsgPK.class)
 public class ProtocolRuleMsg {
-    
+
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -40,7 +40,6 @@ public class ProtocolRuleMsg {
     private Long isStatic;
     private Long isHitStat;
 
-    
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;

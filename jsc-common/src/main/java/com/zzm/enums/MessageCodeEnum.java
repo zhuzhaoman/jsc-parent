@@ -33,6 +33,7 @@ public enum MessageCodeEnum {
     IMSI_RULE_ADD(572, 573, "", "IMSI规则下发"),
     TEMPLATE_RULE_ADD(578, 579, "", "配置规则模板"),
     PRIORITY_RULE_ADD(580, 581, "", "配置规则优先级"),
+    COMPILE_FULL_CHAR(1506, 1507, "", "编译全包浮动"),
     COMMON_RULE_ADD(0,1110, "", "通用规则下发接收消息枚举"),
 
     /**
@@ -82,6 +83,8 @@ public enum MessageCodeEnum {
     PROTOCOL_GET_ONE(817, 818, "m_tAclResponseMsg", "protocol单条规则查询"),
     FIX_CHAR_GET_ONE(775, 776, "m_tAclResponseMsg", "fix-char单条规则查询"),
     TCP_FLAG_GET_ONE(773, 774, "m_tAclResponseMsg", "tcp-flag单条规则查询"),
+    SHOW_RULE_PRIORITY(821,822, "m_tAclResponseMsg", "查询规则优先级"),
+    SHOW_RULE_TEMPLATE(819, 820, "m_tAclResponseMsg", "查询规则模板"),
     COMMON_RULE_GET(0,1113, "", "通用规获取则接收消息枚举"),
 
 
@@ -147,6 +150,7 @@ public enum MessageCodeEnum {
     PORT_GROUP_CONFIG_GROUP_CHILD_GROUP_WEIGHT(33557, 33558, "", "配置输出端口组中子端口组权重"),
     PORT_GROUP_CONFIG_OUTPUT_GROUP_NAME(33539, 33540, "", "配置输出端口组名称"),
     PORT_GROUP_CONFIG_CHILD_GROUP_NAME(33543, 33544, "", "配置子端口组名称"),
+    PORT_GROUP_CONFIG_CHILD_GROUP_GRE(33587, 33588, "", "子端口组gre隧道封装"),
     PORT_GROUP_CONFIG_FLOW_DISTRIBUTE_MODE(33577, 33578, "", "配置端口组流量分发模式"),
     COMMON_PORT_GROUP(0,6660, "", "通用端口组枚举"),
     COMMON_PORT_GROUP_GET(0,6661, "", "通用端口组获取枚举"),
@@ -212,6 +216,12 @@ public enum MessageCodeEnum {
     INTERFACE_GROUP_CLEAR_FLOW(33561, 33562, "", "端口清除端口组流量"),
     INTERFACE_SUB_GROUP_CLEAR_FLOW(33563, 33564, "", "端口清除子端口组流量"),
     INTERFACE_SLOT_CLEAR_FLOW(34819, 34820, "", "端口清除槽位流量"),
+    INTERFACE_GRE_TERMINATE(34363, 34364, "", "Gre隧道终结，盒式"),
+    INTERFACE_ATTRIBUTE_SWITCH(34355, 34356, "", "6个属性开关，盒式"),
+    INTERFACE_FORWARDING(34365, 34366, "", "端口转发，盒式"),
+    INTERFACE_LOOP_BACK(34367, 34368, "", "端口回环"),
+    INTERFACE_MIRROR_ON(34336, 34338, "", "端口镜像开"),
+    INTERFACE_MIRROR_OFF(34337, 34338, "", "端口镜像关"),
     COMMON_INTERFACE_CONFIG(0, 8880, "","通用端口配置枚举"),
     COMMON_INTERFACE_GET(0, 8881, "", "通用端口展示枚举"),
 
@@ -241,9 +251,9 @@ public enum MessageCodeEnum {
     DEVICE_DISK_USAGE_THRESHOLD_CONFIG(36381, 36382, "", "配置磁盘阈值"),
     DEVICE_PORT_TRAFFIC_THRESHOLD_CONFIG(36381, 36382, "", "端口流量阈值"),
     DEVICE_REBOOT_SLOT(36633, 36634, "", "reboot"),
+    DEVICE_SHOW_DEVICE_MANAGE(36631, 36632, "", "查询设备参数信息"),
     COMMON_DEVICE_GET(0, 9991, "", "通用设备展示枚举"),
     COMMON_DEVICE_CONFIG(0, 9992, "", "通用设备配置枚举");
-
 
     private int reqCode;
     private int resCode;

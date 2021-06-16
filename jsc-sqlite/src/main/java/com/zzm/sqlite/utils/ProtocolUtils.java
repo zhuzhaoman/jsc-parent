@@ -51,9 +51,9 @@ public class ProtocolUtils {
 
         if (ruleType == 2L) {
             protocolType = ProtocolTypeVolteEnum.fromCode(protocolTypeCode);
-        } else if (ruleType == 3L || ruleType == 5L) {
+        } else if (ruleType == 0L || ruleType == 3L || ruleType == 5L) {
             protocolType = ProtocolTypeSignalEnum.fromCode(protocolTypeCode);
-        } else if (ruleType == 4L || ruleType == 6L) {
+        } else if (ruleType == 1L || ruleType == 4L || ruleType == 6L) {
             protocolType = ProtocolTypeApplicationEnum.fromCode(protocolTypeCode);
         }
 

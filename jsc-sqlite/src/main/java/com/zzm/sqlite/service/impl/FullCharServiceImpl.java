@@ -47,12 +47,27 @@ public class FullCharServiceImpl extends BaseService implements FullCharService 
 
 
     @Override
-    public PagedGridResult getRuleList(Integer page, Integer pageSize) {
+    public PagedGridResult getRuleList(String username, Integer page, Integer pageSize) {
 
         Sort sort = Sort.by(Sort.Direction.DESC, "setTime");
         Pageable pageable = PageRequest.of(page, pageSize, sort);
 
-        Page<FullcharRuleMsg> ruleMsgPage = fullCharRepository.findAll(pageable);
+        Long userId = getUserId(username);
+
+        Specification<FullcharRuleMsg> specification = new Specification<FullcharRuleMsg>() {
+            @Override
+            public Predicate toPredicate(Root<FullcharRuleMsg> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<>();
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
+
+                Predicate[] arr = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(arr));
+            }
+        };
+
+        Page<FullcharRuleMsg> ruleMsgPage = fullCharRepository.findAll(specification, pageable);
 
         List<FullCharVO> fixCharVOList = ruleMsgPage.getContent().stream().map(fullChar -> {
             return (FullCharVO) valueObjectTransfer.cast(fullChar, FullCharVO.class);
@@ -63,10 +78,12 @@ public class FullCharServiceImpl extends BaseService implements FullCharService 
 
 
     @Override
-    public PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria) {
+    public PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria) {
 
         JSONObject jsonObject = FullCharUtils.queryFieldCast(criteria);
         Set<String> keys = jsonObject.keySet();
+
+        Long userId = getUserId(username);
 
         Specification<FullcharRuleMsg> specification = new Specification<FullcharRuleMsg>() {
             @Override
@@ -77,6 +94,9 @@ public class FullCharServiceImpl extends BaseService implements FullCharService 
                     Predicate predicate = criteriaBuilder.equal(root.get(s), jsonObject.get(s));
                     list.add(predicate);
                 });
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
 
                 Predicate[] arr = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(arr));

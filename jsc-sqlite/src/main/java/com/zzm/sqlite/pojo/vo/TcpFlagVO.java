@@ -4,10 +4,7 @@ import com.zzm.sqlite.core.BindEntity;
 import com.zzm.sqlite.core.BindField;
 import com.zzm.sqlite.pojo.ProtocolRuleMsg;
 import com.zzm.sqlite.pojo.TcpflagRuleMsg;
-import com.zzm.sqlite.utils.Ipv4Utils;
-import com.zzm.sqlite.utils.StatusUtils;
-import com.zzm.sqlite.utils.TcpFlagUtils;
-import com.zzm.sqlite.utils.TimeUtils;
+import com.zzm.sqlite.utils.*;
 import lombok.Data;
 
 /**

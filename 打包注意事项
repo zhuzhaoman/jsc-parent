@@ -1,0 +1,9 @@
+js-api模块下:
+    1.application.yml中环境修改为prod
+    2.netty.properties中服务端ip修改为127.0.0.1
+    3.snmp.properties中将snmp服务ip修改为127.0.0.1
+    4.端口状态要改变
+
+jsc-job模块下:
+    1.HistoryDataJob 需要开启定时任务
+    2.HistoryFlowJob 需要开启定时任务

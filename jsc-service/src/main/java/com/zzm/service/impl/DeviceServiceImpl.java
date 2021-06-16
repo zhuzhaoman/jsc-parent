@@ -65,6 +65,8 @@ public class DeviceServiceImpl implements DeviceService {
     private String savePath;
     @Value("${jsc.config.linux-ip}")
     private String linuxIp;
+    @Value("${jsc.config.upgrade-path}")
+    private String upgradePath;
     private int tryCount = 14;
     private int fileIndex = 0;
     private StringBuilder cardStatusError = new StringBuilder();
@@ -219,16 +221,12 @@ public class DeviceServiceImpl implements DeviceService {
     private void executeImportConfig(String user, String fileName) {
         List<String> template = new ArrayList<>(generationTemplate(user, fileName));
         String result = LinuxUtil.executeCommandExplicit(pythonUrl, importProcedure, template);
-        System.out.println("推送执行反馈");
-        System.out.println(result);
 
         WebSocketSendMessage.sendTopicImportMessage(result);
     }
 
     private void sendCardStatus() {
         String error = cardStatusError.toString();
-        System.out.println("发送板卡异常状态");
-        System.out.println(error);
         cardStatusError.delete(0, cardStatusError.length());
         WebSocketSendMessage.sendTopicImportMessage(error);
     }
@@ -355,6 +353,14 @@ public class DeviceServiceImpl implements DeviceService {
             }
         }
     }
+
+    @Override
+    public void SystemManagerUpgrade(MultipartFile[] files, String sort) {
+
+
+        return ;
+    }
+
 
     /**
      * 查询设备信息

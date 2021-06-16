@@ -47,4 +47,6 @@ public class ImsiRuleBO {
 
     /*  */
     public List<CLteRuleContentMsgBO> m_tLteRuleContentMsg;
+
+    public RuleSendMsgBO m_tRuleSendMsg;
 }

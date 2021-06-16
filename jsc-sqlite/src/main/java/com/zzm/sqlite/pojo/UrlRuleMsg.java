@@ -12,7 +12,7 @@ import java.util.Objects;
 @Table(name = "URL_RULE_MSG")
 @IdClass(UrlRuleMsgPK.class)
 public class UrlRuleMsg {
-    
+
     private long domainId;
     private long userId;
     private long ruleId;

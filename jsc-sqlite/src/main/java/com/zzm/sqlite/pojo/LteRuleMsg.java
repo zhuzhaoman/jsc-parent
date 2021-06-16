@@ -12,7 +12,7 @@ import java.util.Objects;
 @Table(name = "LTE_RULE_MSG")
 @IdClass(LteRuleMsgPK.class)
 public class LteRuleMsg {
-    
+
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -54,7 +54,7 @@ public class LteRuleMsg {
     private Long isStatic;
     private Long isHitStat;
 
-    
+
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;

@@ -2,6 +2,7 @@ package com.zzm.sqlite.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zzm.sqlite.pojo.FullcharRuleMsg;
+import com.zzm.sqlite.pojo.TcpflagRuleMsg;
 import com.zzm.sqlite.pojo.UrlRuleMsg;
 import com.zzm.sqlite.pojo.UrlRuleMsg;
 import com.zzm.sqlite.pojo.vo.FullCharVO;
@@ -45,9 +46,24 @@ public class UrlServiceImpl extends BaseService implements UrlService {
     private final ValueObjectTransfer valueObjectTransfer;
 
     @Override
-    public PagedGridResult getRuleList(Integer page, Integer pageSize) {
+    public PagedGridResult getRuleList(String username, Integer page, Integer pageSize) {
 
         Pageable pageable = PageRequest.of(page, pageSize);
+
+        Long userId = getUserId(username);
+
+        Specification<UrlRuleMsg> specification = new Specification<UrlRuleMsg>() {
+            @Override
+            public Predicate toPredicate(Root<UrlRuleMsg> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> list = new ArrayList<>();
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
+
+                Predicate[] arr = new Predicate[list.size()];
+                return criteriaBuilder.and(list.toArray(arr));
+            }
+        };
 
         Page<UrlRuleMsg> ruleMsgPage = urlRepository.findAll(pageable);
 
@@ -60,10 +76,12 @@ public class UrlServiceImpl extends BaseService implements UrlService {
 
 
     @Override
-    public PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria) {
+    public PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria) {
 
         JSONObject jsonObject = UrlUtils.queryFieldCast(criteria);
         Set<String> keys = jsonObject.keySet();
+
+        Long userId = getUserId(username);
 
         Specification<UrlRuleMsg> specification = new Specification<UrlRuleMsg>() {
             @Override
@@ -74,6 +92,9 @@ public class UrlServiceImpl extends BaseService implements UrlService {
                     Predicate predicate = criteriaBuilder.equal(root.get(s), jsonObject.get(s));
                     list.add(predicate);
                 });
+
+                Predicate predicate = criteriaBuilder.equal(root.get("userId"), userId);
+                list.add(predicate);
 
                 Predicate[] arr = new Predicate[list.size()];
                 return criteriaBuilder.and(list.toArray(arr));

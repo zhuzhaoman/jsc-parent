@@ -81,4 +81,6 @@ public class FixCharRuleBO {
 
     /* 输出报文个数 */
 //    public int m_u32OutputPktNum;
+
+    public RuleSendMsgBO m_tRuleSendMsg;
 }

@@ -41,10 +41,30 @@ public class BaseSystemManagerSendingPolicyServiceImpl {
 
     public static  JSONObject priorityHandle(Object o) {
         JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(o));
-        Integer priority = (Integer) jsonObject.get("m_u32Priority");
+        Integer priority = jsonObject.getInteger("m_u32Priority");
+        Integer comPound = jsonObject.getInteger("m_u32IsComPound");
 
-        if (priority == 0) {
-            jsonObject.remove("m_u32Priority");
+        if (priority != null) {
+            if (priority == 0) {
+                jsonObject.remove("m_u32Priority");
+            }
+        }
+
+        if(comPound != null) {
+            if (comPound == 0) {
+                jsonObject.remove("m_u32Protocol");
+                jsonObject.remove("m_u32ProtocolMask");
+                jsonObject.remove("m_u32SrcIp");
+                jsonObject.remove("m_strSrcIpMask");
+                jsonObject.remove("m_u32DstIp");
+                jsonObject.remove("m_u32DstIpMask");
+                jsonObject.remove("m_strDstIp");
+                jsonObject.remove("m_strDstIpMask");
+                jsonObject.remove("m_u32SrcPort");
+                jsonObject.remove("m_u32SrcPortMask");
+                jsonObject.remove("m_u32DstPort");
+                jsonObject.remove("m_u32DstPortMask");
+            }
         }
 
         return jsonObject;

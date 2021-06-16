@@ -5,6 +5,7 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
+import com.zzm.exception.GraceException;
 import com.zzm.netty.ClientServerSync;
 import com.zzm.pojo.bo.UserBO;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
@@ -52,6 +53,24 @@ public class UserServiceImpl implements UserService {
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) clientServerSync.sendMessage(content);
 
+        return receiveSystemManagerDTO;
+    }
+
+    @Override
+    public ReceiveSystemManagerDTO guestLogin(UserBO userBO) {
+
+        if (!userBO.getUsername().equals("guest") || !userBO.getPassword().equals("guest")) {
+            GraceException.display("用户名或密码错误");
+        }
+
+        ReceiveSystemManagerDTO receiveSystemManagerDTO = new ReceiveSystemManagerDTO();
+        receiveSystemManagerDTO.setMsg("登录成功");
+        receiveSystemManagerDTO.setMessageCode(0);
+        receiveSystemManagerDTO.setDomainId(0);
+        receiveSystemManagerDTO.setUsername(userBO.getUsername());
+        receiveSystemManagerDTO.setDomainType(0);
+        receiveSystemManagerDTO.setCode(200);
+        receiveSystemManagerDTO.setData(null);
         return receiveSystemManagerDTO;
     }
 }

@@ -17,11 +17,11 @@ import java.util.Map;
 public class VXP_PPB3320_PortStatusPortStatusCardTypePolicyServiceImpl implements SnmpPortStatusCardTypePolicyService {
 
     private int PORT_TOTAL = 60;
-
+    private int CARD_TYPE = 12;
 
     @Override
     public int policyType() {
-        return 12;
+        return CARD_TYPE;
     }
 
     @Override
@@ -32,7 +32,8 @@ public class VXP_PPB3320_PortStatusPortStatusCardTypePolicyServiceImpl implement
             if (slotPortStatusVOList.size() < PORT_TOTAL) {
                 List<SlotPortStatusVO> newPortStatusVOS = Arrays.asList(new SlotPortStatusVO[PORT_TOTAL]);
                 result.get(slotNumber - 1).put("list", newPortStatusVOS);
-                result.get(slotNumber - 1).put("cardType", CardTypeEnum.fromValue(12).getMsg());
+                result.get(slotNumber - 1).put("slot", "slot" + slotNumber);
+                result.get(slotNumber - 1).put("cardType", CardTypeEnum.fromValue(CARD_TYPE).getMsg());
                 slotPortStatusVOList = newPortStatusVOS;
             }
 
@@ -51,6 +52,7 @@ public class VXP_PPB3320_PortStatusPortStatusCardTypePolicyServiceImpl implement
             slotPortStatusVO.setPortNumber(portNumber);
             slotPortStatusVO.setPortStatus(portStatus);
             slotPortStatusVO.setExtend(isEXTEND == 1);
+            slotPortStatusVO.setPortType(portRate == 1 ? "S" : "Q");
 
             if (isEXTEND == 1) {
 

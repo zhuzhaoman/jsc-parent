@@ -12,7 +12,7 @@ import java.util.Objects;
 @Table(name = "WINDOW_RULE_MSG")
 @IdClass(WindowRuleMsgPK.class)
 public class WindowRuleMsg {
-    
+
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -42,7 +42,7 @@ public class WindowRuleMsg {
     private Long setTime;
     private Long setIp;
 
-    
+
     @Column(name = "RuleSource")
     public Long getRuleSource() {
         return ruleSource;

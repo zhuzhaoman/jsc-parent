@@ -62,4 +62,6 @@ public class FullCharRuleBO {
 
     /* 关联规则 */
     public List<CFullCharRelatedRuleMsgBO> m_tRelateRule;
+
+    public RuleSendMsgBO m_tRuleSendMsg;
 }

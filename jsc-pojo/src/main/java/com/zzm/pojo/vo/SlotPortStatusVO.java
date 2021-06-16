@@ -18,6 +18,9 @@ public class SlotPortStatusVO {
     // 端口号
     private Integer portNumber;
 
+    // 端口类型：S/Q S(10G口) Q(100G口)
+    private String portType;
+
     // 端口是否甩纤
     private boolean isExtend;
 

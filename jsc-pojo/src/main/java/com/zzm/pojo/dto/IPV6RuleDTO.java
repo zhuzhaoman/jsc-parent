@@ -1,6 +1,7 @@
 package com.zzm.pojo.dto;
 
 import com.zzm.pojo.bo.CCompoundMsgBO;
+import com.zzm.pojo.bo.RuleSendMsgBO;
 import lombok.Data;
 
 import java.util.List;
@@ -94,5 +95,6 @@ public class IPV6RuleDTO {
     /* 符合规则类型和ID */
     public List<CCompoundMsgBO> m_tCompoundMsg;
 
+    public RuleSendMsgBO m_tRuleSendMsg;
 
 }

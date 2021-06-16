@@ -19,13 +19,15 @@ import java.util.UUID;
 @Service
 public class NETVIS_32CGI_PortFlowCardTypePolicyServiceImpl implements SnmpPortFlowCardTypePolicyService {
 
+    private int CARD_TYPE = 14;
+
     @Resource
     private PortHistoryFlowRepository portHistoryFlowRepository;
 
 
     @Override
     public int policyType() {
-        return 14;
+        return CARD_TYPE;
     }
 
     @Override

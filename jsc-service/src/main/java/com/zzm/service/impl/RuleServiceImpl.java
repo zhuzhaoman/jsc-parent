@@ -85,15 +85,18 @@ public class RuleServiceImpl implements RuleService {
     public ReceiveSystemManagerDTO getRuleList(RuleQueryBO ruleQueryBO) {
 
         String url = "http://127.0.0.1:9000/" + ruleQueryBO.getRuleType();
+//        String url = "http://192.8.141.199:9000/" + ruleQueryBO.getRuleType();
 
         if (StringUtils.isBlank(ruleQueryBO.getCriteria())) {
             url = url + "/getRuleList?page=" + ruleQueryBO.getPage()
-                    + "&pageSize=" + ruleQueryBO.getPageSize();
+                    + "&pageSize=" + ruleQueryBO.getPageSize()
+                    + "&username=" + ruleQueryBO.getUsername();
         } else {
             String criteria = ruleQueryBO.getCriteria();
             url = url + "/getRuleListByCriteria?page=" + ruleQueryBO.getPage()
                     + "&pageSize=" + ruleQueryBO.getPageSize()
-                    + "&criteria=" + criteria.substring(1, criteria.length() - 1);
+                    + "&criteria=" + criteria.substring(1, criteria.length() - 1)
+                    + "&username=" + ruleQueryBO.getUsername();
         }
 
         // 发送请求

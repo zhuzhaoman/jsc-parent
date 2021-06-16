@@ -18,11 +18,11 @@ import java.util.Map;
 public class NETVIS_32CGI_PortStatusPortStatusCardTypePolicyServiceImpl implements SnmpPortStatusCardTypePolicyService {
 
     private int PORT_TOTAL = 32;
-
+    private int CARD_TYPE = 14;
 
     @Override
     public int policyType() {
-        return 14;
+        return CARD_TYPE;
     }
 
     @Override
@@ -32,7 +32,8 @@ public class NETVIS_32CGI_PortStatusPortStatusCardTypePolicyServiceImpl implemen
             if (slotPortStatusVOList.size() < PORT_TOTAL) {
                 List<SlotPortStatusVO> newPortStatusVOS = Arrays.asList(new SlotPortStatusVO[PORT_TOTAL]);
                 result.get(slotNumber - 1).put("list", newPortStatusVOS);
-                result.get(slotNumber - 1).put("cardType", CardTypeEnum.fromValue(14).getMsg());
+                result.get(slotNumber - 1).put("slot", "slot" + slotNumber);
+                result.get(slotNumber - 1).put("cardType", CardTypeEnum.fromValue(CARD_TYPE).getMsg());
                 slotPortStatusVOList = newPortStatusVOS;
             }
 
@@ -44,6 +45,7 @@ public class NETVIS_32CGI_PortStatusPortStatusCardTypePolicyServiceImpl implemen
             slotPortStatusVO.setPortNumber(portNumber);
             slotPortStatusVO.setPortStatus(portStatus);
             slotPortStatusVO.setExtend(isEXTEND == 1);
+            slotPortStatusVO.setPortType(portRate == 1 ? "S" : "Q");
 
             if (isEXTEND == 1) {
 

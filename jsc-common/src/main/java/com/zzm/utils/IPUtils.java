@@ -20,6 +20,10 @@ public class IPUtils {
 
     public static String ipToBase64(String ip) {
 
+        if (ip == null || "".equals(ip)) {
+            return "";
+        }
+
         try {
             InetAddress a = InetAddress.getByName(ip);
             byte[] bytes = a.getAddress();

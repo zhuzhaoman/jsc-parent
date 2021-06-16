@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface VlanService {
 
-    PagedGridResult getRuleList(Integer page, Integer pageSize);
+    PagedGridResult getRuleList(String username, Integer page, Integer pageSize);
 
-    PagedGridResult getRuleListByCriteria(Integer page, Integer pageSize, String criteria);
+    PagedGridResult getRuleListByCriteria(String username, Integer page, Integer pageSize, String criteria);
 }

@@ -57,4 +57,5 @@ public class UrlRuleBO {
     /* 批量删除的规则数量 */
     public int m_u32RuleNum;
 
+    public RuleSendMsgBO m_tRuleSendMsg;
 }

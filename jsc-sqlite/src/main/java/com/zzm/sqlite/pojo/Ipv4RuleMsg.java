@@ -12,6 +12,7 @@ import javax.persistence.*;
 @IdClass(Ipv4RuleMsgPK.class)
 public class Ipv4RuleMsg {
 
+    private Long sendSlotId;
     private Long ruleSource;
     private long domainId;
     private long userId;
@@ -47,6 +48,14 @@ public class Ipv4RuleMsg {
     private Long matchType;
     private Long inputPortGroupId;
 
+    @Column(name = "SendSlotId")
+    public Long getSendSlotId() {
+        return sendSlotId;
+    }
+
+    public void setSendSlotId(Long sendSlotId) {
+        this.sendSlotId = sendSlotId;
+    }
     
     @Column(name = "RuleSource")
     public Long getRuleSource() {

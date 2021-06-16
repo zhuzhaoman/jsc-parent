@@ -1,5 +1,8 @@
 package com.zzm.sqlite.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author: zhuzhaoman
  * @date: 2020-12-30
@@ -7,16 +10,43 @@ package com.zzm.sqlite.utils;
  **/
 public class BaseConversionUtils {
 
+    public static void main(String[] args) {
+        System.out.println(hex2Long("0xabcd"));
+        System.out.println(slotIdFormat(129L));
+    }
+
+    public static String slotIdFormat(Long value) {
+
+        if (value == 0) {
+            return "";
+        }
+
+        String slotStr = Integer.toBinaryString(value.intValue());
+        List<String> result = new ArrayList<>();
+        for (int i = slotStr.length() - 1; i >= 0; i--) {
+            char c = slotStr.charAt(i);
+            if (c == '1') {
+                result.add(String.valueOf(Integer.valueOf((slotStr.length() - i))));
+            }
+        }
+        return String.join(",", result);
+    }
+
 
     public static String long2Hex(Long value) {
 
-        if (value == 0) {
-            return "any";
+        try {
+            if (value == 0) {
+                return "any";
+            }
+
+            return "0x" + Long.toHexString(value);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("------------");
+            System.out.println(value);
+            return "";
         }
-
-        String hex = "0x" + Long.toHexString(value);
-
-        return hex;
     }
 
     public static Long hex2Long(String hex) {
@@ -54,8 +84,5 @@ public class BaseConversionUtils {
         return result;
     }
 
-    public static void main(String[] args) {
-        System.out.println(hex2Long("0xabcd"));
-    }
 
 }
