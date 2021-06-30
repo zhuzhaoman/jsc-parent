@@ -66,6 +66,7 @@ public class CommonPortGroupGetSystemManagerReceivedPolicyServiceImpl implements
 
                 String portName = portHandel((Integer) jsonObject1.get("m_u32PortId"));
                 map.put("m_u32PortId", portName);
+                map.put("m_u32IsBackPort", jsonObject1.getIntValue("m_u32IsBackPort"));
                 result.add(map);
             });
 

@@ -21,7 +21,7 @@ import java.util.Map;
  * @date: 2021-02-28
  * @description:
  **/
-@Component
+//@Component
 public class HistoryDataJob {
 
     @Resource

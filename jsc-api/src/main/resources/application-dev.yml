@@ -10,11 +10,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mysql://127.0.0.1:3306/jsc_web?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-#    url: jdbc:mysql://192.8.141.199:3306/jsc_web?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&allowPublicKeyRetrieval=true
     username: root
-#    password: root
     password: 1999114zzm
-
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
   jpa:
     properties:
       hibernate.jdbc.time_zone: Asia/Shanghai
@@ -27,7 +28,7 @@ jsc:
     linux-ip: 192.8.141.199
     python-url: D:/Anaconda/envs/python3.5/python
     save-path: D:/
-    upgrade-path: /u01/install
+    upgrade-path: D:/
     config-default: D:/IDEA/jsc-parent/jsc-api/src/main/resources/config_default.py
     export-procedure: D:/IDEA/jsc-parent/jsc-api/src/main/resources/config_export.py
     import-procedure: D:/IDEA/jsc-parent/jsc-api/src/main/resources/config_import.py

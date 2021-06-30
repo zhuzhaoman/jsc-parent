@@ -85,6 +85,9 @@ public class CommonPortGetSystemManagerReceivedPolicyServiceImpl implements Syst
         String port = portHandel(jsonObject.getInteger("m_u32PortId"));
         jsonObject.put("m_u32PortId", port);
 
+        int m_u32VlanTag = jsonObject.getInteger("m_u32VlanTag");
+        jsonObject.put("m_u32VlanTag", "0x" + Integer.toHexString(m_u32VlanTag));
+
         if (jsonObject.getInteger("m_u32ForwardingPortId") != 0) {
             String forwardPort = portHandel(jsonObject.getInteger("m_u32ForwardingPortId"));
             jsonObject.put("m_u32ForwardingPortId", forwardPort);

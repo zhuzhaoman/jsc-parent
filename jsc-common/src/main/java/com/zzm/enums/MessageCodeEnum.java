@@ -7,6 +7,13 @@ package com.zzm.enums;
  */
 public enum MessageCodeEnum {
 
+    USER_ADD(1565, 1566, "", "用户注册"),
+    USER_DEL(1567, 1568, "", "用户删除"),
+    USER_GET(1793, 1794, "", "用户信息获取"),
+    COMMON_USER_CONFIG(0,1000, "", "通用用户操作消息枚举"),
+    COMMON_USER_GET(0,1100, "", "通用用户操作消息枚举"),
+
+
     CONNECT_REQUEST(257,258, "m_tZCollectionMsg,m_tSystemStatusMsg","登录"),
     DEVICE_INFO(36611, 36612,"m_tZCollectionMsg,m_tSystemStatusMsg", "设备基本信息"),
     DEVICE_DOMAIN(36097, 36098,"", "设备域信息"),
@@ -222,6 +229,7 @@ public enum MessageCodeEnum {
     INTERFACE_LOOP_BACK(34367, 34368, "", "端口回环"),
     INTERFACE_MIRROR_ON(34336, 34338, "", "端口镜像开"),
     INTERFACE_MIRROR_OFF(34337, 34338, "", "端口镜像关"),
+    INTERFACE_SHOW_VLAN_TAG(34371, 34372, "", "端口VlanTag"),
     COMMON_INTERFACE_CONFIG(0, 8880, "","通用端口配置枚举"),
     COMMON_INTERFACE_GET(0, 8881, "", "通用端口展示枚举"),
 
@@ -252,6 +260,7 @@ public enum MessageCodeEnum {
     DEVICE_PORT_TRAFFIC_THRESHOLD_CONFIG(36381, 36382, "", "端口流量阈值"),
     DEVICE_REBOOT_SLOT(36633, 36634, "", "reboot"),
     DEVICE_SHOW_DEVICE_MANAGE(36631, 36632, "", "查询设备参数信息"),
+    DEVICE_SHOW_DEVICE_SHELF_INFO(36627, 36628, "", "查询风扇电源信息"),
     COMMON_DEVICE_GET(0, 9991, "", "通用设备展示枚举"),
     COMMON_DEVICE_CONFIG(0, 9992, "", "通用设备配置枚举");
 

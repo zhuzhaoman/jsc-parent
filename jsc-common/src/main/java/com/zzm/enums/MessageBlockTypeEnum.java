@@ -17,7 +17,8 @@ public enum MessageBlockTypeEnum {
     PORT_GROUP(0, "端口组"),
     SYSTEM_CONFIG(0, "系统配置"),
     INTERFACE(0, "端口管理"),
-    DEVICE(0, "设备管理");
+    DEVICE(0, "设备管理"),
+    USER(51, "用户管理");
 
 
     private int code;

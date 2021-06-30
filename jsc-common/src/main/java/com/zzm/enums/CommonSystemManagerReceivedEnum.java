@@ -7,6 +7,10 @@ package com.zzm.enums;
  **/
 public enum CommonSystemManagerReceivedEnum {
 
+    USER_ADD(1566, 1000, "用户注册"),
+    USER_DEL(1568, 1000, "用户删除"),
+    USER_GET(1794, 1100, "用户信息获取"),
+
     /* 规则下发 */
     IPV4_RULE_ADD(514, 1110, "IPV4规则下发"),
     IPV6_RULE_ADD(516, 1110, "IPV6规则下发"),
@@ -112,7 +116,7 @@ public enum CommonSystemManagerReceivedEnum {
     PORT_GROUP_CONFIG_GROUP_CHILD_GROUP_WEIGHT(33558, 6660, "配置输出端口组中子端口组权重"),
     PORT_GROUP_CONFIG_OUTPUT_GROUP_NAME(33540, 6660, "配置输出端口组名称"),
     PORT_GROUP_CONFIG_CHILD_GROUP_NAME(33544, 6660, "配置子端口组名称"),
-    PORT_GROUP_CONFIG_CHILD_GROUP_GRE( 33588, 6660, "子端口组gre隧道封装"),
+    PORT_GROUP_CONFIG_CHILD_GROUP_GRE(33588, 6660, "子端口组gre隧道封装"),
     PORT_GROUP_CONFIG_FLOW_DISTRIBUTE_MODE(33578, 6660, "配置端口组流量分发模式"),
     PORT_GROUP_GET(34052, 6661, "查询端口组"),
     PORT_GROUP_GET_INPUT(34066, 6661, "查询输入端口组"),
@@ -176,8 +180,9 @@ public enum CommonSystemManagerReceivedEnum {
     INTERFACE_GRE_TERMINATE(34364, 8880, "Gre隧道终结，盒式"),
     INTERFACE_ATTRIBUTE_SWITCH(34356, 8880, "6个属性开关，盒式"),
     INTERFACE_FORWARDING(34366, 8880, "端口转发，盒式"),
-    INTERFACE_LOOP_BACK( 34368, 8880, "端口回环"),
-    INTERFACE_MIRROR( 34338, 8880, "端口镜像开/关"),
+    INTERFACE_LOOP_BACK(34368, 8880, "端口回环"),
+    INTERFACE_MIRROR(34338, 8880, "端口镜像开/关"),
+    INTERFACE_SHOW_VLAN_TAG( 34372, 8880, "端口VlanTag"),
     COMMON_INTERFACE_CONFIG(0, 8880, "通用端口配置枚举"),
     COMMON_INTERFACE_GET(0, 8881, "通用端口展示枚举"),
 
@@ -204,6 +209,7 @@ public enum CommonSystemManagerReceivedEnum {
     DEVICE_SYSTEM_UPDATE_CONFIG(36423, 9992, "更新系统配置"),
     DEVICE_DISK_USAGE_THRESHOLD_CONFIG(36382, 9992, "配置磁盘阈值"),
     DEVICE_PORT_TRAFFIC_THRESHOLD_CONFIG(36382, 9992, "端口流量阈值"),
+    DEVICE_SHOW_DEVICE_SHELF_INFO( 36628, 9991, "查询风扇电源信息"),
     DEVICE_REBOOT_SLOT(36634, 9992, "reboot"),
     DEVICE_SHOW_DEVICE_MANAGE(36632, 9991, "查询设备参数信息");
 

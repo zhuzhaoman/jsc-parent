@@ -34,19 +34,21 @@ public class DeviceController {
     private DeviceService deviceService;
 
     @PostMapping("/upgrade")
-    public JSONResult SystemManagerUpgrade(MultipartFile[] files, String sort) {
+    public JSONResult SystemManagerUpgrade(@RequestParam("files") MultipartFile[] files,
+                                           @RequestParam("sort") String sort,
+                                           @RequestParam("type") Integer type) {
 
         if (files.length <= 0) {
             GraceException.display("上传的文件不能为空");
         }
 
-        if("".equals(sort)) {
+        if ("".equals(sort)) {
             GraceException.display("排序不能为空");
         }
 
-        deviceService.SystemManagerUpgrade(files, sort);
+        deviceService.SystemManagerUpgrade(files, sort, type);
 
-        return JSONResult.ok("升级成功");
+        return JSONResult.ok("升级执行成功，5~10分钟左右升级成功~");
     }
 
     @PostMapping("/importConfigFile")

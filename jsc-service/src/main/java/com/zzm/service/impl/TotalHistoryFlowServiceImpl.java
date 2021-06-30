@@ -12,9 +12,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * @author：zhuzhaoman
@@ -71,7 +70,6 @@ public class TotalHistoryFlowServiceImpl implements TotalHistoryFlowService {
 
 
         Sort sort = Sort.by(Sort.Direction.ASC, "createTime");
-
         List<TotalHistoryFlow> totalHistoryFlowList = totalHistoryFlowRepository.findAll(specification, sort);
 
         return totalHistoryFlowList;
@@ -84,8 +82,8 @@ public class TotalHistoryFlowServiceImpl implements TotalHistoryFlowService {
      */
     @Override
     public List<TotalHistoryFlow> getTotalHistoryFlowByDayBetweenMonth(TotalHistoryFlowBO totalHistoryFlowBO) {
-        List<TotalHistoryFlow> totalHistoryFlowByDayBetweenMonth = totalHistoryFlowRepository.getTotalHistoryFlowByDayBetweenMonth(totalHistoryFlowBO);
-        return totalHistoryFlowByDayBetweenMonth;
+        List<TotalHistoryFlow> totalHistoryFlowList = totalHistoryFlowRepository.getTotalHistoryFlowByDayBetweenMonth(totalHistoryFlowBO);
+        return totalHistoryFlowList;
     }
 
     /**
@@ -109,6 +107,7 @@ public class TotalHistoryFlowServiceImpl implements TotalHistoryFlowService {
     @Override
     public List<TotalHistoryFlow> getTotalHistoryFlowByQuarterRange(TotalHistoryFlowBO totalHistoryFlowBO) {
         List<TotalHistoryFlow> totalHistoryFlowList = totalHistoryFlowRepository.getTotalHistoryFlowByQuarterRange(totalHistoryFlowBO);
+
         return totalHistoryFlowList;
     }
 
@@ -123,5 +122,42 @@ public class TotalHistoryFlowServiceImpl implements TotalHistoryFlowService {
         totalHistoryFlowRepository.deleteTotalHistoryFlowByCreateTimeRange(minTime);
     }
 
+    private Map<String, Float> criticalFlow(List<TotalHistoryFlow> totalHistoryFlowList) {
+
+        Map<String, Float> result = new HashMap<>();
+
+        int total = totalHistoryFlowList.size();
+        float rxAvg = new BigDecimal(totalHistoryFlowList.stream().mapToDouble(TotalHistoryFlow::getRx).sum() / total)
+                .setScale(2, BigDecimal.ROUND_UP).floatValue();
+        float txAvg = new BigDecimal(totalHistoryFlowList.stream().mapToDouble(TotalHistoryFlow::getTx).sum() / total)
+                .setScale(2, BigDecimal.ROUND_UP).floatValue();
+
+        float rxMax = totalHistoryFlowList.stream()
+                .max((flow1, flow2) -> (flow1.getRx() > flow2.getRx()) ? 1 : -1).get().getRx();
+        float txMax = totalHistoryFlowList.stream()
+                .max((flow1, flow2) -> (flow1.getTx() > flow2.getTx()) ? 1 : -1).get().getTx();
+
+        float rxMin = totalHistoryFlowList.stream()
+                .max((flow1, flow2) -> (flow1.getRx() < flow2.getRx()) ? 1 : -1).get().getRx();
+        float txMin = totalHistoryFlowList.stream()
+                .max((flow1, flow2) -> (flow1.getTx() < flow2.getTx()) ? 1 : -1).get().getTx();
+
+        System.out.println("rxAvg:" + rxAvg);
+        System.out.println("txAvg:" + txAvg);
+        result.put("rxAvg", rxAvg);
+        result.put("txAvg", txAvg);
+
+        System.out.println("rxMax:" + rxMax);
+        System.out.println("txMax:" + txMax);
+        result.put("rxMax", rxMax);
+        result.put("txMax", txMax);
+
+        System.out.println("rxMin:" + rxMin);
+        System.out.println("txMin:" + rxMin);
+        result.put("rxMin", rxMin);
+        result.put("txMin", txMin);
+
+        return result;
+    }
 
 }

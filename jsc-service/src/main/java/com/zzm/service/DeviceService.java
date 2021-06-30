@@ -76,5 +76,5 @@ public interface DeviceService {
 
     void downloadConfigFile(String fileName, HttpServletResponse response);
 
-    void SystemManagerUpgrade(MultipartFile[] files, String sort);
+    void SystemManagerUpgrade(MultipartFile[] files, String sort, Integer type);
 }

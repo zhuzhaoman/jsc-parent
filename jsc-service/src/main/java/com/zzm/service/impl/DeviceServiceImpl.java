@@ -13,6 +13,9 @@ import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.device.SystemManagerSendingDeviceComponent;
 import com.zzm.policy.system_manager.sending.device.SystemManagerSendingDevicePolicyService;
 import com.zzm.service.DeviceService;
+import com.zzm.service.impl.policy.module.upgrade.Upgrade;
+import com.zzm.service.impl.policy.module.upgrade.systemManager.SystemManagerCompleteMachineUpgrade;
+import com.zzm.service.impl.policy.module.upgrade.systemManager.SystemManagerSingleUpgrade;
 import com.zzm.utils.LinuxUtil;
 import com.zzm.utils.WebSocketSendMessage;
 import lombok.SneakyThrows;
@@ -21,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -355,10 +359,18 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public void SystemManagerUpgrade(MultipartFile[] files, String sort) {
+    @Async
+    public void SystemManagerUpgrade(MultipartFile[] files, String sort, Integer type) {
+        Upgrade upgrade = null;
 
+        if (type.equals(UpgradeEnum.SINGLE_BOARD.value())) {
+            upgrade = new SystemManagerSingleUpgrade(files, upgradePath, sort);
+        } else if (type.equals(UpgradeEnum.COMPLETE_MACHINE.value())) {
+            upgrade = new SystemManagerCompleteMachineUpgrade(files, upgradePath, sort);
+        }
 
-        return ;
+        assert upgrade != null;
+        upgrade.exchange();
     }
 
 

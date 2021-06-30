@@ -26,15 +26,13 @@ public class DeviceCommonGetSystemManagerReceivedPolicyServiceImpl implements Sy
     public Object dataProcessing(ReceiveSystemManagerDTO receiveSystemManagerDTO) {
 
         if (receiveSystemManagerDTO.getCode() == 200) {
-
-            System.out.println("---------------");
             System.out.println(receiveSystemManagerDTO.getData().toString());
 
             if (receiveSystemManagerDTO.getMessageCode() == 36614) {
                 JSONArray result = JSONArray.parseArray(receiveSystemManagerDTO.getData().toString());
                 receiveSystemManagerDTO.setData(result);
             } else if (receiveSystemManagerDTO.getMessageCode() == 36610) {
-                JSONObject result = JSONObject.parseObject(JSONObject.toJSONString(receiveSystemManagerDTO.getData()));
+                JSONObject result = JSONObject.parseObject(receiveSystemManagerDTO.getData().toString());
                 result = textHandle(result);
                 receiveSystemManagerDTO.setData(result);
             } else {
@@ -53,11 +51,11 @@ public class DeviceCommonGetSystemManagerReceivedPolicyServiceImpl implements Sy
         String msg = jsonObject.getString("m_strNetConfigMsg");
 
 
-
+        String msgReplace = "<pre>" + msg + "</pre>";
 //        String msgReplace = (msg.replace("\n", "<br>")).replace(" ", "&ensp;");
 //        String msgReplace = msg.replace("\n", "<br>");
 
-//        jsonObject.put("m_strNetConfigMsg", msgReplace);
+        jsonObject.put("m_strNetConfigMsg", msgReplace);
 
         return jsonObject;
     }

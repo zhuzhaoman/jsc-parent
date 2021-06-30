@@ -10,8 +10,31 @@ import lombok.Data;
 @Data
 public class UserBO {
 
+    /**
+     * 域id
+     */
+    private Integer domainId;
+
+    /**
+     * 域类型
+     */
+    private Integer domainType;
+
     private String username;
 
     private String password;
+
+
+    /**
+     * 配置类型
+     */
+    private String userType;
+
+    /**
+     * 执行操作：配置、查询
+     */
+    private Integer userAction;
+
+    private Object param;
 
 }

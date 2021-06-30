@@ -27,7 +27,6 @@ public class InterfaceController {
 
     @PostMapping("/operation")
     public ReceiveSystemManagerDTO operation(@RequestBody PortBO portBO) throws Exception {
-        System.out.println(portBO.toString());
         ReceiveSystemManagerDTO operation = portService.operation(portBO);
         return operation;
     }

@@ -8,6 +8,9 @@ package com.zzm.enums;
 public enum MessageTypeEnum {
 
     LOGIN(1, "用户登录"),
+    USER_CONFIG(6, "用户配置"),
+    USER_GET(7, "用户查询"),
+
     DEVICE_INFO(143, "设备基本信息"),
     DEVICE_DOMAIN(141, "设备域信息"),
     FIND_FLOW_BY_SLOT(137, "根据曹魏查询端口流量"),

@@ -19,12 +19,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class PortServiceImpl implements PortService {
 
-
     @Override
     public ReceiveSystemManagerDTO operation(PortBO portBO) throws Exception {
         SystemManagerSendingPortPolicyService systemManagerSendingPortPolicyService
                 = SystemManagerSendingPortComponent.systemManagerSendingPolicyServiceMap.get(portBO.getPortType());
 
+        System.out.println(portBO.getPortType());
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingPortPolicyService.dataEncapsulation(portBO);
 

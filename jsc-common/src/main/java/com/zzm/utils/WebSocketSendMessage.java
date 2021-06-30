@@ -23,6 +23,7 @@ public class WebSocketSendMessage {
      * @param message 发送的数据
      */
     public static void sendTopicMessage(Object message) {
+        System.out.println("推送到topic");
         simpMessagingTemplate.convertAndSend("/topic/all", message);
     }
 

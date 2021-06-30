@@ -2,6 +2,7 @@ package com.zzm.controller;
 
 import com.zzm.annotation.SystemLog;
 import com.zzm.exception.GraceException;
+import com.zzm.pojo.bo.UserAddBO;
 import com.zzm.pojo.bo.UserBO;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
 import com.zzm.service.UserService;
@@ -37,6 +38,18 @@ public class UserController {
     @Autowired
     public UserController(SimpMessagingTemplate simpMessagingTemplate) {
         WebSocketSendMessage.simpMessagingTemplate = simpMessagingTemplate;
+    }
+
+    @PostMapping("/config")
+    @SystemLog(description = "用户相关操作")
+    public ReceiveSystemManagerDTO config(@RequestBody UserBO userBO) throws InterruptedException {
+        return userService.config(userBO);
+    }
+
+    @PostMapping("/getInfo")
+    @SystemLog(description = "用户获取操作")
+    public ReceiveSystemManagerDTO getInfo(@RequestBody UserBO userBO) throws InterruptedException {
+        return userService.getInfo(userBO);
     }
 
     /**
