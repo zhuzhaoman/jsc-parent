@@ -5,14 +5,18 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
 import com.zzm.pojo.bo.UserBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.user.SystemManagerSendingUserPolicyService;
+import com.zzm.service.LogService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Base64;
+import java.util.Date;
 
 /**
  * @author: zhuzhaoman
@@ -24,6 +28,8 @@ public class UserDelSendingServiceImpl implements SystemManagerSendingUserPolicy
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -50,9 +56,8 @@ public class UserDelSendingServiceImpl implements SystemManagerSendingUserPolicy
         sendSystemManagerDTO.setData(sendData);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
     }
 
     @Override
@@ -60,4 +65,22 @@ public class UserDelSendingServiceImpl implements SystemManagerSendingUserPolicy
         return null;
     }
 
+    @Override
+    @Transactional
+    public void recordUserLog(UserBO userBO) {
+        StringBuilder content = new StringBuilder(MessageCodeEnum.USER_DEL.getMsg());
+        try {
+            JSONObject params = JSONObject.parseObject(JSONObject.toJSONString(userBO.getParam()));
+            content.append("【")
+                    .append("删除用户:").append(params.getString("m_strUserName"))
+                    .append("】");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OperationLog operationLog = OperationLog.builder().username(userBO.getUsername())
+                .operationTitle("用户管理")
+                .operationContent(content.toString())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
+    }
 }

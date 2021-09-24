@@ -21,4 +21,5 @@ public interface SystemManagerSendingPortGroupPolicyService {
      */
     Object dataEncapsulation(PortGroupBO portGroupBO);
 
+    void recordUserLog(PortGroupBO portGroupBO);
 }

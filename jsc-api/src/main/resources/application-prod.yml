@@ -1,15 +1,17 @@
 server:
   port: 8080
+  tomcat:
+    connection-timeout: 60000
 
-#  ssl:
-#    enabled: true
-#    # SSL/TLS: Support Weak SSLv3/TLS1.0/TLS1.1 Protocol
-#    enabled-protocols: [ TLSv1.2 ]
-#    # Diffie-Hellman Key Exchange Insufficient DH Group Strength Vulnerability
-#    ciphers: [ TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,SSL_RSA_WITH_RC4_128_SHA ]
-#    key-store: classpath:www.b-du.com.jks
-#    key-store-password: JSC@3passok
-#    key-store-type: JKS
+  ssl:
+    enabled: true
+    # SSL/TLS: Support Weak SSLv3/TLS1.0/TLS1.1 Protocol
+    enabled-protocols: [ TLSv1.2 ]
+    # Diffie-Hellman Key Exchange Insufficient DH Group Strength Vulnerability
+    ciphers: [ TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,SSL_RSA_WITH_RC4_128_SHA ]
+    key-store: classpath:www.b-du.com.jks
+    key-store-password: JSC@3passok
+    key-store-type: JKS
 
 spring:
   jackson:
@@ -22,20 +24,24 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/jsc_web?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: root
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
 
   jpa:
     properties:
       hibernate.jdbc.time_zone: Asia/Shanghai
     hibernate:
       ddl-auto: update
-    show-sql: true
+#    show-sql: true
 
 jsc:
   config:
     linux-ip: 127.0.0.1
     python-url: python
-    save-path: /u01/pos
-    upgrade-path: /u01/install
+    save-path: /u01/pos/
+    upgrade-path: /u01/install/
     config-default: /home/web/config_default.py
     export-procedure: /home/web/config_export.py
     import-procedure: /home/web/config_import.py

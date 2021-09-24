@@ -5,15 +5,20 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
+import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.bo.SystemBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.system.SystemManagerSendingSystemPolicyService;
+import com.zzm.service.LogService;
 import com.zzm.utils.BaseConversionUtils;
 import com.zzm.utils.IPUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author: zhuzhaoman
@@ -25,6 +30,8 @@ public class DataOriginConfigSendingServiceImpl implements SystemManagerSendingS
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -57,9 +64,8 @@ public class DataOriginConfigSendingServiceImpl implements SystemManagerSendingS
         sendSystemManagerDTO.setData(sendData);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
 
     }
 
@@ -67,7 +73,6 @@ public class DataOriginConfigSendingServiceImpl implements SystemManagerSendingS
     public Object getDataEncapsulation(SystemBO systemBO){
         return null;
     }
-
 
     private SendSystemManagerDTO getSendData(SystemBO systemBO) {
 
@@ -80,5 +85,15 @@ public class DataOriginConfigSendingServiceImpl implements SystemManagerSendingS
                 systemBO.getDomainType());
 
         return sendSystemManagerDTO;
+    }
+
+    @Override
+    @Transactional
+    public void recordUserLog(SystemBO systemBO) {
+        OperationLog operationLog = OperationLog.builder().username(systemBO.getUsername())
+                .operationTitle("系统功能配置")
+                .operationContent(MessageCodeEnum.SYSTEM_CONFIG_DATA_ORIGIN.getMsg())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 }

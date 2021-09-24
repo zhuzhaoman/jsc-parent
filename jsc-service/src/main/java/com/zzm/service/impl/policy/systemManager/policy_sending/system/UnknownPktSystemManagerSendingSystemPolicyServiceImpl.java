@@ -5,13 +5,17 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
 import com.zzm.pojo.bo.SystemBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.system.SystemManagerSendingSystemPolicyService;
+import com.zzm.service.LogService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author: zhuzhaoman
@@ -23,6 +27,8 @@ public class UnknownPktSystemManagerSendingSystemPolicyServiceImpl implements Sy
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -32,15 +38,13 @@ public class UnknownPktSystemManagerSendingSystemPolicyServiceImpl implements Sy
     @Override
     public Object configDataEncapsulation(SystemBO systemBO){
 
-
         SendSystemManagerDTO sendSystemManagerDTO = getSendData(systemBO);
         sendSystemManagerDTO.setMessageCode(MessageCodeEnum.SYSTEM_CONFIG_UNKNOWN_PKT.getReqCode());
         sendSystemManagerDTO.setData(systemBO.getParam());
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
 
     }
 
@@ -61,5 +65,25 @@ public class UnknownPktSystemManagerSendingSystemPolicyServiceImpl implements Sy
                 systemBO.getDomainType());
 
         return sendSystemManagerDTO;
+    }
+
+    @Override
+    @Transactional
+    public void recordUserLog(SystemBO systemBO) {
+        StringBuilder content = new StringBuilder(MessageCodeEnum.SYSTEM_CONFIG_UNKNOWN_PKT.getMsg());
+        try {
+            JSONObject params = JSONObject.parseObject(JSONObject.toJSONString(systemBO.getParam()));
+            content.append("【")
+                    .append("业务策略ID:").append(params.getInteger("m_u32ServiceProfileId")).append("、")
+                    .append("开关:").append(params.getBoolean("isOn") ? "关" : "开")
+                    .append("】");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OperationLog operationLog = OperationLog.builder().username(systemBO.getUsername())
+                .operationTitle("系统功能配置")
+                .operationContent(content.toString())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 }

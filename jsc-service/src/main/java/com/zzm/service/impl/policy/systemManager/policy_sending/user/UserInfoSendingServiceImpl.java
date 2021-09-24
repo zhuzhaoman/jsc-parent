@@ -1,21 +1,21 @@
 package com.zzm.service.impl.policy.systemManager.policy_sending.user;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
-import com.zzm.pojo.bo.PortBO;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
 import com.zzm.pojo.bo.UserBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.user.SystemManagerSendingUserPolicyService;
-import com.zzm.utils.BaseConversionUtils;
+import com.zzm.service.LogService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Base64;
+import java.util.Date;
 
 /**
  * @author: zhuzhaoman
@@ -27,6 +27,8 @@ public class UserInfoSendingServiceImpl implements SystemManagerSendingUserPolic
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -52,9 +54,17 @@ public class UserInfoSendingServiceImpl implements SystemManagerSendingUserPolic
         sendSystemManagerDTO.setData(userBO.getParam());
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
     }
 
+    @Override
+    @Transactional
+    public void recordUserLog(UserBO userBO) {
+        OperationLog operationLog = OperationLog.builder().username(userBO.getUsername())
+                .operationTitle("用户管理")
+                .operationContent(MessageCodeEnum.USER_GET.getMsg())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
+    }
 }

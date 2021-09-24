@@ -36,7 +36,6 @@ public class ErrorMessageController {
      * @return
      */
     @GetMapping("/getErrorCategoryCount")
-    @SystemLog(description = "获取异常信息记录数")
     public JSONResult getErrorCategoryCount() {
 
         List<Map<String, Integer>> errors = null;
@@ -57,7 +56,7 @@ public class ErrorMessageController {
      * @return
      */
     @PostMapping("/list")
-    @SystemLog(description = "分页查询异常信息")
+    @SystemLog(description = "查询异常信息")
     public JSONResult getErrorsList(@RequestBody ErrorsPagedBO errorsPagedBO) {
 
         PagedGridResult<Errors> pagedGridResult = null;

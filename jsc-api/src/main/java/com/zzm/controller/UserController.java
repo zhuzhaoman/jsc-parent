@@ -2,7 +2,6 @@ package com.zzm.controller;
 
 import com.zzm.annotation.SystemLog;
 import com.zzm.exception.GraceException;
-import com.zzm.pojo.bo.UserAddBO;
 import com.zzm.pojo.bo.UserBO;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
 import com.zzm.service.UserService;

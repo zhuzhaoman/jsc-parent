@@ -7,18 +7,22 @@ import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
 import com.zzm.exception.GraceException;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
 import com.zzm.pojo.bo.*;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.rule.SystemManagerSendingRulePolicyService;
+import com.zzm.service.LogService;
 import com.zzm.service.impl.policy.systemManager.policy_sending.BaseSystemManagerSendingPolicyServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +36,8 @@ public class ImsiRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -95,9 +101,8 @@ public class ImsiRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
                 jsonObject);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
     }
 
     @Override
@@ -122,9 +127,8 @@ public class ImsiRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
                 ruleDelBO);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
     }
 
     @Override
@@ -140,8 +144,40 @@ public class ImsiRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
                 ruleBO.getParam());
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
+    }
+
+    @Override
+    @Transactional
+    public void recordUserLog(RuleBO ruleBO) {
+        StringBuilder content = new StringBuilder();
+
+        if ("add".equals(ruleBO.getRuleAction())) {
+            content.append(MessageCodeEnum.IMSI_RULE_ADD.getMsg());
+        } else if ("del".equals(ruleBO.getRuleAction())) {
+            RuleDelBO ruleDelBO = JSON.parseObject(JSON.toJSONString(ruleBO.getParam()), RuleDelBO.class);
+            String ruleMsg = ruleDelBO.getM_u32RuleNum() > 1 ?
+                    MessageCodeEnum.IMSI_RULE_MORE_DEL.getMsg() :
+                    MessageCodeEnum.IMSI_RULE_SOLO_DEL.getMsg();
+            content.append(ruleMsg);
+        } else if ("find".equals(ruleBO.getRuleAction())) {
+            content.append(MessageCodeEnum.IMSI_GET_ONE.getMsg());
+        }
+
+        try {
+            JSONObject params = JSONObject.parseObject(JSONObject.toJSONString(ruleBO.getParam()));
+            content.append("【")
+                    .append("规则ID:").append(params.getInteger("m_u32AclIndex"))
+                    .append("】");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        OperationLog operationLog = OperationLog.builder().username(ruleBO.getUsername())
+                .operationTitle("规则管理")
+                .operationContent(content.toString())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 }

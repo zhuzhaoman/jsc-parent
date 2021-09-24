@@ -1,5 +1,6 @@
 package com.zzm.controller;
 
+import com.zzm.annotation.SystemLog;
 import com.zzm.pojo.FlowCycle;
 import com.zzm.pojo.bo.FlowCycleBO;
 import com.zzm.service.FlowCycleService;
@@ -44,6 +45,7 @@ public class FlowCycleController {
      * @return
      */
     @PostMapping("/updateCycle")
+    @SystemLog(description = "修改历史流量存储周期")
     public JSONResult updateFlowCycle(@RequestBody FlowCycleBO flowCycleBo) {
         flowCycleService.updateFlowCycle(flowCycleBo);
         return JSONResult.ok();

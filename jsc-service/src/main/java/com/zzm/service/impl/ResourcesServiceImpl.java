@@ -27,6 +27,7 @@ public class ResourcesServiceImpl implements ResourcesService {
 
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingResourcesPolicyService.configDataEncapsulation(resourcesBO);
+        systemManagerSendingResourcesPolicyService.recordConfigOrReleaseUserLog(resourcesBO, true);
 
         return receiveSystemManagerDTO;
     }
@@ -38,6 +39,8 @@ public class ResourcesServiceImpl implements ResourcesService {
 
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingResourcesPolicyService.getDataEncapsulation(resourcesBO);
+        systemManagerSendingResourcesPolicyService.recordGetUserLog(resourcesBO);
+
 
         return receiveSystemManagerDTO;
     }
@@ -49,6 +52,7 @@ public class ResourcesServiceImpl implements ResourcesService {
 
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingResourcesPolicyService.releaseDataEncapsulation(resourcesBO);
+        systemManagerSendingResourcesPolicyService.recordConfigOrReleaseUserLog(resourcesBO, false);
 
         return receiveSystemManagerDTO;
     }

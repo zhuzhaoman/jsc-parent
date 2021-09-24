@@ -1,5 +1,6 @@
 package com.zzm.policy.system_manager.sending.service_profile;
 
+import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.bo.ServiceProfileBO;
 
 /**
@@ -20,5 +21,7 @@ public interface SystemManagerSendingServiceProfilePolicyService {
      * @param serviceProfileBO
      */
     Object dataEncapsulation(ServiceProfileBO serviceProfileBO);
+
+    void recordUserLog(ServiceProfileBO serviceProfileBO);
 
 }

@@ -5,7 +5,7 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
 import com.zzm.pojo.bo.DeviceDomainBO;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;

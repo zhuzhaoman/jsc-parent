@@ -6,16 +6,20 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
+import com.zzm.pojo.bo.PortBO;
 import com.zzm.pojo.bo.PortGroupBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.port_group.SystemManagerSendingPortGroupPolicyService;
+import com.zzm.service.LogService;
 import com.zzm.utils.BaseConversionUtils;
 import com.zzm.utils.IPUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author zhuzhaoman
@@ -27,6 +31,8 @@ public class ConfigSubPortGrePackageSystemManagerSendingPortGroupServiceImpl imp
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -44,7 +50,6 @@ public class ConfigSubPortGrePackageSystemManagerSendingPortGroupServiceImpl imp
 //
 //        jsonObject.put("m_strGreSrcMac", m_strGreSrcMac.replace(":", ""));
 //        jsonObject.put("m_strGreDstMac", m_strGreDstMac.replace(":", ""));
-
 
         if (StringUtils.isNotBlank(jsonObject.getString("m_u32Ipv4Sip"))) {
             String srcIp = jsonObject.getString("m_u32Ipv4Sip");
@@ -87,9 +92,27 @@ public class ConfigSubPortGrePackageSystemManagerSendingPortGroupServiceImpl imp
                 param);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
+    }
+
+    @Override
+    public void recordUserLog(PortGroupBO portGroupBO) {
+        StringBuilder content = new StringBuilder(MessageCodeEnum.PORT_GROUP_CONFIG_CHILD_GROUP_GRE.getMsg());
+        try {
+            JSONObject params = JSONArray.parseArray(JSONObject.toJSONString(portGroupBO.getParam())).getJSONObject(0);
+            content.append("【")
+                    .append("子端口ID:").append(params.getInteger("m_u32SubPortId")).append("、")
+                    .append("开关:").append(params.getInteger("m_u32SubGrePackageEnable"))
+                    .append("】");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OperationLog operationLog = OperationLog.builder().username(portGroupBO.getUsername())
+                .operationTitle("端口管理")
+                .operationContent(content.toString())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 
 }

@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @date: 2020-10-20
  * @description:
  **/
-@Configuration
+//@Configuration
 public class TomcatConfig {
 
     @Bean

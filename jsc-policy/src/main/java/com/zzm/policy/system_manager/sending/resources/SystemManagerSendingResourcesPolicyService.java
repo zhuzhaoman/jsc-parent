@@ -33,4 +33,7 @@ public interface SystemManagerSendingResourcesPolicyService {
      */
     Object releaseDataEncapsulation(ResourcesBO resourcesBO);
 
+    void recordConfigOrReleaseUserLog(ResourcesBO resourcesBO, boolean isConfig);
+
+    void recordGetUserLog(ResourcesBO resourcesBO);
 }

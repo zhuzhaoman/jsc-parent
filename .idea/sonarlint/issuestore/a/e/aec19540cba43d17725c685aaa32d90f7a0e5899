@@ -1,20 +1,10 @@
 
-{
-java:S1488 "^Immediately return this expression instead of assigning it to the temporary variable "result".(‡íûç8ËÚÅŸß.
-€
-java:S1488e"^Immediately return this expression instead of assigning it to the temporary variable "result".(è¬Ò¶ıÿÿÿÿ8ˆãß.
-|
-java:S1149"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(í…Ò‰8Ñ…ïß.
+X	java:S125"<This block of commented-out lines of code should be removed.(İ•ç×8Ä¤±¹á.
 C
 java:S2111d"!Use "BigDecimal.valueOf" instead.(§¿“šüÿÿÿÿ8ˆãß.
-€
-java:S1488Y"^Immediately return this expression instead of assigning it to the temporary variable "result".(è¬Ò¶ıÿÿÿÿ8ˆãß.
-{
-java:S1488)"^Immediately return this expression instead of assigning it to the temporary variable "result".(â›ù²8ıÕÂŸß.
-{
-java:S14882"^Immediately return this expression instead of assigning it to the temporary variable "result".(¸£Áö8‹¯Áß.
-X	java:S125"<This block of commented-out lines of code should be removed.(İ•ç×8Ä¤±¹á.
 >
 java:S2111X"!Use "BigDecimal.valueOf" instead.(¨Ïüæ8ˆãß.
+|
+java:S1149"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(í…Ò‰8Ñ…ïß.
 >
 java:S1643@"Use a StringBuilder instead.(Ï´®Îûÿÿÿÿ8ˆãß.

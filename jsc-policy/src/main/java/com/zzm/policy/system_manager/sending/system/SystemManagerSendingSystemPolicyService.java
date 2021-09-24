@@ -1,5 +1,6 @@
 package com.zzm.policy.system_manager.sending.system;
 
+import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.bo.ResourcesBO;
 import com.zzm.pojo.bo.SystemBO;
 
@@ -28,4 +29,5 @@ public interface SystemManagerSendingSystemPolicyService {
      */
     Object getDataEncapsulation(SystemBO systemBO);
 
+    void recordUserLog(SystemBO systemBO);
 }

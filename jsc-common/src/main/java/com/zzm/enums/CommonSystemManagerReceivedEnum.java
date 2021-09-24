@@ -8,6 +8,7 @@ package com.zzm.enums;
 public enum CommonSystemManagerReceivedEnum {
 
     USER_ADD(1566, 1000, "用户注册"),
+    USER_ACTIVE( 1538, 1000, "用户激活"),
     USER_DEL(1568, 1000, "用户删除"),
     USER_GET(1794, 1100, "用户信息获取"),
 
@@ -148,6 +149,7 @@ public enum CommonSystemManagerReceivedEnum {
     SYSTEM_CONFIG_DPI_SEARCH_BUF_NUMBER(2155, 7770, "配置dpi查找buf数"),
     SYSTEM_CONFIG_NUMBER_OF_DPI_MATCHES(2157, 7770, "配置dpi匹配数"),
     SYSTEM_CONFIG_DPI_RULE_OFFSET_POSITION(2153, 7770, "配置dpi规则偏移位置"),
+    SYSTEM_CONFIG_IP_FRAGMENT( 2183, 7770, "配置ip分片包"),
     SYSTEM_CONFIG_PERFORMANCE_TESTING(2159, 7770, "配置性能测试开关"),
     SYSTEM_CONFIG_DATA_PROCESSING_FACTORY_SETTINGS(2291, 7770, "数据处理配置恢复出厂默认设置"),
     SYSTEM_CONFIG_DATA_ORIGIN(2143, 7770, "添加数据来源"),
@@ -183,6 +185,8 @@ public enum CommonSystemManagerReceivedEnum {
     INTERFACE_LOOP_BACK(34368, 8880, "端口回环"),
     INTERFACE_MIRROR(34338, 8880, "端口镜像开/关"),
     INTERFACE_SHOW_VLAN_TAG( 34372, 8880, "端口VlanTag"),
+    INTERFACE_HASH_TYPE(34376, 8880,  "内外层Hash方式"),
+    INTERFACE_PING_PORT(34370, 8881,  "端口ping功能"),
     COMMON_INTERFACE_CONFIG(0, 8880, "通用端口配置枚举"),
     COMMON_INTERFACE_GET(0, 8881, "通用端口展示枚举"),
 
@@ -211,8 +215,9 @@ public enum CommonSystemManagerReceivedEnum {
     DEVICE_PORT_TRAFFIC_THRESHOLD_CONFIG(36382, 9992, "端口流量阈值"),
     DEVICE_SHOW_DEVICE_SHELF_INFO( 36628, 9991, "查询风扇电源信息"),
     DEVICE_REBOOT_SLOT(36634, 9992, "reboot"),
-    DEVICE_SHOW_DEVICE_MANAGE(36632, 9991, "查询设备参数信息");
+    DEVICE_SHOW_DEVICE_MANAGE(36632, 9991, "查询设备参数信息"),
 
+    SYSLOG_SERVER_IP_CONFIG(1554, 10001, "日志推送ip地址配置");
 
     private int reqCode;
     private int resCode;

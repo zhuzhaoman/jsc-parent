@@ -67,8 +67,12 @@ public enum MessageTypeEnum {
      * 设备
      */
     DEVICE_GET(143, "设备查询"),
-    DEVICE_CONFIG(142, "设备配置");
+    DEVICE_CONFIG(142, "设备配置"),
 
+    /**
+     * 日志
+     */
+    SYS_LOG_CONFIG(6, "日志配置");
 
     private Integer code;
     private String msg;

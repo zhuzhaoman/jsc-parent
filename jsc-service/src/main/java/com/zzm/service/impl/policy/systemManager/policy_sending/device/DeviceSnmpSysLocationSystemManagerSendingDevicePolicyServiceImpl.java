@@ -5,13 +5,17 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
 import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.device.SystemManagerSendingDevicePolicyService;
+import com.zzm.service.LogService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author zhuzhaoman
@@ -23,6 +27,8 @@ public class DeviceSnmpSysLocationSystemManagerSendingDevicePolicyServiceImpl im
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -46,6 +52,25 @@ public class DeviceSnmpSysLocationSystemManagerSendingDevicePolicyServiceImpl im
         Object data = clientServerSync.sendMessage(content);
 
         return data;
+    }
+
+    @Override
+    @Transactional
+    public void recordUserLog(DeviceBO deviceBO) {
+        StringBuilder content = new StringBuilder("snmp配置 >>> " + MessageCodeEnum.DEVICE_SNMP_SYS_LOCATION.getMsg());
+        try {
+            JSONObject params = JSONObject.parseObject(JSONObject.toJSONString(deviceBO.getParam()));
+            content.append("【")
+                    .append("位置:").append(params.getString("m_strSysLocation"))
+                    .append("】");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OperationLog operationLog = OperationLog.builder().username(deviceBO.getUsername())
+                .operationTitle("设备信息管理")
+                .operationContent(content.toString())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 
 }

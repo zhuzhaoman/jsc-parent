@@ -1,6 +1,7 @@
 package com.zzm.policy.system_manager.sending.real_time_flow;
 
 
+import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.bo.RealTimeFlowBO;
 
 /**
@@ -21,4 +22,6 @@ public interface SystemManagerSendingRealTimeFlowPolicyService {
      * @param realTimeFlowBO
      */
     Object dataEncapsulation(RealTimeFlowBO realTimeFlowBO) throws Exception;
+
+    void recordUserLog(RealTimeFlowBO realTimeFlowBO);
 }

@@ -31,6 +31,10 @@ public class WebSocketSendMessage {
         simpMessagingTemplate.convertAndSend("/topic/import", message);
     }
 
+    public static void sendTopicSysLogMessage(Object message) {
+        simpMessagingTemplate.convertAndSend("/topic/sysLog", message);
+    }
+
     /**
      * 发送信息给指定用户
      * @param user 接受信息的用户

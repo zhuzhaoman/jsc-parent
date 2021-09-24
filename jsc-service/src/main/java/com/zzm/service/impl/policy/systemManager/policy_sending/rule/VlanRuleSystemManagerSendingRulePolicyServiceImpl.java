@@ -6,27 +6,26 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
 import com.zzm.pojo.bo.CVlanTypeMsgBO;
 import com.zzm.pojo.bo.RuleBO;
 import com.zzm.pojo.bo.RuleDelBO;
 import com.zzm.pojo.bo.VlanRuleBO;
 import com.zzm.pojo.dto.CVlanTypeMsgDTO;
-import com.zzm.pojo.dto.IPV6RuleDTO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.pojo.dto.VlanRuleDTO;
 import com.zzm.policy.system_manager.sending.rule.SystemManagerSendingRulePolicyService;
+import com.zzm.service.LogService;
 import com.zzm.service.impl.policy.systemManager.policy_sending.BaseSystemManagerSendingPolicyServiceImpl;
 import com.zzm.utils.BaseConversionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author: zhuzhaoman
@@ -39,6 +38,8 @@ public class VlanRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -106,9 +107,8 @@ public class VlanRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
                 jsonObject);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
     }
 
     @Override
@@ -136,9 +136,8 @@ public class VlanRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
                 sendMap);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
     }
 
     @Override
@@ -154,8 +153,40 @@ public class VlanRuleSystemManagerSendingRulePolicyServiceImpl extends BaseSyste
                 ruleBO.getParam());
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
+    }
+
+    @Override
+    @Transactional
+    public void recordUserLog(RuleBO ruleBO) {
+        StringBuilder content = new StringBuilder();
+
+        if ("add".equals(ruleBO.getRuleAction())) {
+            content.append(MessageCodeEnum.VLAN_RULE_ADD.getMsg());
+        } else if ("del".equals(ruleBO.getRuleAction())) {
+            RuleDelBO ruleDelBO = JSON.parseObject(JSON.toJSONString(ruleBO.getParam()), RuleDelBO.class);
+            String ruleMsg = ruleDelBO.getM_u32RuleNum() > 1 ?
+                    MessageCodeEnum.VLAN_RULE_MORE_DEL.getMsg() :
+                    MessageCodeEnum.VLAN_RULE_SOLO_DEL.getMsg();
+            content.append(ruleMsg);
+        } else if ("find".equals(ruleBO.getRuleAction())) {
+            content.append(MessageCodeEnum.VLAN_GET_ONE.getMsg());
+        }
+
+        try {
+            JSONObject params = JSONObject.parseObject(JSONObject.toJSONString(ruleBO.getParam()));
+            content.append("【")
+                    .append("规则ID:").append(params.getInteger("m_u32AclIndex"))
+                    .append("】");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        OperationLog operationLog = OperationLog.builder().username(ruleBO.getUsername())
+                .operationTitle("规则管理")
+                .operationContent(content.toString())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 }

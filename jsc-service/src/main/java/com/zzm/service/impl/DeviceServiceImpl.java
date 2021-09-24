@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zzm.enums.*;
 import com.zzm.exception.GraceException;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
 import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.bo.DeviceThresholdConfigBO;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
@@ -14,8 +14,10 @@ import com.zzm.policy.system_manager.sending.device.SystemManagerSendingDeviceCo
 import com.zzm.policy.system_manager.sending.device.SystemManagerSendingDevicePolicyService;
 import com.zzm.service.DeviceService;
 import com.zzm.service.impl.policy.module.upgrade.Upgrade;
-import com.zzm.service.impl.policy.module.upgrade.systemManager.SystemManagerCompleteMachineUpgrade;
-import com.zzm.service.impl.policy.module.upgrade.systemManager.SystemManagerSingleUpgrade;
+import com.zzm.service.impl.policy.module.upgrade.systemManager.SystemManagerCompleteMachineInstall;
+import com.zzm.service.impl.policy.module.upgrade.systemManager.SystemManagerCompleteMachineUpdate;
+import com.zzm.service.impl.policy.module.upgrade.systemManager.SystemManagerSingleInstall;
+import com.zzm.service.impl.policy.module.upgrade.systemManager.SystemManagerSingleUpdate;
 import com.zzm.utils.LinuxUtil;
 import com.zzm.utils.WebSocketSendMessage;
 import lombok.SneakyThrows;
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +37,7 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,8 +79,9 @@ public class DeviceServiceImpl implements DeviceService {
     private int fileIndex = 0;
     private StringBuilder cardStatusError = new StringBuilder();
 
+    @Async
     @Override
-    public boolean importConfigFile(MultipartFile[] files, String user) {
+    public Future<String> importConfigFile(MultipartFile[] files, String user) {
 
         if (files == null || files.length <= 0) {
             GraceException.display("上传的配置文件不能为空");
@@ -102,10 +107,6 @@ public class DeviceServiceImpl implements DeviceService {
 
                     try {
                         String filePath = savePath + fileName;
-                        File newFile = new File(filePath);
-                        if (!newFile.exists()) {
-                            newFile.mkdirs();
-                        }
                         File savedFile = new File(filePath);
                         file.transferTo(savedFile);
                     } catch (Exception e) {
@@ -119,7 +120,7 @@ public class DeviceServiceImpl implements DeviceService {
 
         loadConfigFile(user, files);
 
-        return true;
+        return new AsyncResult<>("任务完成");
     }
 
     private void loadConfigFile(String user, MultipartFile[] files) {
@@ -209,13 +210,12 @@ public class DeviceServiceImpl implements DeviceService {
         List<String> template = new ArrayList<>(configDefaultTemplate);
         String result = LinuxUtil.executeCommandExplicit(pythonUrl, configDefault, template);
 
-        if (result != null) {
-            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
-            Matcher m = p.matcher(result);
-            result = m.replaceAll("");
-        }
+        System.out.println(result);
+        Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+        Matcher m = p.matcher(result);
+        result = m.replaceAll("");
 
-        if (result.equals("success")) {
+        if (result.contains("success")) {
             return true;
         } else {
             return false;
@@ -272,7 +272,7 @@ public class DeviceServiceImpl implements DeviceService {
 
         for (Object card : cardList) {
             JSONObject cardObj = JSONObject.parseObject(JSONObject.toJSONString(card));
-            if ((Integer) cardObj.get("m_u32RunStatus") != 4) {
+            if (cardObj.getInteger("m_u32RunStatus") != 4 && cardObj.getInteger("m_u32SlotId") <= 8) {
                 status = false;
             }
 
@@ -359,20 +359,39 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    @Async
-    public void SystemManagerUpgrade(MultipartFile[] files, String sort, Integer type) {
+    public Upgrade SystemManagerUpgradeUpload(MultipartFile[] files, Integer type, Integer mode) {
         Upgrade upgrade = null;
 
-        if (type.equals(UpgradeEnum.SINGLE_BOARD.value())) {
-            upgrade = new SystemManagerSingleUpgrade(files, upgradePath, sort);
-        } else if (type.equals(UpgradeEnum.COMPLETE_MACHINE.value())) {
-            upgrade = new SystemManagerCompleteMachineUpgrade(files, upgradePath, sort);
+        if (mode.equals(UpgradeModeEnum.INSTALL.value())) {
+            if (type.equals(UpgradeTypeEnum.SINGLE_BOARD.value())) {
+                upgrade = new SystemManagerSingleInstall();
+            } else if (type.equals(UpgradeTypeEnum.COMPLETE_MACHINE.value())) {
+                upgrade = new SystemManagerCompleteMachineInstall();
+            }
+        } else if (mode.equals(UpgradeModeEnum.UPDATE.value())) {
+            if (type.equals(UpgradeTypeEnum.SINGLE_BOARD.value())) {
+                upgrade = new SystemManagerSingleUpdate();
+            } else if (type.equals(UpgradeTypeEnum.COMPLETE_MACHINE.value())) {
+                upgrade = new SystemManagerCompleteMachineUpdate();
+            }
         }
 
-        assert upgrade != null;
-        upgrade.exchange();
+        if (upgrade != null) {
+            upgrade.fileUpload(files, upgradePath);
+            return upgrade;
+        }
+
+        return null;
     }
 
+    @Async
+    @Override
+    public Future<String> SystemManagerUpgradeAsync(Upgrade upgrade, String sort) {
+        if (upgrade != null) {
+            upgrade.exchange(sort);
+        }
+        return new AsyncResult<>("任务完成");
+    }
 
     /**
      * 查询设备信息
@@ -528,6 +547,7 @@ public class DeviceServiceImpl implements DeviceService {
 
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingDevicePolicyService.dataEncapsulation(deviceBO);
+        systemManagerSendingDevicePolicyService.recordUserLog(deviceBO);
 
         return receiveSystemManagerDTO;
     }

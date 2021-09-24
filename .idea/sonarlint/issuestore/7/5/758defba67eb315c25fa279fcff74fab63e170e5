@@ -1,0 +1,9 @@
+
+Z
+java:S1128
+"=Remove this unused import 'com.zzm.pojo.bo.ServiceProfileBO'.(¯™ÕÌ8—ğí”é.
+a
+java:S32520"FUse static access with "com.alibaba.fastjson.JSON" for "toJSONString".(—¾ğˆüÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(É¬óÈşÿÿÿÿ
+™
+java:S1128"‚Remove this unused import 'com.zzm.policy.system_manager.sending.service_profile.SystemManagerSendingServiceProfilePolicyService'.(Ş½ã

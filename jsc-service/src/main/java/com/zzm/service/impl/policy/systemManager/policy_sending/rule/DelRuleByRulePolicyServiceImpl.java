@@ -2,7 +2,7 @@ package com.zzm.service.impl.policy.systemManager.policy_sending.rule;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zzm.enums.*;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
 import com.zzm.pojo.bo.RuleBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import org.springframework.stereotype.Service;

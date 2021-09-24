@@ -31,7 +31,7 @@ public class RealTimeFlowController {
      * @throws InterruptedException
      */
     @PostMapping("/get")
-    @SystemLog(description = "获取实时流量")
+    @SystemLog(description = "查看实时流量")
     public ReceiveSystemManagerDTO realTimeFlow(@RequestBody RealTimeFlowBO realTimeFlowBO) throws InterruptedException {
 
         if ("".equals(realTimeFlowBO.getParam().trim())) {

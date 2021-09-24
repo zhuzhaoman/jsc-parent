@@ -4,6 +4,8 @@ public enum CardTypeEnum {
     NETVIS_PPB3320(12, 60, "NETVIS_PPB3320","正交2.0双路NPS卡"),
     RTM(13, 90, "RTM","RTM"),
     NETVIS_BB2032(14, 32,"NETVIS_BB2032", "32口盒式汇聚分流设备"),
+    VXP_IOB6310(16, 60, "VXP_IOB6310","正交2.0博通IO卡"),
+    VXP_PPB3310(17, 60, "VXP_PPB3310","单路业务卡"),
     NETVIS_PPB3321(18, 60, "NETVIS_PPB3321","正交2.0双路NPS卡+"),
     NETVIS_AB1048S(21, 54, "NETVIS_AB1048S","48口盒式 单路NPS + barefoot");
 

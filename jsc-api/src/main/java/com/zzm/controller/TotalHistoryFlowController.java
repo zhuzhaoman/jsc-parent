@@ -39,7 +39,7 @@ public class TotalHistoryFlowController {
      * @return
      */
     @PostMapping("/day")
-    @SystemLog(description = "根据日期范围查询历史流量")
+    @SystemLog(description = "根据天获取历史流量信息")
     public JSONResult getTotalHistoryFlowByDay(@RequestBody TotalHistoryFlowBO totalHistoryFlowBO) {
         List<TotalHistoryFlow> totalHistoryFlowByDay = totalHistoryFlowService.getTotalHistoryFlowByDay(totalHistoryFlowBO);
         return JSONResult.ok(totalHistoryFlowByDay);
@@ -52,7 +52,7 @@ public class TotalHistoryFlowController {
      * @return
      */
     @PostMapping("/dateRange")
-    @SystemLog(description = "根据日期范围查询历史流量")
+    @SystemLog(description = "根据日期范围（刻度天）查询历史流量信息")
     public JSONResult getTotalHistoryFlowByMonth(@RequestBody TotalHistoryFlowBO totalHistoryFlowBO) {
 
         Date startTime = totalHistoryFlowBO.getStartTime();
@@ -82,7 +82,7 @@ public class TotalHistoryFlowController {
      * @return
      */
     @PostMapping("/quarter")
-    @SystemLog(description = "根据日期范围查询历史流量")
+    @SystemLog(description = "根据季度查询历史流量信息")
     public JSONResult getTotalHistoryFlowByQuarterRange(@RequestBody TotalHistoryFlowBO totalHistoryFlowBO) {
         List<TotalHistoryFlow> totalHistoryFlowList = totalHistoryFlowService.getTotalHistoryFlowByQuarterRange(totalHistoryFlowBO);
         return JSONResult.ok(totalHistoryFlowList);

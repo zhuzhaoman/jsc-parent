@@ -1,6 +1,7 @@
 package com.zzm.policy.system_manager.sending.port;
 
 
+import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.bo.PortBO;
 
 /**
@@ -21,4 +22,6 @@ public interface SystemManagerSendingPortPolicyService {
      * @param portBO
      */
     Object dataEncapsulation(PortBO portBO) throws Exception;
+
+    void recordUserLog(PortBO portBO);
 }

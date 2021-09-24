@@ -1,8 +1,14 @@
 package com.zzm.service.impl.policy.module.upgrade;
 
+import com.zzm.exception.GraceException;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: zhuzhaoman
@@ -12,27 +18,48 @@ import org.springframework.web.multipart.MultipartFile;
 public abstract class Upgrade {
     private final Logger log = LoggerFactory.getLogger(Upgrade.class);
 
-    private MultipartFile[] files;
-    private String upgradePath;
-    private String sort;
-
-
-    public Upgrade(MultipartFile[] files, String upgradePath, String sort) {
-        this.files = files;
-        this.upgradePath = upgradePath;
-        this.sort = sort;
+    public void exchange(String sort) {
+        versionUpgrade(sort);
     }
 
-    public boolean exchange() {
-        if (!fileUpload(files, upgradePath)) {
+    public boolean fileUpload(MultipartFile[] files, String upgradePath) {
+        List<String> fileNameList = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            fileNameList.add(file.getOriginalFilename());
+        }
+
+        boolean checkFlag = checkUpgradeFileName(fileNameList);
+        if (!checkFlag) {
+            GraceException.display("文件名称校验不通过");
             return false;
         }
-        versionUpgrade(sort);
+
+        try {
+            for (MultipartFile file : files) {
+                // 获得文件上传的文件名称
+                String fileName = file.getOriginalFilename();
+                if (StringUtils.isNotBlank(fileName)) {
+                    try {
+                        String filePath = upgradePath + fileName;
+                        File newFile = new File(filePath);
+
+                        file.transferTo(newFile);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            GraceException.display("配置文件导入失败");
+            return false;
+        }
+
         return true;
     }
 
-    protected abstract boolean fileUpload(MultipartFile[] files, String upgradePath);
-
     protected abstract void versionUpgrade(String sort);
+
+    protected abstract boolean checkUpgradeFileName(List<String> fileNameList);
 
 }

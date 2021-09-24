@@ -4,11 +4,13 @@ package com.zzm.service;
 import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.bo.DeviceThresholdConfigBO;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
+import com.zzm.service.impl.policy.module.upgrade.Upgrade;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * @author zhuzhaoman
@@ -17,7 +19,7 @@ import java.util.concurrent.ExecutionException;
  */
 public interface DeviceService {
 
-    boolean importConfigFile(MultipartFile[] files, String user);
+    Future<String> importConfigFile(MultipartFile[] files, String user);
 
     /**
      * 查询设备信息
@@ -76,5 +78,7 @@ public interface DeviceService {
 
     void downloadConfigFile(String fileName, HttpServletResponse response);
 
-    void SystemManagerUpgrade(MultipartFile[] files, String sort, Integer type);
+    Upgrade SystemManagerUpgradeUpload(MultipartFile[] files, Integer type, Integer mode);
+
+    Future<String> SystemManagerUpgradeAsync(Upgrade upgrade, String sort);
 }

@@ -1,0 +1,24 @@
+
+a
+java:S2259W"DA "NullPointerException" could be thrown; "method" is nullable here.(œ™ô±8ö£”Âê.
+8
+java:S3878W"Remove this array creation.(œ™ô±8ö£”Âê.
+Q
+java:S3740"/Provide the parametrized type for this generic.(İÓóŒşÿÿÿÿ8èÜ‹Âê.
+Q
+java:S3740"/Provide the parametrized type for this generic.(Ì±İ–ûÿÿÿÿ8Ää‘Âê.
+|
+java:S1149a"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(í…Ò‰8ö£”Âê.
+a
+java:S2259:"DA "NullPointerException" could be thrown; "method" is nullable here.(çĞ³†8ö£”Âê.
+U
+java:S3878:"8Remove this array creation and simply pass the elements.(çĞ³†8ö£”Âê.
+L
+java:S3740@"/Provide the parametrized type for this generic.(¨¥œ§8ö£”Âê.
+|
+java:S1149F"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(í…Ò‰8ö£”Âê.
+O
+java:S1135&"2Complete the task associated to this TODO comment.( È‘ç8Ää‘Âê.
+L
+java:S3740`"/Provide the parametrized type for this generic.(»İ‰Ş8ö£”Âê.
+E	java:S108g")Either remove or fill this block of code.(”ı¾8ö£”Âê.

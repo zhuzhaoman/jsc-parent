@@ -6,6 +6,8 @@ import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.bo.DeviceThresholdConfigBO;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
 import com.zzm.service.DeviceService;
+import com.zzm.service.impl.policy.module.upgrade.Upgrade;
+import com.zzm.utils.CustomFileUtils;
 import com.zzm.utils.JSONResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +17,14 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 /**
  * @author zhuzhaoman
@@ -29,14 +37,29 @@ import java.util.Map;
 public class DeviceController {
 
     public static final Logger log = LoggerFactory.getLogger(DeviceController.class);
+    private static List<Future<String>> upgradeFutureList = new ArrayList<>();
+    private static List<Future<String>> importFutureList = new ArrayList<>();
 
     @Resource
     private DeviceService deviceService;
 
     @PostMapping("/upgrade")
+    @SystemLog(description = "软件升级/安装")
     public JSONResult SystemManagerUpgrade(@RequestParam("files") MultipartFile[] files,
                                            @RequestParam("sort") String sort,
-                                           @RequestParam("type") Integer type) {
+                                           @RequestParam("mode") Integer mode,
+                                           @RequestParam("type") Integer type) throws IOException {
+
+        for (int i = 0; i < upgradeFutureList.size(); i++) {
+            if (upgradeFutureList.get(i) != null) {
+                if (upgradeFutureList.get(i).isDone()) {
+                    //判断线程结束，输出回调信息，并将该回调清除
+                    upgradeFutureList.remove(i);
+                } else {
+                    GraceException.display("正在安装/升级，请稍后...");
+                }
+            }
+        }
 
         if (files.length <= 0) {
             GraceException.display("上传的文件不能为空");
@@ -46,27 +69,43 @@ public class DeviceController {
             GraceException.display("排序不能为空");
         }
 
-        deviceService.SystemManagerUpgrade(files, sort, type);
+        Upgrade upgrade = deviceService.SystemManagerUpgradeUpload(files, type, mode);
 
-        return JSONResult.ok("升级执行成功，5~10分钟左右升级成功~");
+        if (upgrade != null) {
+            Future<String> stringFuture = deviceService.SystemManagerUpgradeAsync(upgrade, sort);
+            upgradeFutureList.add(stringFuture);
+        } else {
+            GraceException.display("文件上传失败");
+        }
+
+        return JSONResult.ok("升级/安装执行成功，5~10分钟左右升级成功~");
     }
 
     @PostMapping("/importConfigFile")
+    @SystemLog(description = "配置导入")
     public JSONResult importConfigFile(MultipartFile[] files, HttpServletRequest request) {
 
-        String user = request.getHeader("x-token");
-
-        boolean flag = deviceService.importConfigFile(files, user);
-        if (!flag) {
-            return JSONResult.error("导入文件失败");
+        for (int i = 0; i < importFutureList.size(); i++) {
+            if (importFutureList.get(i) != null) {
+                if (importFutureList.get(i).isDone()) {
+                    //判断线程结束，输出回调信息，并将该回调清除
+                    importFutureList.remove(i);
+                } else {
+                    GraceException.display("正在配置导入，请稍后...");
+                }
+            }
         }
 
-        return JSONResult.ok();
+        String user = request.getHeader("x-token");
+        Future<String> stringFuture = deviceService.importConfigFile(files, user);
+        importFutureList.add(stringFuture);
+
+        return JSONResult.ok("配置导入中...");
     }
 
 
     @GetMapping("/exportConfigFile")
-    //@SystemLog(description = "导出配置")
+    @SystemLog(description = "配置导出")
     public JSONResult exportConfigFile(@RequestParam("user") String user,
                                        HttpServletRequest request,
                                        HttpServletResponse response) {
@@ -81,6 +120,7 @@ public class DeviceController {
     }
 
     @GetMapping("/download")
+    @SystemLog(description = "配置文件下载")
     public void download(@RequestParam("fileName") String fileName,
                          HttpServletRequest request,
                          HttpServletResponse response) {
@@ -113,7 +153,6 @@ public class DeviceController {
      * @throws InterruptedException
      */
     @GetMapping("/threshold")
-    @SystemLog(description = "获取设备阈值")
     public ReceiveSystemManagerDTO getThreshold(String username) {
         try {
             return deviceService.getThreshold(username);

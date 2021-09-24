@@ -2,6 +2,8 @@ package com.zzm.aspect;
 
 import com.google.gson.Gson;
 import com.zzm.annotation.SystemLog;
+import com.zzm.pojo.OperationLog;
+import com.zzm.service.LogService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -10,8 +12,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.Date;
 
 /**
  * @author: zhuzhaoman
@@ -22,6 +26,9 @@ import java.lang.reflect.Method;
 @Slf4j
 @Component
 public class SystemLogAspect {
+
+    @Resource
+    private LogService logService;
 
     /**
      * 自定义一注解为切点
@@ -65,6 +72,19 @@ public class SystemLogAspect {
 
         // 获取注解的描述信息
         String methodDescription = getAspectLogDescription(joinPoint);
+        String username = request.getHeader("X-Token");
+
+        try {
+            OperationLog operationLog = OperationLog.builder()
+                    .username(username)
+                    .operationTitle(methodDescription)
+                    .createTime(new Date())
+                    .build();
+
+            logService.saveUserLog(operationLog);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         log.info("------------------------------------> Start <------------------------------------");
         log.info("URL               ：{}", request.getRequestURL().toString());
@@ -72,7 +92,7 @@ public class SystemLogAspect {
         log.info("HTTP Method       ：{}", request.getMethod());
         log.info("Class Method      ：{}.{}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
         log.info("IP                ：{}", request.getRemoteAddr());
-        log.info("Request Args      ：{}", new Gson().toJson(joinPoint.getArgs()));
+//        log.info("Request Args      ：{}", new Gson().toJson(joinPoint.getArgs()));
     }
 
     @After("logPointcut()")

@@ -46,11 +46,32 @@ public class CommonPortGetSystemManagerReceivedPolicyServiceImpl implements Syst
                 result = showPortInfo(result);
             }
 
+            if (receiveSystemManagerDTO.getMessageCode() == 34370) {
+                result = pingPortDataHandle(result);
+            }
+
             receiveSystemManagerDTO.setData(result);
             receiveSystemManagerDTO.setMsg("端口配置获取成功！");
         }
 
         return receiveSystemManagerDTO;
+    }
+
+    private JSONArray pingPortDataHandle(JSONArray result) {
+        for (int i = 0; i < result.size(); i++) {
+            JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(result.get(i)));
+
+            Long ipv4SipLong = jsonObject.getLong("m_u32Ipv4Sip");
+            Long ipv4DipLong = jsonObject.getLong("m_u32Ipv4Dip");
+
+            jsonObject.put("m_u32Ipv4Sip", BaseConversionUtils.long2Ip(ipv4SipLong));
+            jsonObject.put("m_u32Ipv4Dip", BaseConversionUtils.long2Ip(ipv4DipLong));
+            jsonObject.put("m_u32PortId", portHandel(jsonObject.getInteger("m_u32PortId")));
+
+            result.set(i, jsonObject);
+        }
+
+        return result;
     }
 
 
@@ -165,22 +186,29 @@ public class CommonPortGetSystemManagerReceivedPolicyServiceImpl implements Syst
                 for (int i1 = 0; i1 < jsonArray1.size(); i1++) {
                     JSONObject jsonObject1 = JSONObject.parseObject(JSONObject.toJSONString(jsonArray1.get(i1)));
 
-                    if (StringUtils.isNotBlank((String) jsonObject1.get("m_strIpv6"))) {
-                        byte[] ipv6Byte = Base64.getDecoder().decode((String) jsonObject1.get("m_strIpv6"));
+                    if (StringUtils.isNotBlank(jsonObject1.getString("m_strIpv6"))) {
+                        byte[] ipv6Byte = Base64.getDecoder().decode(jsonObject1.getString("m_strIpv6"));
+                        byte[] ipv6MaskByte = Base64.getDecoder().decode(jsonObject1.getString("m_strIpv6Mask"));
                         String ipv6 = null;
+                        String ipv6Mask = null;
                         try {
                             ipv6 = InetAddress.getByAddress(ipv6Byte).getHostAddress();
+                            ipv6Mask = InetAddress.getByAddress(ipv6MaskByte).getHostAddress();
                         } catch (UnknownHostException e) {
                             e.printStackTrace();
                             ipv6 = "";
+                            ipv6Mask = "";
                         }
                         jsonObject1.put("m_strIpv6", ipv6);
+                        jsonObject1.put("m_strIpv6Mask", ipv6Mask);
                     } else {
-                        String ipv4 = BaseConversionUtils.long2Ip(Long.parseLong(String.valueOf(jsonObject1.get("m_u32Ipv4"))));
+                        String ipv4 = BaseConversionUtils.long2Ip(Long.parseLong(jsonObject1.getString("m_u32Ipv4")));
+                        String ipv4Mask = "0x" + Integer.toHexString(Integer.parseInt(jsonObject1.getString("m_u32Ipv4Mask")));
                         jsonObject1.put("m_u32Ipv4", ipv4);
+                        jsonObject1.put("m_u32Ipv4Mask", ipv4Mask);
                     }
 
-                    byte[] macByte = Base64.getDecoder().decode((String) jsonObject1.get("m_strMac"));
+                    byte[] macByte = Base64.getDecoder().decode(jsonObject1.getString("m_strMac"));
                     String[] macArr = new String[macByte.length];
                     for (int j = 0; j < macByte.length; j++) {
                         String s = Integer.toHexString(macByte[j]).replace("f", "");

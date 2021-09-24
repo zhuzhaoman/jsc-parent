@@ -24,6 +24,7 @@ public class ServiceProfileServiceImpl implements ServiceProfileService {
 
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingServiceProfilePolicyService.dataEncapsulation(serviceProfileBO);
+        systemManagerSendingServiceProfilePolicyService.recordUserLog(serviceProfileBO);
 
         return receiveSystemManagerDTO;
     }

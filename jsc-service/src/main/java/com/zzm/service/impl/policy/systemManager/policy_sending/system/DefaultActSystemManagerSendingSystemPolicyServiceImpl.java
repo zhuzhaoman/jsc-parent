@@ -2,13 +2,18 @@ package com.zzm.service.impl.policy.systemManager.policy_sending.system;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zzm.enums.*;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
+import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.bo.SystemBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.system.SystemManagerSendingSystemPolicyService;
+import com.zzm.service.LogService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author: zhuzhaoman
@@ -20,6 +25,8 @@ public class DefaultActSystemManagerSendingSystemPolicyServiceImpl implements Sy
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -35,9 +42,8 @@ public class DefaultActSystemManagerSendingSystemPolicyServiceImpl implements Sy
         sendSystemManagerDTO.setData(systemBO.getParam());
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
 
     }
 
@@ -58,5 +64,25 @@ public class DefaultActSystemManagerSendingSystemPolicyServiceImpl implements Sy
                 systemBO.getDomainType());
 
         return sendSystemManagerDTO;
+    }
+
+    @Override
+    @Transactional
+    public void recordUserLog(SystemBO systemBO) {
+        StringBuilder content = new StringBuilder(MessageCodeEnum.SYSTEM_CONFIG_DEFAULT_ACT.getMsg());
+        try {
+            JSONObject params = JSONObject.parseObject(JSONObject.toJSONString(systemBO.getParam()));
+            content.append("【")
+                    .append("业务策略ID:").append(params.getInteger("m_u32ServiceProfileId")).append("、")
+                    .append("开关:").append(params.getBoolean("isOn") ? "关" : "开")
+                    .append("】");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OperationLog operationLog = OperationLog.builder().username(systemBO.getUsername())
+                .operationTitle("系统功能配置")
+                .operationContent(content.toString())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 }

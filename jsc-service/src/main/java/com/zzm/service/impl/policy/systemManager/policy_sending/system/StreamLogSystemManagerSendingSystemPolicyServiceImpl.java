@@ -5,13 +5,18 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
 import com.zzm.pojo.bo.SystemBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.system.SystemManagerSendingSystemPolicyService;
+import com.zzm.service.LogService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import sun.rmi.runtime.Log;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author: zhuzhaoman
@@ -23,6 +28,8 @@ public class StreamLogSystemManagerSendingSystemPolicyServiceImpl implements Sys
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -32,15 +39,13 @@ public class StreamLogSystemManagerSendingSystemPolicyServiceImpl implements Sys
     @Override
     public Object configDataEncapsulation(SystemBO systemBO){
 
-
         SendSystemManagerDTO sendSystemManagerDTO = getSendData(systemBO);
         sendSystemManagerDTO.setMessageCode(MessageCodeEnum.SYSTEM_CONFIG_STREAM_LOG.getReqCode());
         sendSystemManagerDTO.setData(systemBO.getParam());
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
 
     }
 
@@ -61,5 +66,15 @@ public class StreamLogSystemManagerSendingSystemPolicyServiceImpl implements Sys
                 systemBO.getDomainType());
 
         return sendSystemManagerDTO;
+    }
+
+    @Override
+    @Transactional
+    public void recordUserLog(SystemBO systemBO) {
+        OperationLog operationLog = OperationLog.builder().username(systemBO.getUsername())
+                .operationTitle("系统功能配置")
+                .operationContent(MessageCodeEnum.SYSTEM_CONFIG_STREAM_LOG.getMsg())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 }

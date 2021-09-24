@@ -27,6 +27,7 @@ public class SystemServiceImpl implements SystemService {
 
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingSystemPolicyService.configDataEncapsulation(systemBO);
+        systemManagerSendingSystemPolicyService.recordUserLog(systemBO);
 
         return receiveSystemManagerDTO;
     }
@@ -38,6 +39,7 @@ public class SystemServiceImpl implements SystemService {
 
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingSystemPolicyService.getDataEncapsulation(systemBO);
+
 
         return receiveSystemManagerDTO;
     }

@@ -35,7 +35,7 @@ import java.util.concurrent.Executors;
 /**
  * 历史流量定时任务
  */
-//@Component
+@Component
 @SuppressWarnings("all")
 public class HistoryFlowJob {
 

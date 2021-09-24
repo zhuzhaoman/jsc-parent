@@ -24,9 +24,9 @@ public class PortServiceImpl implements PortService {
         SystemManagerSendingPortPolicyService systemManagerSendingPortPolicyService
                 = SystemManagerSendingPortComponent.systemManagerSendingPolicyServiceMap.get(portBO.getPortType());
 
-        System.out.println(portBO.getPortType());
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingPortPolicyService.dataEncapsulation(portBO);
+        systemManagerSendingPortPolicyService.recordUserLog(portBO);
 
         return receiveSystemManagerDTO;
     }

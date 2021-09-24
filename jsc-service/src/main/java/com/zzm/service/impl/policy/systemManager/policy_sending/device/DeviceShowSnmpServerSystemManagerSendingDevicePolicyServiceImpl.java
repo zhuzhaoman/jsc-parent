@@ -5,13 +5,17 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
 import com.zzm.pojo.bo.DeviceBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.device.SystemManagerSendingDevicePolicyService;
+import com.zzm.service.LogService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author zhuzhaoman
@@ -23,6 +27,8 @@ public class DeviceShowSnmpServerSystemManagerSendingDevicePolicyServiceImpl imp
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -43,9 +49,17 @@ public class DeviceShowSnmpServerSystemManagerSendingDevicePolicyServiceImpl imp
                 deviceBO.getParam());
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
+        return clientServerSync.sendMessage(content);
+    }
 
-        return data;
+    @Override
+    @Transactional
+    public void recordUserLog(DeviceBO deviceBO) {
+        OperationLog operationLog = OperationLog.builder().username(deviceBO.getUsername())
+                .operationTitle("snmp配置")
+                .operationContent(MessageCodeEnum.DEVICE_SHOW_SNMP_CONFIG.getMsg())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 
 }

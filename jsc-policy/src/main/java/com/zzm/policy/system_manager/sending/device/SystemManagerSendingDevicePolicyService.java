@@ -19,7 +19,9 @@ public interface SystemManagerSendingDevicePolicyService {
 
     /**
      * 封装要发送的数据
-     * @param DeviceBO
+     * @param deviceBO
      */
     Object dataEncapsulation(DeviceBO deviceBO) throws Exception;
+
+    void recordUserLog(DeviceBO deviceBO);
 }

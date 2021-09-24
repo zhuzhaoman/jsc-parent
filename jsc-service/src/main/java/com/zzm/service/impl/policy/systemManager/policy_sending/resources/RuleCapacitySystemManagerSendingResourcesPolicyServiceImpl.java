@@ -2,13 +2,17 @@ package com.zzm.service.impl.policy.systemManager.policy_sending.resources;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zzm.enums.*;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
 import com.zzm.pojo.bo.ResourcesBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.resources.SystemManagerSendingResourcesPolicyService;
+import com.zzm.service.LogService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author: zhuzhaoman
@@ -20,6 +24,8 @@ public class RuleCapacitySystemManagerSendingResourcesPolicyServiceImpl implemen
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -46,9 +52,8 @@ public class RuleCapacitySystemManagerSendingResourcesPolicyServiceImpl implemen
         }
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
     }
 
     @Override
@@ -57,9 +62,8 @@ public class RuleCapacitySystemManagerSendingResourcesPolicyServiceImpl implemen
         sendSystemManagerDTO.setMessageCode(MessageCodeEnum.RULE_CAPACITY_RESOURCES_GET.getReqCode());
         sendSystemManagerDTO.setMessageType(MessageTypeEnum.RESOURCES_GET.getCode());
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
     }
 
     @Override
@@ -70,9 +74,8 @@ public class RuleCapacitySystemManagerSendingResourcesPolicyServiceImpl implemen
         sendSystemManagerDTO.setData(resourcesBO.getParam());
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
     }
 
     private SendSystemManagerDTO getSendData(ResourcesBO resourcesBO) {
@@ -85,5 +88,42 @@ public class RuleCapacitySystemManagerSendingResourcesPolicyServiceImpl implemen
                 resourcesBO.getDomainType());
 
         return sendSystemManagerDTO;
+    }
+
+    @Override
+    @Transactional
+    public void recordConfigOrReleaseUserLog(ResourcesBO resourcesBO, boolean isConfig) {
+        StringBuilder content = new StringBuilder();
+
+        if (resourcesBO.getResourceAction().equals("save")) {
+            content.append(MessageCodeEnum.RULE_CAPACITY_RESOURCES_SAVE.getMsg());
+        } else {
+            content.append(MessageCodeEnum.RULE_CAPACITY_RESOURCES_CONFIG.getMsg());
+            try {
+                JSONObject params = JSONObject.parseObject(JSONObject.toJSONString(resourcesBO.getParam()));
+                content.append("【")
+                        .append("用户名:").append(params.getString("m_strUserName")).append("、")
+                        .append("规则类型:").append(params.getString("m_u32RuleType")).append("、") // String
+                        .append("规则容量:").append(params.getInteger("m_u32RuleResourceNum"))
+                        .append("】");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        OperationLog operationLog = OperationLog.builder().username(resourcesBO.getUsername())
+                .operationTitle("资源配置")
+                .operationContent(content.toString())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
+    }
+
+    @Override
+    public void recordGetUserLog(ResourcesBO resourcesBO) {
+        OperationLog operationLog = OperationLog.builder().username(resourcesBO.getUsername())
+                .operationTitle("资源配置")
+                .operationContent(MessageCodeEnum.RULE_CAPACITY_RESOURCES_GET.getMsg())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 }

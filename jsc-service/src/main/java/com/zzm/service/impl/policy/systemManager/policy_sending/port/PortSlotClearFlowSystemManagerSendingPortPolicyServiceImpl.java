@@ -5,13 +5,16 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
 import com.zzm.pojo.bo.PortBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.port.SystemManagerSendingPortPolicyService;
+import com.zzm.service.LogService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author zhuzhaoman
@@ -23,6 +26,8 @@ public class PortSlotClearFlowSystemManagerSendingPortPolicyServiceImpl implemen
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -43,9 +48,26 @@ public class PortSlotClearFlowSystemManagerSendingPortPolicyServiceImpl implemen
                 portBO.getParam());
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
+    }
+
+    @Override
+    public void recordUserLog(PortBO portBO) {
+        StringBuilder content = new StringBuilder("端口配置 >>> " + MessageCodeEnum.INTERFACE_SLOT_CLEAR_FLOW.getMsg());
+        try {
+            JSONObject params = JSONObject.parseObject(JSONObject.toJSONString(portBO.getParam()));
+            content.append("【")
+                    .append("槽位ID:").append(params.getInteger("m_u32SlotId"))
+                    .append("】");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OperationLog operationLog = OperationLog.builder().username(portBO.getUsername())
+                .operationTitle("端口管理")
+                .operationContent(content.toString())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 
 }

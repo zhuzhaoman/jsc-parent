@@ -5,13 +5,18 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
 import com.zzm.pojo.bo.RealTimeFlowBO;
+import com.zzm.pojo.bo.SystemBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.real_time_flow.SystemManagerSendingRealTimeFlowPolicyService;
+import com.zzm.service.LogService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +30,8 @@ public class InputSystemManagerSendingRealTimeFlowPolicyServiceImpl implements S
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -50,8 +57,17 @@ public class InputSystemManagerSendingRealTimeFlowPolicyServiceImpl implements S
                 param);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
+    }
+
+    @Override
+    @Transactional
+    public void recordUserLog(RealTimeFlowBO realTimeFlowBO) {
+        OperationLog operationLog = OperationLog.builder().username(realTimeFlowBO.getUsername())
+                .operationTitle("流量管理")
+                .operationContent("实时流量查询 >>> " + MessageCodeEnum.FIND_FLOW_BY_INPUT.getMsg())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 }

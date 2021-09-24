@@ -1,5 +1,6 @@
 package com.zzm.controller;
 
+import com.zzm.annotation.SystemLog;
 import com.zzm.exception.GraceException;
 import com.zzm.pojo.bo.TopologyAddBO;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
@@ -43,6 +44,7 @@ public class TopologyController {
     }
 
     @PostMapping("/saveTopology")
+    @SystemLog(description = "保存设备组网信息")
     public JSONResult saveTopology(@RequestBody TopologyAddBO topologyAddBO) throws Exception {
 
         topologyService.saveTopology(topologyAddBO);
@@ -51,12 +53,14 @@ public class TopologyController {
     }
 
     @GetMapping("/getTopology")
+    @SystemLog(description = "获取设备组网信息")
     public JSONResult getTopology() {
         TopologyVO topology = topologyService.getTopology();
         return JSONResult.ok(topology);
     }
 
     @PostMapping("/removeTopology")
+    @SystemLog(description = "删除设备组网信息")
     public JSONResult removeTopology() {
         topologyService.removeTopology();
         return JSONResult.ok();

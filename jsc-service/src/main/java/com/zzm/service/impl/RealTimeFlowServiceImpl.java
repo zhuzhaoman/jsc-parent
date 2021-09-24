@@ -28,6 +28,7 @@ public class RealTimeFlowServiceImpl implements RealTimeFlowService {
                 SystemManagerSendingRealTimeFlowComponent.systemManagerSendingPolicyServiceMap.get(realTimeFlowBO.getType());
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingRealTimeFlowPolicyService.dataEncapsulation(realTimeFlowBO);
+        systemManagerSendingRealTimeFlowPolicyService.recordUserLog(realTimeFlowBO);
 
         return receiveSystemManagerDTO;
     }

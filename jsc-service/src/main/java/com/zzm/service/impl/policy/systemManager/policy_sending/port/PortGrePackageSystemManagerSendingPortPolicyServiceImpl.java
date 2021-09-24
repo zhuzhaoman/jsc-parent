@@ -6,10 +6,12 @@ import com.zzm.enums.MessageBlockTypeEnum;
 import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
-import com.zzm.netty.ClientServerSync;
+import com.zzm.netty.systemmanager.ClientServerSync;
+import com.zzm.pojo.OperationLog;
 import com.zzm.pojo.bo.PortBO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
 import com.zzm.policy.system_manager.sending.port.SystemManagerSendingPortPolicyService;
+import com.zzm.service.LogService;
 import com.zzm.utils.BaseConversionUtils;
 import com.zzm.utils.IPUtils;
 import org.apache.commons.lang.StringUtils;
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;
-import java.util.Base64;
+import java.util.Date;
 
 /**
  * @author zhuzhaoman
@@ -29,6 +31,8 @@ public class PortGrePackageSystemManagerSendingPortPolicyServiceImpl implements 
 
     @Resource
     private ClientServerSync clientServerSync;
+    @Resource
+    private LogService logService;
 
     @Override
     public String policyType() {
@@ -40,19 +44,22 @@ public class PortGrePackageSystemManagerSendingPortPolicyServiceImpl implements 
         JSONArray jsonArray = JSONArray.parseArray(JSONObject.toJSONString(portBO.getParam()));
         JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(jsonArray.get(0)));
 
-        String m_strGreSrcMac = jsonObject.get("m_strGreSrcMac").toString();
-        String m_strGreDstMac = jsonObject.get("m_strGreDstMac").toString();
-
-//        jsonObject.put("m_strGreSrcMac", Base64.getEncoder().encodeToString(m_strGreSrcMac.replace(":", "").getBytes("US-ASCII")));
+        //        jsonObject.put("m_strGreSrcMac", Base64.getEncoder().encodeToString(m_strGreSrcMac.replace(":", "").getBytes("US-ASCII")));
 //        jsonObject.put("m_strGreDstMac", Base64.getEncoder().encodeToString(m_strGreDstMac.replace(":", "").getBytes("US-ASCII")));
 
-        jsonObject.put("m_strGreSrcMac", m_strGreSrcMac.replace(":", ""));
-        jsonObject.put("m_strGreDstMac", m_strGreDstMac.replace(":", ""));
+        if (StringUtils.isNotBlank(jsonObject.getString("m_strGreSrcMac"))) {
+            String m_strGreSrcMac = jsonObject.getString("m_strGreSrcMac");
+            String m_strGreDstMac = jsonObject.getString("m_strGreDstMac");
 
 
-        if (StringUtils.isNotBlank((String) jsonObject.get("m_u32Ipv4Sip"))) {
-            String srcIp = (String) jsonObject.get("m_u32Ipv4Sip");
-            String dstIp = (String) jsonObject.get("m_u32Ipv4Dip");
+            jsonObject.put("m_strGreSrcMac", m_strGreSrcMac.replace(":", ""));
+            jsonObject.put("m_strGreDstMac", m_strGreDstMac.replace(":", ""));
+        }
+
+
+        if (StringUtils.isNotBlank(jsonObject.getString("m_u32Ipv4Sip"))) {
+            String srcIp = jsonObject.getString("m_u32Ipv4Sip");
+            String dstIp = jsonObject.getString("m_u32Ipv4Dip");
 
             Long src = BaseConversionUtils.ip2Long(srcIp);
             Long dst = BaseConversionUtils.ip2Long(dstIp);
@@ -60,8 +67,8 @@ public class PortGrePackageSystemManagerSendingPortPolicyServiceImpl implements 
             jsonObject.put("m_u32Ipv4Sip", src);
             jsonObject.put("m_u32Ipv4Dip", dst);
         } else {
-            String srcIp = (String) jsonObject.get("m_strIpv6Sip");
-            String dstIp = (String) jsonObject.get("m_strIpv6Dip");
+            String srcIp = jsonObject.getString("m_strIpv6Sip");
+            String dstIp = jsonObject.getString("m_strIpv6Dip");
 
             String src = IPUtils.ipToBase64(srcIp);
             String dst = IPUtils.ipToBase64(dstIp);
@@ -91,9 +98,27 @@ public class PortGrePackageSystemManagerSendingPortPolicyServiceImpl implements 
                 param);
 
         String content = JSONObject.toJSONString(sendSystemManagerDTO);
-        Object data = clientServerSync.sendMessage(content);
 
-        return data;
+        return clientServerSync.sendMessage(content);
+    }
+
+    @Override
+    public void recordUserLog(PortBO portBO) {
+        StringBuilder content = new StringBuilder("端口配置 >>> " + MessageCodeEnum.INTERFACE_GRE_PACKAGE.getMsg());
+        try {
+            JSONObject params = JSONArray.parseArray(JSONObject.toJSONString(portBO.getParam())).getJSONObject(0);
+            content.append("【")
+                    .append("端口ID:").append(params.getInteger("m_u32PortId")).append("、")
+                    .append("开关:").append(params.getInteger("m_u32GrePackageEnable"))
+                    .append("】");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        OperationLog operationLog = OperationLog.builder().username(portBO.getUsername())
+                .operationTitle("端口管理")
+                .operationContent(content.toString())
+                .createTime(new Date()).build();
+        logService.saveUserLog(operationLog);
     }
 
 }

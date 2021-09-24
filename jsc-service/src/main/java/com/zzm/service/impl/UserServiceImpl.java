@@ -6,13 +6,10 @@ import com.zzm.enums.MessageCodeEnum;
 import com.zzm.enums.MessageIdentifyEnum;
 import com.zzm.enums.MessageTypeEnum;
 import com.zzm.exception.GraceException;
-import com.zzm.netty.ClientServerSync;
-import com.zzm.pojo.bo.UserAddBO;
+import com.zzm.netty.systemmanager.ClientServerSync;
 import com.zzm.pojo.bo.UserBO;
 import com.zzm.pojo.dto.ReceiveSystemManagerDTO;
 import com.zzm.pojo.dto.SendSystemManagerDTO;
-import com.zzm.policy.system_manager.sending.rule.SystemManagerSendingRuleComponent;
-import com.zzm.policy.system_manager.sending.rule.SystemManagerSendingRulePolicyService;
 import com.zzm.policy.system_manager.sending.user.SystemManagerSendingUserComponent;
 import com.zzm.policy.system_manager.sending.user.SystemManagerSendingUserPolicyService;
 import com.zzm.service.UserService;
@@ -21,7 +18,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @author zhuzhaoman
@@ -86,6 +82,7 @@ public class UserServiceImpl implements UserService {
 
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingUserPolicyService.configDataEncapsulation(userBO);
+        systemManagerSendingUserPolicyService.recordUserLog(userBO);
 
         return receiveSystemManagerDTO;
     }

@@ -26,6 +26,7 @@ public class PortGroupServiceImpl implements PortGroupService {
 
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingPortGroupPolicyService.dataEncapsulation(portGroupBO);
+        systemManagerSendingPortGroupPolicyService.recordUserLog(portGroupBO);
 
         return receiveSystemManagerDTO;
     }

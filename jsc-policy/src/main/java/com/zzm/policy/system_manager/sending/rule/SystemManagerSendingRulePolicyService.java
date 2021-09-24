@@ -1,6 +1,7 @@
 package com.zzm.policy.system_manager.sending.rule;
 
 import com.zzm.pojo.bo.RuleBO;
+import com.zzm.pojo.bo.ServiceProfileBO;
 
 /**
  * @author: zhuzhaoman
@@ -32,5 +33,7 @@ public interface SystemManagerSendingRulePolicyService {
      * @param ruleBO
      */
     Object findDataEncapsulation(RuleBO ruleBO);
+
+    void recordUserLog(RuleBO ruleBO);
 
 }

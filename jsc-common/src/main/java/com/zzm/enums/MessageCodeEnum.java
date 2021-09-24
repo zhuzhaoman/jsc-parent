@@ -8,6 +8,7 @@ package com.zzm.enums;
 public enum MessageCodeEnum {
 
     USER_ADD(1565, 1566, "", "用户注册"),
+    USER_ACTIVE(1537, 1538, "", "用户激活"),
     USER_DEL(1567, 1568, "", "用户删除"),
     USER_GET(1793, 1794, "", "用户信息获取"),
     COMMON_USER_CONFIG(0,1000, "", "通用用户操作消息枚举"),
@@ -169,7 +170,7 @@ public enum MessageCodeEnum {
     SYSTEM_CONFIG_DEFAULT_ACT(538, 539, "", "系统配置默认动作"),
     SYSTEM_CONFIG_UNKNOWN_PKT(2058, 2059, "", "系统配置未识别报文处理"),
     SYSTEM_CONFIG_PKT_HEADER_OUT(2168, 2169, "", "系统配置报文头部输出"),
-    SYSTEM_CONFIG_PKT_HEADER_STRIP(2096, 2097, "", "系统配置包问首部剥离"),
+    SYSTEM_CONFIG_PKT_HEADER_STRIP(2096, 2097, "", "系统配置报文首部剥离"),
     SYSTEM_CONFIG_PKT_TRUNCATION(2150, 2151, "", "系统配置报文截断"),
     SYSTEM_CONFIG_IP_MATCH_LEVEL(2092, 2093, "", "系统配置ip内外层匹配"),
     SYSTEM_CONFIG_PKT_INFO_CARRY(2050, 2051, "", "系统配置报文信息携带"),
@@ -197,6 +198,7 @@ public enum MessageCodeEnum {
     SYSTEM_DEL_DATA_ORIGIN(2146, 2147, "", "删除数据来源"),
     SYSTEM_CLEAN_DATA_ORIGIN(2148, 2149, "", "清除数据来源"),
     SYSTEM_GET_DATA_ORIGIN(2144, 2145, "", "获取数据来源"),
+    SYSTEM_CONFIG_IP_FRAGMENT(2182, 2183, "", "ip分片包"),
     COMMON_SYSTEM_CONFIG(0,7770, "", "通用系统配置枚举"),
     COMMON_SYSTEM_CONFIG_GET(0,7771, "", "通用系统配置获取枚举"),
 
@@ -230,6 +232,8 @@ public enum MessageCodeEnum {
     INTERFACE_MIRROR_ON(34336, 34338, "", "端口镜像开"),
     INTERFACE_MIRROR_OFF(34337, 34338, "", "端口镜像关"),
     INTERFACE_SHOW_VLAN_TAG(34371, 34372, "", "端口VlanTag"),
+    INTERFACE_HASH_TYPE(34375, 34376, "", "内外层Hash方式"),
+    INTERFACE_PING_PORT(34369, 34370, "", "端口ping功能"),
     COMMON_INTERFACE_CONFIG(0, 8880, "","通用端口配置枚举"),
     COMMON_INTERFACE_GET(0, 8881, "", "通用端口展示枚举"),
 
@@ -237,19 +241,19 @@ public enum MessageCodeEnum {
      * 设备
      */
     DEVICE_MANAGE(36631, 36632, "", "查看设备参数信息"),
-    DEVICE_SHOW_NET_CONFIG(36609, 36610, "", "show net-config"),
-    DEVICE_SHOW_SNMP_CONFIG(36613, 36614, "", "show snmp server config"),
-    DEVICE_ADD_SNMP_COMMUNITY(36384, 36385, "", "添加团体名"),
-    DEVICE_DEL_SNMP_COMMUNITY(36386, 36387, "", "删除团体名"),
-    DEVICE_ADD_SNMP_USER(36390, 36391, "", "添加用户"),
-    DEVICE_DEL_SNMP_USER(36392, 36393, "", "删除用户"),
+    DEVICE_SHOW_NET_CONFIG(36609, 36610, "", "查看网络配置"),
+    DEVICE_SHOW_SNMP_CONFIG(36613, 36614, "", "查看snmp配置"),
+    DEVICE_ADD_SNMP_COMMUNITY(36384, 36385, "", "添加snmp团体名"),
+    DEVICE_DEL_SNMP_COMMUNITY(36386, 36387, "", "删除snmp团体名"),
+    DEVICE_ADD_SNMP_USER(36390, 36391, "", "添加用户(v3)"),
+    DEVICE_DEL_SNMP_USER(36392, 36393, "", "删除用户(v3)"),
     DEVICE_SAVE_SNMP_CONFIG(36388, 36389, "", "保存团体名设置"),
     DEVICE_SAVE_NET_CONFIG(36361, 36362, "", "保存网络设置"),
     DEVICE_ROUTE_CONFIG(36359, 36360, "", "系统路由设置"),
     DEVICE_NTP_CONFIG(36363, 36364, "", "系统NTP设置"),
     DEVICE_GATEWAY_CONFIG(36355, 36356, "", "系统网关设置"),
     DEVICE_IP_CONFIG(36353, 36354, "", "系统IP设置"),
-    DEVICE_NAME_CONFIG(36367, 36368, "", "设备描述配置"),
+    DEVICE_NAME_CONFIG(36367, 36368, "", "设备名称配置"),
     DEVICE_ID_CONFIG(36434, 36435, "", "设备id配置"),
     DEVICE_SNMP_SYS_NAME(36400, 36401, "", "snmp系统名称"),
     DEVICE_SNMP_SYS_LOCATION(36402, 36403, "", "snmp系统位置"),
@@ -258,11 +262,17 @@ public enum MessageCodeEnum {
     DEVICE_SYSTEM_UPDATE_CONFIG(36422, 36423, "", "更新系统配置"),
     DEVICE_DISK_USAGE_THRESHOLD_CONFIG(36381, 36382, "", "配置磁盘阈值"),
     DEVICE_PORT_TRAFFIC_THRESHOLD_CONFIG(36381, 36382, "", "端口流量阈值"),
-    DEVICE_REBOOT_SLOT(36633, 36634, "", "reboot"),
+    DEVICE_REBOOT_SLOT(36633, 36634, "", "重启线卡"),
     DEVICE_SHOW_DEVICE_MANAGE(36631, 36632, "", "查询设备参数信息"),
     DEVICE_SHOW_DEVICE_SHELF_INFO(36627, 36628, "", "查询风扇电源信息"),
     COMMON_DEVICE_GET(0, 9991, "", "通用设备展示枚举"),
-    COMMON_DEVICE_CONFIG(0, 9992, "", "通用设备配置枚举");
+    COMMON_DEVICE_CONFIG(0, 9992, "", "通用设备配置枚举"),
+
+    /**
+     * 日志管理
+     */
+    SYSLOG_SERVER_IP_CONFIG(1553, 1554, "", "日志推送ip地址配置"),
+    COMMON_SYSLOG_CONFIG(0, 10001, "", "通用日志配置枚举");
 
     private int reqCode;
     private int resCode;

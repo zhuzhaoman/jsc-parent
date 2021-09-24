@@ -31,7 +31,7 @@ public class PortStatusController {
      * @throws InterruptedException
      */
     @GetMapping("/all")
-    @SystemLog(description = "获取端口状态")
+    @SystemLog(description = "查看端口状态")
     public JSONResult allSlotPortStatus() {
 
         try {
@@ -49,7 +49,7 @@ public class PortStatusController {
      * @return
      */
     @GetMapping("/appointStatus")
-    @SystemLog(description = "获取单个端口信息")
+    @SystemLog(description = "查看单个端口信息")
     public JSONResult appointStatus(@RequestParam("portIndexList") String portIndexList) {
         System.out.println("端口丝印号：" + portIndexList);
 

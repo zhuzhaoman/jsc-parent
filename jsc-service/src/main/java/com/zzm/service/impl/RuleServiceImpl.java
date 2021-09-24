@@ -37,6 +37,7 @@ public class RuleServiceImpl implements RuleService {
 
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingRulePolicyService.addDataEncapsulation(ruleBO);
+        systemManagerSendingRulePolicyService.recordUserLog(ruleBO);
 
         return receiveSystemManagerDTO;
     }
@@ -48,6 +49,8 @@ public class RuleServiceImpl implements RuleService {
 
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingRulePolicyService.findDataEncapsulation(ruleBO);
+        systemManagerSendingRulePolicyService.recordUserLog(ruleBO);
+
 
         return receiveSystemManagerDTO;
     }
@@ -59,6 +62,7 @@ public class RuleServiceImpl implements RuleService {
 
         ReceiveSystemManagerDTO receiveSystemManagerDTO =
                 (ReceiveSystemManagerDTO) systemManagerSendingRulePolicyService.delDataEncapsulation(ruleBO);
+        systemManagerSendingRulePolicyService.recordUserLog(ruleBO);
 
         return receiveSystemManagerDTO;
     }

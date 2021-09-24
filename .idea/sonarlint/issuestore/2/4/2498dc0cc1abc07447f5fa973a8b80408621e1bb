@@ -1,11 +1,11 @@
 
-W
-java:S1128"5Remove this unused import 'javax.persistence.Entity'.(úƒßıûÿÿÿÿ8³±à„Ş.
-V
-java:S1128"4Remove this unused import 'javax.persistence.Table'.(˜øŒ“øÿÿÿÿ8³±à„Ş.
-P
-java:S1128"4Remove this unused import 'javax.persistence.Basic'.(ùÈÃt8àäé„Ş.
 K
 java:S1128	".Remove this unused import 'java.util.Objects'.(¼¸õ›8àäé„Ş.
+P
+java:S1128"4Remove this unused import 'javax.persistence.Basic'.(ùÈÃt8àäé„Ş.
+W
+java:S1128"5Remove this unused import 'javax.persistence.Entity'.(úƒßıûÿÿÿÿ8³±à„Ş.
 Q
 java:S1128"5Remove this unused import 'javax.persistence.Column'.(ìûæH8àäé„Ş.
+V
+java:S1128"4Remove this unused import 'javax.persistence.Table'.(˜øŒ“øÿÿÿÿ8³±à„Ş.

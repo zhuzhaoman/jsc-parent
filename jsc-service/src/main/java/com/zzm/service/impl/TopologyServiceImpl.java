@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ import java.util.List;
 @Service
 public class TopologyServiceImpl implements TopologyService {
 
-    @Autowired
+    @Resource(name = "restTemplate")
     private RestTemplate restTemplate;
     @Autowired
     private ChassisInfoRepository chassisInfoRepository;
@@ -65,7 +66,7 @@ public class TopologyServiceImpl implements TopologyService {
 
         ips.forEach(ip -> {
             try {
-                String url = String.join("", "http://", ip, ":8080/portStatus/all");
+                String url = String.join("", "https://", ip, ":8080/portStatus/all");
                 // 发送请求
                 Object response = restTemplate.getForObject(url, Object.class);
                 JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString(response));
